@@ -1,9 +1,6 @@
 from django.contrib import admin
 from . import models
 from django.contrib.admin.models import LogEntry
-from mptt.admin import MPTTModelAdmin
-from mptt.admin import DraggableMPTTAdmin
-from mapbox_location_field.admin import MapAdmin
 from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
