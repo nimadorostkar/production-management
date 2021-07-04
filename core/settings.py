@@ -25,7 +25,6 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_shortcuts',     # https://github.com/alesdotio/django-admin-shortcuts
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -34,11 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'app.config.AppConfig',
-    #"django.contrib.gis",
     'import_export',  # https://django-import-export.readthedocs.io/en/latest/index.html
     'extra_settings', # https://github.com/fabiocaccamo/django-extra-settings
-    'mptt',           # https://django-mptt.readthedocs.io/en/latest/index.html
-    'mapbox_location_field',  # https://github.com/simon-the-shark/django-mapbox-location-field         https://account.mapbox.com/
     'bootstrapform',  # https://django-bootstrap-form.readthedocs.io/en/latest/
     'jalali_date',    # https://pypi.org/project/django-jalali-date/
     'extensions',
@@ -117,81 +113,6 @@ JALALI_DATE_DEFAULTS = {
         }
     },
 }
-
-
-
-
-ADMIN_SHORTCUTS = [
-    {
-        'shortcuts': [
-            {
-                'title': 'نمایش داشبورد',
-                'url': '/',
-                'open_new_window': True,
-            },
-            {
-                'title': 'خروج',
-                'url_name': 'admin:logout',
-            },
-            {
-                'title': 'Users',
-                'url_name': 'admin:auth_user_changelist',
-                #'count': 'example.utils.count_users',
-            },
-            {
-                'title': 'Groups',
-                'url_name': 'admin:auth_group_changelist',
-                #'count': 'example.utils.count_groups',
-            },
-            {
-                'title': 'Add user',
-                'url_name': 'admin:auth_user_add',
-                'has_perms': 'example.utils.has_perms_to_users',
-            },
-        ]
-    },
-    {
-        'title': 'مدیریت تولید',
-        'shortcuts': [
-            {
-                'title': 'فرآیند ها',
-                'url_name': 'admin:app_process_changelist',
-            },
-            {
-                'title': 'محصولات',
-                'url_name': 'admin:app_product_changelist',
-            },
-            {
-                'title': 'تیکت ها',
-                'url_name': 'admin:app_ticket_changelist',
-            },
-            {
-                'title': 'پروفایل',
-                'url_name': 'admin:app_profile_changelist',
-            },
-            {
-                'title': 'درخت محصول',
-                'url_name': 'admin:app_tree_changelist',
-            },
-            {
-                'title': 'سفارشات',
-                'url_name': 'admin:app_order_changelist',
-            },
-            {
-                'title': 'Contact forms',
-                'icon': 'columns',
-                'url_name': 'admin:index',
-                'count_new': '3',
-            },
-        ]
-    },
-]
-ADMIN_SHORTCUTS_SETTINGS = {
-    'show_on_all_pages': False,
-    'hide_app_list': False,
-    'open_new_window': False,
-}
-
 
 
 

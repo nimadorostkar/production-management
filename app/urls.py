@@ -1,6 +1,5 @@
 from django.urls import path, re_path
 from app import views
-#from .views import MapView
 
 app_name='app'
 
