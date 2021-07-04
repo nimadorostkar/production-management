@@ -12,4 +12,15 @@ urlpatterns = [
     re_path(r'^.*\.html', views.pages, name='pages'),
     # The home page
     path('', views.index, name='home'),
+    # products
+    path('products', views.products, name='products'),
+    path('products_detail/<int:id>/',views.products_detail,name='products_detail'),
+    # mother stations
+    path('mother_station', views.mother_station, name='mother_station'),
+    path('mother_station_detail/<int:id>/',views.mother_station_detail,name='mother_station_detail'),
+    # other
+    path('profile', views.profile, name='profile'),
+    path('search',views.search,name='search'),
+    path('ticket',views.ticket,name='ticket'),
+    path('notices',views.notices,name='notices'),
     ]
