@@ -2,7 +2,7 @@ from django import forms
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from .models import Profile, Ticket, Process, Confirmation, Order
+from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 

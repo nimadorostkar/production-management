@@ -10,23 +10,6 @@
 
 
 
-<div class="row">
-  <div class="col-lg-12 col-md-12">
-    <div class="card ">
-      <div class="card-header">
-        <h4 class="card-title"> سفارشات بحرانی </h4>
-      </div>
-      <div class="card-body">
-
-          <p  dir="rtl" align="right" id="extra_orders">  </p>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
 
 
     <div class="row">
@@ -410,67 +393,6 @@
 {% block javascripts %}
 
   <script>
-
-    var array = [
-      {% for Order in orders %}
-       {% for Tree in tree %}
-        {% for relatedProduct in Tree.relatedProduct.all %}
-          {% if relatedProduct == Order.product %}
-           {% if Order.confirmed %}
-             {% if Order.completed == False %}
-                { "name":"{{Tree.name}}", "tot":{% widthratio Tree.quantity 1 Order.circulation %} },
-             {% endif %}
-           {% endif %}
-          {% endif %}
-        {% endfor %}
-       {% endfor %}
-      {% endfor %}
-    ];
-
-    var orders = array.reduce(function (agg, obj) {
-      var objForName = agg.filter(function (nameObj) { return nameObj.name === obj.name})[0]
-
-      if (objForName) {
-        objForName.total += obj.tot;
-      } else {
-        agg.push({
-          name: obj.name,
-          total: obj.tot
-        })
-      }
-      return agg;
-    }, [])
-
-
-
-    var processes_inventory = [
-       {% for Process in processes %}
-          { "name":"{{Process.name}}", "total":"{{Process.inventory}}" },
-       {% endfor %}
-     ];
-
-
-
-    var extra_orders = document.getElementById("extra_orders");
-
-    for(var i=0; i < orders.length; i++){
-      for(var j=0; j < processes_inventory.length; j++){
-        if ( orders[i].name == processes_inventory[j].name ){
-          var diff = processes_inventory[j].total - orders[i].total ;
-
-          if ( diff<0 ){
-            diff = diff* -1;
-            extra_orders.innerHTML += "<p> تعداد  "+diff+" شفارش در فرآیند "+ processes_inventory[j].name +" بیشتر از موجودی است. </p> <br>";
-          }
-
-        }
-      }
-    }
-
-
-
-
-
 
 
 

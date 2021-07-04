@@ -139,8 +139,8 @@ class Station(models.Model):
     mother_station = models.ForeignKey(Mother_Station ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " ایستگاه مادر ")
     pro_cap_day = models.IntegerField(default='1', null=True,blank=True, verbose_name = " ظرفیت تولید در روز ")
     percent_error = models.IntegerField(default='1', null=True,blank=True, verbose_name = " درصد خطا ")
-    input_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعات ورودی ")
-    output_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعه خروجی ")
+    input_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,related_name='input', verbose_name = " قطعات ورودی ")
+    output_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,related_name='output', verbose_name = " قطعه خروجی ")
 
 
     class Meta:
@@ -162,8 +162,8 @@ class Station(models.Model):
 
 #------------------------------------------------------------------------------
 class Tree(models.Model):
-    station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True,verbose_name = " ایستگاه ")
-    parent_station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True,verbose_name = " ایستگاه والد ")
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='station', verbose_name = " ایستگاه ")
+    parent_station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='parent_station', verbose_name = " ایستگاه والد ")
     quantity = models.IntegerField(default='1',verbose_name = "تعداد در یک محصول")
     relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
 
