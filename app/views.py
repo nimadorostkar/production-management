@@ -122,26 +122,15 @@ def search(request):
 #------------------------------------------------------------------------------
 @login_required()
 def products(request):
-    products= models.Product.objects.all()
+    products = models.Product.objects.all()
     return render(request, 'products.html', {'products': products})
 
 
 @login_required()
 def products_detail(request, id):
     product = get_object_or_404(models.Product, id=id)
-    nodes = models.Tree.objects.filter(relatedProduct=product)
-    orders = models.Order.objects.filter(product=product)
-    tree = models.Tree.objects.all()
-    all_orders = models.Order.objects.all()
-    processes= models.Process.objects.all()
-
-    return render(request, 'products_detail.html', {'product': product,
-    'nodes': nodes,
-    'orders':orders,
-    'tree':tree,
-    'processes':processes,
-    'all_orders':all_orders
-    })
+    context = {'product': product}
+    return render(request, 'products_detail.html', context)
 
 
 
