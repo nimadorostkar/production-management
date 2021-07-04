@@ -12,6 +12,9 @@ urlpatterns = [
     re_path(r'^.*\.html', views.pages, name='pages'),
     # The home page
     path('', views.index, name='home'),
+
+'''
+
     # other pages
     path('maps', views.maps, name='maps'),
     #path("maps", MapView.as_view()),
@@ -34,3 +37,4 @@ urlpatterns = [
     # mother stations
     path('mother_station', views.mother_station, name='mother_station'),
     path('mother_station_detail/<int:id>/',views.mother_station_detail,name='mother_station_detail'),
+'''

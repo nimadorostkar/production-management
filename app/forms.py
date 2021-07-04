@@ -32,56 +32,18 @@ class TicketForm(forms.ModelForm):
 		fields = ['to','title','descriptions']
 
 
-#------------------------------------------------------------------------------
-class MaterialForm(forms.ModelForm):
-	manager = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.Select(), error_messages={'required': 'این فیلد ضروری است'} )
-	#CHOICES = ( ('M','Material'), ('R','Repository'), ('T','Transfer'), ('S','Station'),('P','Product') )
-	#position = forms.Select(choices=CHOICES,attrs={'class': 'form-control'}),
-	class Meta:
-		model = Process
-		fields = ['name', 'description','inventory','min_inventory','manager','supplier']
-
-#------------------------------------------------------------------------------
-class StationForm(forms.ModelForm):
-	manager = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.Select(), error_messages={'required': 'این فیلد ضروری است'} )
-
-	class Meta:
-		model = Process
-		fields = ['name', 'description','manager', 'mother_station', 'pro_cap_day', 'percent_error' ,'inventory']
 
 
-#------------------------------------------------------------------------------
-class RepositoryForm(forms.ModelForm):
-	manager = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.Select(), error_messages={'required': 'این فیلد ضروری است'} )
-
-	class Meta:
-		model = Process
-		fields = ['name', 'description', 'manager']
 
 
-#------------------------------------------------------------------------------
-class TransferForm(forms.ModelForm):
-	manager = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.Select(), error_messages={'required': 'این فیلد ضروری است'} )
-
-	class Meta:
-		model = Process
-		fields = ['name', 'description', 'manager']
 
 
-#------------------------------------------------------------------------------
-class InventoryForm(forms.ModelForm):
-	class Meta:
-		model = Process
-		fields = ['inventory']
 
 
-#------------------------------------------------------------------------------
-class ConfirmationForm(forms.ModelForm):
-	order = forms.ModelChoiceField(queryset=Order.objects.filter(confirmed=False, completed=False), widget=forms.Select(), error_messages={'required': 'این فیلد ضروری است'} )
 
-	class Meta:
-		model = Confirmation
-		fields = ['order']
+
+
+
 
 
 

@@ -3,15 +3,11 @@ from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
-#from mapbox_location_field.models import LocationField
-#from django.contrib.gis.db.models import PointField
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 import uuid
 from django.template.defaultfilters import truncatechars
 from extensions.utils import jalali_converter
-
-
 
 
 
