@@ -156,6 +156,24 @@ def materials_detail(request, id):
 
 #------------------------------------------------------------------------------
 @login_required()
+def stations(request):
+    stations = models.Station.objects.all()
+    return render(request, 'stations.html', {'stations': stations})
+
+
+@login_required()
+def stations_detail(request, id):
+    station = get_object_or_404(models.Station, id=id)
+    context = {'station': station}
+    return render(request, 'stations_detail.html', context)
+
+
+
+
+
+
+#------------------------------------------------------------------------------
+@login_required()
 @transaction.atomic
 def ticket(request):
     send_tickets = models.Ticket.objects.filter(user=request.user).order_by('-created_on')
