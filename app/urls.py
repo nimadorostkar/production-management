@@ -34,9 +34,3 @@ urlpatterns = [
     # mother stations
     path('mother_station', views.mother_station, name='mother_station'),
     path('mother_station_detail/<int:id>/',views.mother_station_detail,name='mother_station_detail'),
-    # add material, station, repository, transfer and product
-    path('add_material', views.add_material, name='add_material'),
-    path('add_station', views.add_station, name='add_station'),
-    path('add_repository', views.add_repository, name='add_repository'),
-    path('add_transfer', views.add_transfer, name='add_transfer'),
-]
