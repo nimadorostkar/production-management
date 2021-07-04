@@ -1,0 +1,47 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} UI Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card" align="right" dir="rtl">
+      <div class="card-header">
+        <h4 class="card-title"> محصولات </h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  نام
+                </th>
+                <th>
+                  توضیحات
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for Supplier in supplier %}
+              <tr>
+                <td><a href="{{ Supplier.get_absolute_url }}"> {{ Supplier.name }} </a></td>
+                <td> {{ Supplier.description|slice:":50" }}... </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

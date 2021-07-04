@@ -1,0 +1,622 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load mptt_tags %}
+{% load bootstrap %}
+
+
+
+<div class="row">
+<div class="col-md-12">
+  <div class="card  card-plain" align="right" dir="rtl">
+    <div class="card-header">
+        <h3 align="center" class="card-title"> {{ process.name }} </h3>
+      <h5 class="card-category">
+        وضعیت:
+      </h5>
+      <h4 class="card-title">
+        {% if process.position == "M" %} قطعه <i class="tim-icons icon-app"></i>{% endif %}
+        {% if process.position == "R" %} انبار <i class="tim-icons icon-basket-simple"></i>{% endif %}
+        {% if process.position == "T" %} انتقال <i class="tim-icons icon-delivery-fast"></i>{% endif %}
+        {% if process.position == "S" %} ایستگاه <i class="tim-icons icon-settings"></i> {% endif %}
+        {% if process.position == "P" %}  محصول  <i class="tim-icons icon-bag-16"></i> {% endif %}
+      </h4>
+    </div>
+    <div class="card-body">
+      <div align="right" dir="rtl" class="card-description">
+        <p class="category"> {{ process.description|linebreaks }} </p>
+      </div>  <br>
+
+
+      {% if process.position == "M" %}
+           <div class="row">
+              <div class="col-md-4">
+                <div class="card card-user">
+                  <div class="card-header ">
+                    <h5 class="card-category d-inline"> موجودی </h5>
+
+                    {% if request.user == process.manager %}
+                        <button id="edit_inventory" type="button"> <i class="tim-icons icon-pencil"></i> </button>
+                         <!-- The inventory PopUp -->
+                          <div id="add_inventory" class="inventory">
+                            <!-- inventory content -->
+                            <div class="inventory-content">
+                              <form action="#" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                      <label for="exampleInputEmail1"> موجودی </label>
+                                      <input name="inventory" type="text" class="form-control" value="{{ process.inventory }}">
+                                    </div>
+                                  </div>
+                                </div>
+                               <div class="card-footer">
+                                 <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+                               </div>
+                             </form>
+                            </div>
+                          </div>
+                    {% endif %}
+
+                  </div>
+                    <h3 align='center' class="card-title"> <i class="tim-icons icon-chart-bar-32 text-primary"></i> {{ process.inventory }} </h3>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card card-user">
+                  <div class="card-header">
+                    <h5 class="card-category"> حداقل موجودی </h5>
+                    <h3 align='center' class="card-title"><i class="tim-icons icon-sound-wave text-primary"></i> {{ process.min_inventory }} </h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card card-user">
+                  <div class="card-header">
+                    <h5 class="card-category">  تامین کننده </h5>
+                    <a href="{{process.supplier.link}}">
+                      <h3 align='center' class="card-title"><i class="tim-icons icon-cart text-primary"></i> {{ process.supplier }} </h3>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="card card-user">
+                  <div class="card-header">
+                    <h5 class="card-category">  محصولات استفاده کننده از این قطعه  : </h5>
+                    <h4 align="center" class="card-title">
+                      {% for Tree in input %}
+                        {% for relatedProduct in Tree.relatedProduct.all %}  <i class="tim-icons icon-tag"></i>  {{ relatedProduct }}  {% endfor %}
+                      {% endfor %}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+      {% endif %}
+
+
+      {% if process.position == "S" %}
+        <table class="table">
+          <tbody>
+                <tr>
+                  <td>
+                    <p class="category"> ظرفیت تولید در روز :  {{ process.pro_cap_day }} </p>
+                  </td>
+                  <td>
+                    <p class="category">  درصد خطا :  {{ process.pro_cap_day }} </p>
+                  </td>
+                  <td>
+                    <p class="category"> موجودی تولید شده :  {{ process.inventory|default_if_none:"نامعلوم" }}  </p>
+                  </td>
+                  <td>
+                    <p class="category"> ایستگاه مادر :  <a href="{{ process.mother_station.get_absolute_url }}"> {{ process.mother_station|default_if_none:"ندارد" }}  </a> </p>
+                  </td>
+                </tr>
+          </tbody>
+        </table>
+          {% if request.user == process.manager %}
+            <form action="#" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"> موجودی </label>
+                    <input name="inventory" type="text" class="form-control" value="{{ process.inventory }}">
+                  </div>
+                </div>
+              </div>
+             <div class="card-footer">
+               <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+             </div>
+           </form>
+         {% endif %}
+
+      {% endif %}
+
+      {% if process.position == "R" %}  {% endif %}
+      {% if process.position == "T" %}  {% endif %}
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+<div class="row">
+
+   <div class="col-md-8">
+     <div class="card card-chart">
+       <div class="card-header">
+         <h5 class="card-category"> سفارشات </h5>
+         <h3 id="total_order" class="card-title"><i class="tim-icons icon-chart-pie-36 text-primary"></i>  </h3>
+       </div>
+       <div class="card-body">
+         <div class="chart-area">
+
+           <!-- HTML -->
+           <div id="chartdiv"></div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+   <div class="col-md-4">
+     <div class="card card-user">
+       <div class="card-header">
+         <h5 class="card-category"> مسئول ایستگاه </h5>
+         <h3 class="card-title"><i class="tim-icons icon-single-02 text-primary"></i> {{ process.manager }} </h3>
+       </div>
+       <div class="card-body">
+         <p class="card-text">
+           <div class="author">
+             <a href="javascript:void(0)">
+               <img class="avatar" src="{{ process.manager.profile.user_photo.url }}" >
+               <h5 class="title">
+                {{ process.manager.first_name }} {{ process.manager.last_name }}
+               </h5>
+             </a>
+           </div>
+         </p>
+         <div class="card-description">
+             {{ request.user.profile.email }}
+         </div>
+       </div>
+     </div>
+   </div>
+
+</div>
+
+
+
+<div class="row">
+
+  <div class="col-lg-12">
+    <div class="card card-chart">
+        <div class="card-header">
+          <h5 align="right" class="card-category"> توضیحات تکمیلی سفارشات </h5>
+        </div>
+
+        <div class="card-body">
+
+          <div style="background-color:#52a8fd59; margin-left:10%; margin-right:10%;" class="alert alert-info">
+            <h6  align="center" id="diff">  </h6>
+          </div>
+
+          <h5 align="center" class="card-category">
+            {% for Order in orders %}
+             {% for Tree in input %}
+               {% for relatedProduct in Tree.relatedProduct.all %}
+                  {% if relatedProduct == Order.product %}
+                    {% if Order.confirmed %}
+                     {% if Order.completed == False %}
+                          <div style="background-color:#52a8fd59; margin-left:10%; margin-right:10%;" class="alert alert-info">
+                            <h6 align="center">    تعداد {% widthratio Tree.quantity 1 Order.circulation %} برای سفارش محصول {{ relatedProduct }} با کد سفارش {{ Order.code }} </h6>
+                          </div>
+                     {% endif %}
+                    {% endif %}
+                  {% endif %}
+               {% endfor %}
+             {% endfor %}
+            {% endfor %}
+          </h5>
+          <br><br><hr>
+          <div class="card-header"> <h6 style="color:#9A9A9A;" align="right" class="card-category"> سفارشات تایید نشده </h6> </div>
+          <h5 align="center" class="card-category">
+            {% for Order in orders %}
+             {% for Tree in input %}
+               {% for relatedProduct in Tree.relatedProduct.all %}
+                  {% if relatedProduct == Order.product %}
+                     {% if Order.confirmed == False %}
+                        {% if Order.completed == False %}
+                          <div style="background-color:#ffeb003d; margin-left:10%; margin-right:10%;" class="alert alert-info">
+                            <h6 align="center">    تعداد {% widthratio Tree.quantity 1 Order.circulation %} برای سفارش محصول {{ relatedProduct }} با کد سفارش {{ Order.code }} </h6>
+                          </div>
+                        {% endif %}
+                    {% endif %}
+                  {% endif %}
+               {% endfor %}
+             {% endfor %}
+            {% endfor %}
+          </h5>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-lg-5 col-md-6">
+    <div class="card">
+      <div class="card-header ">
+        <div class="card-header">
+          <h3 class="card-title"><i class="tim-icons icon-bullet-list-67 text-primary"></i> تاریخچه تاییدات </h3>
+        </div>
+      </div>
+      <div class="card-body" align="right" dir="rtl">
+        <div class="table-full-width table-responsive">
+          {% for Confirmation in confirmation_history %}
+            سفارش {{ Confirmation.order }} توسط شما تایید شده    <hr>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div align="right" dir="rtl" class="col-lg-7 col-md-6">
+    <div class="card">
+      <div class="card-header ">
+        <div class="card-header">
+          <h3 class="card-title"><i class="tim-icons icon-bullet-list-67 text-primary"></i> تایید سفارشات تایید نشده </h3>
+        </div>
+      </div>
+      <div class="card-body" align="right" dir="rtl">
+        <div class="table-full-width table-responsive">
+          <form action="#" method="post" enctype="multipart/form-data">
+            <div class="row" align="center" dir="rtl">
+              <div class="col-md-6">
+                <div class="form-group">
+                  {% csrf_token %}
+                  {{ confirmation_form|bootstrap }}
+                </div>
+              </div>
+              <div class="col-md-6 px-md-1">
+                <div class="form-group">
+                  <div class="card-footer">
+                   <button type="submit" class="btn btn-fill btn-primary"> تایید </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+
+
+
+<div class="row">
+  <div class="col-lg-6 col-md-6">
+    <div class="card">
+      <div class="card-header ">
+        <div class="card-header">
+          <h3 class="card-title"><i class="tim-icons icon-bullet-list-67 text-primary"></i> فرآیندهای قبل </h3>
+        </div>
+      </div>
+      <div class="card-body" align="right" dir="rtl">
+        <div class="table-full-width table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  نام
+                </th>
+                <th>
+                   محصول مرتبط
+                </th>
+                <th class="text-center">
+                  تعداد
+                </th>
+                <th class="text-center">
+                  وضعیت
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for Tree in input %}
+               {% for node in Tree.get_children %}
+                  <tr>
+                    <td>
+                     <p class="title"> {{ node.name }} </p>
+                    </td>
+                    <td class="td-actions">
+                      {% for relatedProduct in node.relatedProduct.all %} {{ relatedProduct }} {% endfor %}
+                    </td>
+                    <td class="text-center">
+                      {{ node.quantity }}
+                    </td>
+                    <td class="text-center">
+                      <div class="photo">
+                      {% if node.name.position == "M" %}
+                      <img src="{% static 'assets/img/m.png' %}" class="img-responsive" />
+                      {% endif %}
+                      {% if node.name.position == "R" %}
+                      <img src="{% static 'assets/img/r.png' %}" class="img-responsive" />
+                      {% endif %}
+                      {% if node.name.position == "T" %}
+                      <img src="{% static 'assets/img/t.png' %}" class="img-responsive" />
+                      {% endif %}
+                      {% if node.name.position == "S" %}
+                      <img src="{% static 'assets/img/s.png' %}" class="img-responsive" />
+                      {% endif %}
+                      {% if node.name.position == "P" %}
+                      <img src="{% static 'assets/img/p.png' %}" class="img-responsive" />
+                      {% endif %}
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+               {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-6">
+    <div class="card">
+      <div class="card-header ">
+        <div class="card-header">
+          <h3 class="card-title"><i class="tim-icons icon-bullet-list-67 text-primary"></i>  فرآیندهای بعد </h3>
+        </div>
+      </div>
+      <div class="card-body" align="right" dir="rtl">
+        <div class="table-full-width table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  نام
+                </th>
+                <th>
+                   محصول مرتبط
+                </th>
+                <th class="text-center">
+                  تعداد
+                </th>
+                <th class="text-center">
+                  وضعیت
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for Tree in input %}
+                  <tr>
+                    <td>
+                     <p class="title"> {{ Tree.parent }} </p>
+                    </td>
+                    <td class="td-actions">
+                      {% for relatedProduct in Tree.relatedProduct.all %} {{ relatedProduct }} {% endfor %}
+                    </td>
+                    <td class="text-center">
+                      {{ Tree.quantity }}
+                    </td>
+                    <td class="text-center">
+                      <div class="photo">
+                      {% if Tree.name.position == "M" %}
+                      <img src="{% static 'assets/img/m.png' %}" class="img-responsive" />
+                      {% endif %}
+                      {% if Tree.name.position == "R" %}
+                      <img src="{% static 'assets/img/r.png' %}" class="img-responsive" />
+                      {% endif %}
+                      {% if Tree.name.position == "T" %}
+                      <img src="{% static 'assets/img/t.png' %}" class="img-responsive" />
+                      {% endif %}
+                      {% if Tree.name.position == "S" %}
+                      <img src="{% static 'assets/img/s.png' %}" class="img-responsive" />
+                      {% endif %}
+                      {% if Tree.name.position == "P" %}
+                      <img src="{% static 'assets/img/p.png' %}" class="img-responsive" />
+                      {% endif %}
+                      </div>
+                    </td>
+                  </tr>
+               {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-plain">
+      <div class="card-header">
+         process location
+      </div>
+
+      {% load mapbox_location_field_tags %}
+      {% location_field_includes %}
+      {% include_jquery %}
+
+        <div class="col-12  col-xl-12 pr-0 pr-md-4 ">
+           {{  Process.location }}
+          <div class="border" id="map" width="100%" style='height:400px'></div>
+        </div>
+
+            <script>
+                mapboxgl.accessToken = 'pk.eyJ1IjoiZG9yb3N0a2FyIiwiYSI6ImNrbmVjdzg3djFkb3EycG8wZW5sdjNld3YifQ.AeDSXrxKTXAxPdIEESuPqA';
+                var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [17.69439, 51.42151],
+                zoom: 9,
+                // bearing: 180
+                });
+            </script>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+<script>
+
+   // Order and Chart code
+
+   var input_data = [
+      {% for Order in orders %}
+       {% for Tree in input %}
+         {% for relatedProduct in Tree.relatedProduct.all %}
+            {% if relatedProduct == Order.product %}
+             {% if Order.confirmed %}
+              {% if Order.completed == False %}
+                { "a": "{{ relatedProduct }} (code:{{ Order.code }})", "b": {% widthratio Tree.quantity 1 Order.circulation %} },
+              {% endif %}
+             {% endif %}
+            {% endif %}
+         {% endfor %}
+       {% endfor %}
+      {% endfor %}
+    ];
+
+
+  am4core.ready(function() {
+  // Themes begin
+  am4core.useTheme(am4themes_animated);
+  // Themes end
+  // Create chart instance
+  var chart = am4core.create("chartdiv", am4charts.PieChart);
+
+  // Add data
+  chart.data = input_data;
+
+  // Add and configure Series
+  var pieSeries = chart.series.push(new am4charts.PieSeries());
+  pieSeries.dataFields.value = "b";
+  pieSeries.dataFields.category = "a";
+  pieSeries.slices.template.stroke = am4core.color("#fff");
+  pieSeries.slices.template.strokeWidth = 2;
+  pieSeries.slices.template.strokeOpacity = 1;
+
+  // This creates initial animation
+  pieSeries.hiddenState.properties.opacity = 1;
+  pieSeries.hiddenState.properties.endAngle = -90;
+  pieSeries.hiddenState.properties.startAngle = -90;
+
+  }); // end am4core.ready()
+
+
+
+//- ------------------------------------------------------------------------- -
+
+  // extra order detail...
+
+  var inventory = {{ process.inventory }} ;
+  var data = [
+     {% for Order in orders %}
+      {% for Tree in input %}
+        {% for relatedProduct in Tree.relatedProduct.all %}
+           {% if relatedProduct == Order.product %}
+            {% if Order.confirmed %}
+              {% if Order.completed == False %}
+                {% widthratio Tree.quantity 1 Order.circulation %},
+              {% endif %}
+            {% endif %}
+           {% endif %}
+        {% endfor %}
+      {% endfor %}
+     {% endfor %}
+   ];
+  var total = 0;
+  for(var i = 0; i < data.length; i++) { total += data[i];}
+  document.getElementById("total_order").innerHTML = total;
+
+
+
+
+
+
+  var diff=inventory-total;
+  if ( diff<0 ){
+    diff = diff* -1;
+    document.getElementById("diff").innerHTML = " تعداد " + diff + " شفارش بیشتر از موجودی است ";
+    document.getElementById("diff").style.color = "red";
+  }
+  else{
+    document.getElementById("diff").innerHTML = " موجودی " + diff + " بیشتر از سفارشات است ";
+    document.getElementById("diff").style.color = "green";
+  }
+
+
+//- ------------------------------------------------------------------------- -
+
+    // alert min_inventory
+      var total_inventory = {{ process.inventory }} ;
+      var min_inventory = {{ process.min_inventory }} ;
+      if (total_inventory < min_inventory) { alert(" مقدار موجودی از حداقل کمتر است! "); }
+
+
+//- ------------------------------------------------------------------------- -
+
+    // js script for edit inventory - popup
+      var inventory = document.getElementById("add_inventory");
+      var btn = document.getElementById("edit_inventory");
+      var span = document.getElementsByClassName("close")[0];
+      btn.onclick = function() {
+        inventory.style.display = "block";
+      }
+      span.onclick = function() {
+        inventory.style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target == inventory) {
+          inventory.style.display = "none";
+        }
+      }
+
+
+//- ------------------------------------------------------------------------- -
+
+
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+    });
+
+
+</script>
+
+{% endblock javascripts %}

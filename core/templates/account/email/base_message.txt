@@ -1,0 +1,7 @@
+{% load i18n %}{% autoescape off %}{% blocktrans %}Hello from Crop Team!{% endblocktrans %}
+
+{% block content %}{% endblock %}
+
+{% blocktrans %}Thank you for using Crop!
+{{ site_domain }}{% endblocktrans %}
+{% endautoescape %}

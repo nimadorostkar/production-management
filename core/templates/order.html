@@ -1,0 +1,204 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} manufactures {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card" align="right" dir="rtl">
+      <div class="card-header">
+        <h4 class="card-title"> سفارشات برحسب محصولات </h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  نام
+                </th>
+                <th>
+                  تیراژ
+                </th>
+                <th>
+                  زمان شروع
+                </th>
+                <th>
+                  توضیحات
+                </th>
+                <th>
+                  کد
+                </th>
+                <th class="text-center">
+                  تایید شده
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for Order in orders %}
+            {% if Order.completed == False %}
+              <tr>
+                <td> <a href="{{ Order.get_absolute_url }}"> {{ Order.product }} </a> </td>
+                <td> {{ Order.circulation }} </td>
+                <td> {{ Order.j_created_on }} </td>
+                <td> {{ Order.description|slice:":60" }}... </td>
+                <td> {{ Order.code }} </td>
+                <td class="text-center">
+                  {% if Order.confirmed %}
+                    <i style="color:green;" class="tim-icons icon-check-2"></i>
+                  {% else %}
+                    <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card" align="right" dir="rtl">
+      <div class="card-header">
+        <h4 class="card-title"> سفارشات به پایان رسیده </h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  نام
+                </th>
+                <th>
+                  تیراژ
+                </th>
+                <th>
+                  زمان شروع
+                </th>
+                <th>
+                  توضیحات
+                </th>
+                <th class="text-center">
+                  کد
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for Order in orders %}
+             {% if Order.completed %}
+                <tr>
+                  <td> <a href="{{ Order.get_absolute_url }}"> {{ Order.product }} </a> </td>
+                  <td> {{ Order.circulation }} </td>
+                  <td> {{ Order.j_created_on }} </td>
+                  <td> {{ Order.description|slice:":70" }}... </td>
+                  <td class="text-center"> {{ Order.code }} </td>
+                </tr>
+             {% endif %}
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card" align="right" dir="rtl">
+      <div class="card-header">
+        <h4 class="card-title"> فرایند های درگیر </h4>
+      </div>
+      <div class="card-body">
+
+        <div align="center" id="process_orders"> </div>
+
+
+          <script>
+            var array = [
+              {% for Order in orders %}
+               {% for Tree in tree %}
+                {% for relatedProduct in Tree.relatedProduct.all %}
+                  {% if relatedProduct == Order.product %}
+                   {% if Order.confirmed %}
+                     {% if Order.completed == False %}
+                       { "name":"{{Tree.name}}", "tot":{% widthratio Tree.quantity 1 Order.circulation %} },
+                     {% endif %}
+                   {% endif %}
+                  {% endif %}
+                {% endfor %}
+               {% endfor %}
+              {% endfor %}
+            ];
+
+            var orders = array.reduce(function (agg, obj) {
+              var objForName = agg.filter(function (nameObj) { return nameObj.name === obj.name})[0]
+
+              if (objForName) {
+                objForName.total += obj.tot;
+              } else {
+                agg.push({
+                  name: obj.name,
+                  total: obj.tot
+                })
+              }
+              return agg;
+            }, [])
+
+            console.log(orders)
+
+            var process = document.getElementById("process_orders");
+            for(var i=0; i < orders.length; i++){
+              process.innerHTML += "<h6>"+orders[i].name+"  "+orders[i].total+"</h6><br>";
+            }
+
+          </script>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

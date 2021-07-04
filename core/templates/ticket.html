@@ -1,0 +1,83 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} ticket {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load bootstrap %}
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card"  align="right" dir="rtl">
+      <div class="card-header">
+        <h5 class="title"> ارسال تیکت </h5>
+      </div>
+      <div class="card-body">
+         <form action="/ticket" method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+           {{ ticket_form|bootstrap }}
+    <!--      <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> ارسال به </label>
+                <input list="to" name="to" type="text" class="form-control" placeholder="ارسال به">
+                <datalist id="to">
+                  {% for User in users %}
+                    <option value= "{{ User.username }}" >
+                  {% endfor %}
+                </datalist>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> عنوان </label>
+                <input name="title" type="text" class="form-control" placeholder="عنوان">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label> متن پیام </label>
+                <input name="descriptions" type="text" class="form-control" placeholder="متن پیام">
+              </div>
+            </div>
+          </div>  -->
+          <div class="card-footer">
+            <button type="submit" class="btn btn-fill btn-primary"> ارسال </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<h2>  تیکت ها  </h2>
+
+   {% for Ticket in ticket %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-profile">
+                <div class="card-body">
+                    <h6 class="card-category text-gray">{{ Ticket.j_created_on }}</h6>
+                    <h3 class="card-title" align="right" dir="rtl" > {{ Ticket.title }} </h3>
+                    <p align="right" dir="rtl" > {{ Ticket.descriptions }} </p>
+                    <hr>
+                    <p class="card-category text-gray" align="right" dir="rtl" > ارسال شده از طرف {{ Ticket.user }} به {{ Ticket.to }}  </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

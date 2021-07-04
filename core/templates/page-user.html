@@ -1,0 +1,137 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Page User {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card"  align="right" dir="rtl">
+      <div class="card-header">
+        <h5 class="title"> پروفایل کاربری </h5>
+      </div>
+      <div class="card-body">
+         <form method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+          <div class="row">
+            <div class="col-md-3 pr-md-1">
+              <div class="form-group">
+                <label> شناسه کاربری </label>
+                <input type="text" class="form-control" disabled="" value="{{ request.user.id }}">
+              </div>
+            </div>
+            <div class="col-md-4 px-md-1">
+              <div class="form-group">
+                <label> نام کاربری </label>
+                <input name="username" type="text" class="form-control" value="{{ request.user.username }}">
+              </div>
+            </div>
+            <div class="col-md-5 pl-md-1">
+              <div class="form-group">
+                <label for="exampleInputEmail1"> آدرس ایمیل </label>
+                <input name="email" type="email" class="form-control" value="{{ request.user.email }}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pr-md-1">
+              <div class="form-group">
+                <label> نام </label>
+                <input name="first_name" type="text" class="form-control" value="{{ request.user.first_name }}">
+              </div>
+            </div>
+            <div class="col-md-6 pl-md-1">
+              <div class="form-group">
+                <label> نام خانوادگی </label>
+                <input name="last_name" type="text" class="form-control" value="{{ request.user.last_name }}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label> آدرس </label>
+                <input name="address" type="text" class="form-control" placeholder="Address" value="{{ request.user.profile.address }}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pr-md-1">
+              <div class="form-group">
+                <label> شماره تماس </label>
+                <input name="phone" type="text" class="form-control" placeholder="City" value="{{ request.user.profile.phone }}">
+              </div>
+            </div>
+            <div class="col-md-6 px-md-1">
+                <label> تصویر کاربری </label>
+                <input name="user_photo" type="file" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pr-md-1">
+              <div class="form-group">
+                <label> رمز عبور </label>
+                <input name="password1" type="password" class="form-control" value="{{ request.user.password1 }}">
+              </div>
+            </div>
+            <div class="col-md-6 px-md-1">
+              <div class="form-group">
+                <label> تکرار رمز عبور </label>
+                <input name="password2" type="password" class="form-control" value="{{ request.user.password2 }}">
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-user">
+      <div class="card-body">
+        <p class="card-text">
+          <div class="author">
+            <div class="block block-one"></div>
+            <div class="block block-two"></div>
+            <div class="block block-three"></div>
+            <div class="block block-four"></div>
+            <a href="javascript:void(0)">
+              <img class="avatar" src="{{ request.user.profile.user_photo.url }}" >
+              <h5 class="title">
+                {{ request.user.username }}
+              </h5>
+            </a>
+            <br>
+            <h6 class="title">
+                <i class="tim-icons icon-single-02"></i><hr>
+               {{ request.user.first_name }} {{ request.user.last_name }}
+            </h6><br>
+            <i class="tim-icons icon-mobile"></i><hr>
+            <p class="description"> {{ request.user.profile.phone }} </p><br>
+            <i class="tim-icons icon-email-85"></i><hr>
+            <p class="description"> {{ request.user.email }} </p><br>
+          </div>
+        </p>
+        <div class="card-description">
+            {{ request.user.profile.email }}
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="button-container">
+          <a href="https://www.ksegroup.co">ksegroup.co</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,108 @@
+
+
+    <div class="sidebar" data="blue">
+      <div class="sidebar-wrapper">
+
+        <div class="logo">
+          <a target="_blank" href="https://atrotech.ir" class="simple-text logo-mini">
+             توانکار
+          </a>
+          <a target="_blank" href="https://atrotech.ir" class="simple-text logo-normal">
+            Tavankar
+          </a>
+        </div>
+
+        <ul class="nav">
+        {% if user.is_authenticated %}
+          <li class="{% if 'index' in segment %} active {% endif %}">
+            <a href="/">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p> داشبورد </p>
+            </a>
+          </li>
+          <li class="{% if 'order' in segment %} active {% endif %}">
+            <a href="{% url 'app:order' %}">
+              <i class="tim-icons icon-atom"></i>
+              <p> سفارش  </p>
+            </a>
+          </li>
+          <li class="{% if 'maps' in segment %} active {% endif %}">
+            <a href="{% url 'app:maps' %}">
+              <i class="tim-icons icon-square-pin"></i>
+              <p> نقشه </p>
+            </a>
+          </li>
+          <li class="{% if 'app:products' in segment %} active {% endif %}">
+            <a href="{% url 'app:products' %}">
+              <i class="tim-icons icon-app"></i>
+              <p> محصول </p>
+            </a>
+          </li>
+          <li class="{% if 'app:processes' in segment %} active {% endif %}">
+            <a href="{% url 'app:processes' %}">
+              <i class="tim-icons icon-components"></i>
+              <p> فرایندها </p>
+            </a>
+          </li>
+          <li class="{% if 'notifications' in segment %} active {% endif %}">
+            <a href="/ui-notifications.html">
+              <i class="tim-icons icon-bell-55"></i>
+              <p> notifications </p>
+            </a>
+          </li>
+          <li class="{% if 'notices' in segment %} active {% endif %}">
+            <a href="{% url 'app:notices' %}">
+              <i class="tim-icons icon-bell-55"></i>
+              <p> اعلانات </p>
+            </a>
+          </li>
+          <li class="{% if 'page-user' in segment %} active {% endif %}">
+            <a href="{% url 'app:profile' %}">
+              <i class="tim-icons icon-single-02"></i>
+              <p> پروفایل </p>
+            </a>
+          </li>
+          <li class="{% if 'ticket' in segment %} active {% endif %}">
+            <a href="{% url 'app:ticket' %}">
+              <i class="tim-icons icon-email-85"></i>
+              <p> تیکت </p>
+            </a>
+          </li>
+          <li class="{% if 'supplier' in segment %} active {% endif %}">
+            <a href="{% url 'app:supplier' %}">
+              <i class="tim-icons icon-cart"></i>
+              <p> تامین کننده </p>
+            </a>
+          </li>
+          <li class="{% if 'supplier' in segment %} active {% endif %}">
+            <a href="{% url 'app:mother_station' %}">
+              <i class="tim-icons icon-bullet-list-67"></i>
+              <p> ایستگاه های مادر </p>
+            </a>
+          </li>
+          <li class="{% if 'tables' in segment %} active {% endif %}">
+            <a href="/ui-tables.html">
+              <i class="tim-icons icon-single-copy-04"></i>
+              <p> لیست </p>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'account_logout' %}" >
+              <i class="tim-icons icon-user-run"></i>
+              <p> خروج </p>
+            </a>
+          </li>
+          {% else %}
+          <li class="">
+            <a target="_blank"
+               href="https://atrotech.ir">
+              <i class="tim-icons icon-spaceship"></i>
+              <p>Atro PRO Version</p>
+            </a>
+          </li>
+          {% endif %}
+
+        </ul>
+
+      </div>
+    </div>

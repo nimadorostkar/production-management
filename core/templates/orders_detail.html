@@ -1,0 +1,206 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} manufactures detail  {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load mptt_tags %}
+
+
+<div class="col-md-12">
+  <div class="card  card-plain" align="right" dir="rtl">
+    <div class="card-header">
+      <h4 class="card-title"> تولید {{ order.product }} <small> ({{ order.code }}) </small> </h4>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table tablesorter " id="">
+          <thead class=" text-primary">
+            <tr>
+              <th>
+                نام
+              </th>
+              <th>
+                تیراژ
+              </th>
+              <th>
+                زمان شروع
+              </th>
+              <th>
+                توضیحات
+              </th>
+              <th>
+                کد
+              </th>
+              <th class="text-center">
+               تایید شده
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td> <a href="{{ Order.get_absolute_url }}"> {{ order.product }} </a> </td>
+              <td> {{ order.circulation }} </td>
+              <td> {{ order.j_created_on }} </td>
+              <td> {{ order.description|slice:":60" }}... </td>
+              <td> {{ order.code }} </td>
+              <td class="text-center">
+                {% if order.confirmed %}
+                  <i style="color:green;" class="tim-icons icon-check-2"></i>
+                {% else %}
+                  <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+                {% endif %}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+<div class="col-md-12">
+  <div class="card card-user" align="right" dir="rtl">
+    <div class="card-body">
+      <p class="card-text"> فرایند های درگیر این سفارش </p>
+      <div class="card-description">
+
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  نام
+                </th>
+                <th>
+                  مقدار
+                </th>
+                <th>
+                  مسئول
+                </th>
+                <th>
+                  موجودی فرآیند
+                </th>
+                <th class="text-center">
+                  ایستگاه
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% recursetree nodes %}
+              <tr>
+                <td><a href="{{ node.name.get_absolute_url }}"> {{ node.name }} </a></td>
+                <td> {% widthratio node.quantity 1 order.circulation %} </td>
+                <td> {{ node.name.manager }} </td>
+                <td> {{ node.name.inventory }} </td>
+                <td class="text-center">
+                  <div class="photo">
+                  {% if node.name.position == "M" %}
+                  <img src="{% static 'assets/img/m.png' %}" class="img-responsive" />
+                  {% endif %}
+                  {% if node.name.position == "R" %}
+                  <img src="{% static 'assets/img/r.png' %}" class="img-responsive" />
+                  {% endif %}
+                  {% if node.name.position == "T" %}
+                  <img src="{% static 'assets/img/t.png' %}" class="img-responsive" />
+                  {% endif %}
+                  {% if node.name.position == "S" %}
+                  <img src="{% static 'assets/img/s.png' %}" class="img-responsive" />
+                  {% endif %}
+                  {% if node.name.position == "P" %}
+                  <img src="{% static 'assets/img/p.png' %}" class="img-responsive" />
+                  {% endif %}
+                  </div>
+                </td>
+              </tr>
+              {% if not node.is_leaf_node %}
+               {{ children }}
+              {% endif %}
+            {% endrecursetree %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+<div class="row">
+<div class="col-md-12">
+  <div class="card card-user" align="right" dir="rtl">
+    <div class="card-body">
+      <p class="card-text"> فرایند های تایید شده برای سفارش {{ order }} </p>
+      <div class="card-description">
+
+
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  نام
+                </th>
+                <th>
+                  مسئول
+                </th>
+                <th class="text-center">
+                  تایید شده
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for Confirmation in confirmation %}
+              <tr>
+                <td> <a href="{{ Confirmation.process.get_absolute_url }}"> {{ Confirmation.process }} </a> </td>
+                <td> {{ Confirmation.process.manager }} </td>
+                <td class="text-center">
+                  {% if Confirmation.confirmed %}
+                    <i style="color:green;" class="tim-icons icon-check-2"></i>
+                  {% else %}
+                    <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script>
+
+
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+    });
+
+
+
+  </script>
+
+{% endblock javascripts %}

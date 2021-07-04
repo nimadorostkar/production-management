@@ -1,0 +1,48 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Authentication forms">
+  <meta name="author" content="Arasari Studio">
+  <title>Logout | tavankar </title>
+  <link href="{% static 'account/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'account/css/common.css' %}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&amp;display=swap" rel="stylesheet">
+  <link href="{% static 'account/css/theme-03.css' %}" rel="stylesheet">
+</head>
+<body>
+  <div class="forny-container">
+    <div class="forny-inner">
+      <div class="forny-form">
+        <div class="mb-8 text-center forny-logo">
+          <img width=40% src="{% static 'assets/img/logo.png' %}">
+          <!-- <h3>Logo Placeholder</h3> -->
+        </div>
+        <div class="text-center">
+          <h4> خروج از حساب کاربری </h4>
+          <p class="mb-10"> مطمئن هستید ، می خواهید از سیستم خارج شوید؟ </p>
+        </div>
+        <form method="POST" action="{% url 'account_logout' %}">
+          {% csrf_token %}
+          <div>
+            <button class="primaryAction btn btn-primary btn-block" type="submit"> بله ، از سیستم خارج شوید </button>
+          </div>
+        </form>
+        <div class="line mt-6 mb-6 text-center">
+          <span>یا </span>
+        </div>
+        <div class="text-center">
+          <p> <a href="javascript:history.back()"> بازگشت </a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'account/js/jquery.min.js' %}"></script>
+  <script src="{% static 'account/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'account/js/main.js' %}"></script>
+  <script src="{% static 'account/js/demo.js' %}"></script>
+</body>
+</html>

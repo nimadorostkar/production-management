@@ -1,0 +1,31 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} ticket {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load bootstrap %}
+
+
+<br> <h2 align="center" dir="rtl">  اعلانات  </h2> <hr><br>
+
+   {% for Notice in notices %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-profile">
+                <div class="card-body">
+                    <h6 class="card-category text-gray">{{ Notice.j_created_on }}</h6>
+                    <h3 style="color:#2891f7e3;" class="card-title" align="right" dir="rtl" > {{ Notice.title }} </h3> <br>
+                    <h6 align="right" dir="rtl" > {{ Notice.content|linebreaks }} </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

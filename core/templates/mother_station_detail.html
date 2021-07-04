@@ -1,0 +1,143 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load mptt_tags %}
+{% load bootstrap %}
+
+
+
+<div class="row">
+
+    <div class="col-md-12">
+      <div class="card  card-plain" align="right" dir="rtl">
+        <div class="card-header">
+            <h3 align="center" class="card-title"> {{ mother_stations.name }} </h3>
+        </div>
+        <div class="card-body">
+          <div align="right" dir="rtl" class="card-description">
+            <p class="category"> {{ mother_stations.description|linebreaks }} </p> <br>
+
+            <table class="table">
+              <tbody>
+                    <tr>
+                      <td>
+                        <p class="category"> مجموع ظرفیت تولید در روز:  <span id="total_pro_cap_day" ></span> </p>
+                      </td>
+                    </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div dir="rtl" align="right"  class="row">
+
+  <div class="col-lg-12">
+    <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category"> ایستگاه های زیرمجموعه {{mother_stations.name}} </h5>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table tablesorter " id="">
+              <thead class=" text-primary">
+                <tr>
+                  <th>
+                    نام
+                  </th>
+                  <th>
+                    توضیحات
+                  </th>
+                  <th class="text-center">
+                    تصویر
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for Process in processes %}
+                <tr>
+                  <td><a href="{{ Process.get_absolute_url }}"> {{ Process.name }} </a></td>
+                  <td> {{ Process.description|slice:":50" }}... </td>
+                  <td class="text-center">
+                    <div class="photo">
+                    {% if Process.position == "M" %}
+                    <img src="{% static 'assets/img/m.png' %}" class="img-responsive" />
+                    {% endif %}
+                    {% if Process.position == "R" %}
+                    <img src="{% static 'assets/img/r.png' %}" class="img-responsive" />
+                    {% endif %}
+                    {% if Process.position == "T" %}
+                    <img src="{% static 'assets/img/t.png' %}" class="img-responsive" />
+                    {% endif %}
+                    {% if Process.position == "S" %}
+                    <img src="{% static 'assets/img/s.png' %}" class="img-responsive" />
+                    {% endif %}
+                    {% if Process.position == "P" %}
+                    <img src="{% static 'assets/img/p.png' %}" class="img-responsive" />
+                    {% endif %}
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+<script>
+
+
+
+    // total production capacity per day
+    var pro_cap_day = [ {% for Process in processes %} {{Process.pro_cap_day}}, {% endfor %} ];
+    var total_pro_cap_day = 0;
+    for(var i = 0; i < pro_cap_day.length; i++) { total_pro_cap_day += pro_cap_day[i];}
+    document.getElementById("total_pro_cap_day").innerHTML = total_pro_cap_day;
+
+
+
+
+
+
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+    });
+
+
+</script>
+
+{% endblock javascripts %}

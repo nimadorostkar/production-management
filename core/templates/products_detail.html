@@ -1,0 +1,414 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load mptt_tags %}
+
+<script>
+
+      var all_process_array = [
+        {% for Order in all_orders %}
+         {% for Tree in tree %}
+          {% for relatedProduct in Tree.relatedProduct.all %}
+            {% if relatedProduct == Order.product %}
+             {% if Order.confirmed %}
+               {% if Order.completed == False %}
+                  { "name":"{{Tree.name}}", "tot":{% widthratio Tree.quantity 1 Order.circulation %} },
+               {% endif %}
+             {% endif %}
+            {% endif %}
+          {% endfor %}
+         {% endfor %}
+        {% endfor %}
+      ];
+
+      var all_process_orders = all_process_array.reduce(function (agg, obj) {
+        var objForName = agg.filter(function (nameObj) { return nameObj.name === obj.name})[0]
+
+        if (objForName) {
+          objForName.total += obj.tot;
+        } else {
+          agg.push({
+            name: obj.name,
+            total: obj.tot
+          })
+        }
+        return agg;
+      }, [])
+
+
+</script>
+
+
+
+
+
+
+
+<div class="col-md-12">
+  <div class="card  card-plain" align="right" dir="rtl">
+    <div class="card-header">
+      <h4 class="card-title" dir="rtl" align="center"> محصول {{ product.name }} <small> ({{ product.code }}) </small> </h4> <br>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="card card-user">
+      <div class="card-body">
+        <p class="card-text">
+          <div class="author">
+            <div class="block block-one"></div>
+            <div class="block block-two"></div>
+            <div class="block block-three"></div>
+            <div class="block block-four"></div>
+            <img width="20%" src="{{ product.image.url }}">
+          </div>
+        </p>
+        <div align="right" dir="rtl" class="card-description">
+          <p class="category"> {{ product.description|linebreaks }} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="card card-user">
+      <div class="card-header">
+        <h4 class="card-title" dir="rtl" align="center"> سفارشات بحرانی </h4> <hr><br>
+      </div>
+       <div class="card-body">
+         <div class="category" dir="rtl" align="right" id="extra_orders">  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-chart">
+
+          <div class="row">
+            <div class="col-lg-8 ml-auto mr-auto">
+              <div class="row">
+                <div class="col-md-12">
+                  <input id="input" class="btn btn-primary btn-block" type="range" min="1" max="100" step="1" value="20">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div id="sampleDiv" style="zoom:40%;" >
+              <div class="pg-orgchart">
+                <div class="org-chart">
+                    <ul>
+                      {% recursetree nodes %}
+                          <li>
+                            <div id="{{ node.name }}div" class="user">
+                              {% if node.name.position == "M" %}
+                              <img src="{% static 'assets/img/m.png' %}" class="img-responsive" />
+                              {% endif %}
+                              {% if node.name.position == "R" %}
+                              <img src="{% static 'assets/img/r.png' %}" class="img-responsive" />
+                              {% endif %}
+                              {% if node.name.position == "T" %}
+                              <img src="{% static 'assets/img/t.png' %}" class="img-responsive" />
+                              {% endif %}
+                              {% if node.name.position == "S" %}
+                              <img src="{% static 'assets/img/s.png' %}" class="img-responsive" />
+                              {% endif %}
+                              {% if node.name.position == "P" %}
+                              <img src="{% static 'assets/img/p.png' %}" class="img-responsive" />
+                              {% endif %}
+                              <div class="name"> <a class="manager" href="{{ node.name.get_absolute_url }}"> {{ node.name }} </a> </div>
+                              <div> <p>  موجودی :  {{ node.name.inventory }} </p></div>
+                              <div>
+                                <p id="{{ node.name }}"> </p>
+
+                                    <script>
+                                      var node_name = "{{ node.name }}";
+                                      var node_inventory = "{{ node.name.inventory }}";
+                                      for(var i=0; i < all_process_orders.length; i++)
+                                      {
+                                        if ( all_process_orders[i].name == node_name )
+                                        {
+                                          document.getElementById("{{ node.name }}").innerHTML = " سفارشات :  "+all_process_orders[i].total;
+                                          //document.getElementById("{{ node.name }}div").style.background = "#e9fdd8";
+                                          if(all_process_orders[i].total > node_inventory){ document.getElementById("{{ node.name }}div").style.background = "#ff1b1b26"; }
+                                          else if(node_inventory-all_process_orders[i].total < 25){ document.getElementById("{{ node.name }}div").style.background = "#fffa1b26"; }
+                                        }
+                                      }
+                                    </script>
+
+                               </div>
+                            </div>
+                             {% if not node.is_leaf_node %}
+                              <ul> {{ children }} </ul>
+                             {% endif %}
+                          </li>
+                      {% endrecursetree %}
+                    </ul>
+                </div>
+             </div>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" align="right" dir="rtl">
+          <div class="card-header">
+            <h4 class="card-title"> سفارشات باز {{ product.name }} </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                  <tr>
+                    <th>
+                      نام
+                    </th>
+                    <th>
+                      تیراژ
+                    </th>
+                    <th>
+                      زمان شروع
+                    </th>
+                    <th>
+                      توضیحات
+                    </th>
+                    <th>
+                      کد
+                    </th>
+                    <th class="text-center">
+                      تایید شده
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for Order in orders %}
+                {% if Order.completed == False %}
+                  <tr>
+                    <td> <a href="{{ Order.get_absolute_url }}"> {{ Order.product }} </a> </td>
+                    <td> {{ Order.circulation }} </td>
+                    <td> {{ Order.j_created_on }} </td>
+                    <td> {{ Order.description|slice:":60" }}... </td>
+                    <td> {{ Order.code }} </td>
+                    <td class="text-center">
+                      {% if Order.confirmed %}
+                        <i style="color:green;" class="tim-icons icon-check-2"></i>
+                      {% else %}
+                        <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" align="right" dir="rtl">
+          <div class="card-header">
+            <h4 class="card-title"> فرایند های مرتبط با {{ product.name }} </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                  <tr>
+                    <th>
+                      نام
+                    </th>
+                    <th>
+                      مسئول
+                    </th>
+                    <th>
+                      مشخصات
+                    </th>
+                    <th>
+                      موجودی
+                    </th>
+                    <th class="text-center">
+                      ایستگاه
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                   {% recursetree nodes %}
+                      <tr>
+                        <td><a href="{{ node.name.get_absolute_url }}"> {{ node.name.name }} </a></td>
+                        <td> {{ node.name.manager }} </td>
+                        <td> {{ node.name.description|slice:":60" }}... </td>
+                        <td> {{ node.name.inventory }} </td>
+                        <td class="text-center">
+                          <div class="photo">
+                          {% if node.name.position == "M" %}
+                          <img src="{% static 'assets/img/m.png' %}" class="img-responsive" />
+                          {% endif %}
+                          {% if node.name.position == "R" %}
+                          <img src="{% static 'assets/img/r.png' %}" class="img-responsive" />
+                          {% endif %}
+                          {% if node.name.position == "T" %}
+                          <img src="{% static 'assets/img/t.png' %}" class="img-responsive" />
+                          {% endif %}
+                          {% if node.name.position == "S" %}
+                          <img src="{% static 'assets/img/s.png' %}" class="img-responsive" />
+                          {% endif %}
+                          {% if node.name.position == "P" %}
+                          <img src="{% static 'assets/img/p.png' %}" class="img-responsive" />
+                          {% endif %}
+                          </div>
+                        </td>
+                      </tr>
+                      {% if not node.is_leaf_node %}
+                         {{ children }}
+                      {% endif %}
+                  {% endrecursetree %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script>
+
+
+
+    // zoom tree with input renge
+
+    var p = document.getElementById("input"),
+        res = document.getElementById("sampleDiv");
+
+    p.addEventListener("input", function() {
+        res.style.zoom = p.value+'%';
+    }, false);
+
+
+//----------------------------------------------------------------------------
+
+
+
+
+    // compare processes order with inventory in tree
+
+        var array = [
+          {% for Order in orders %}
+           {% for Tree in tree %}
+            {% for relatedProduct in Tree.relatedProduct.all %}
+              {% if relatedProduct == Order.product %}
+               {% if Order.confirmed %}
+                 {% if Order.completed == False %}
+                    { "name":"{{Tree.name}}", "tot":{% widthratio Tree.quantity 1 Order.circulation %} },
+                 {% endif %}
+               {% endif %}
+              {% endif %}
+            {% endfor %}
+           {% endfor %}
+          {% endfor %}
+        ];
+
+        var orders = array.reduce(function (agg, obj) {
+          var objForName = agg.filter(function (nameObj) { return nameObj.name === obj.name})[0]
+
+          if (objForName) {
+            objForName.total += obj.tot;
+          } else {
+            agg.push({
+              name: obj.name,
+              total: obj.tot
+            })
+          }
+          return agg;
+        }, [])
+
+
+
+        var processes_inventory = [
+           {% for Process in processes %}
+              { "name":"{{Process.name}}", "total":"{{Process.inventory}}" },
+           {% endfor %}
+         ];
+
+
+
+        var extra_orders = document.getElementById("extra_orders");
+
+        for(var i=0; i < orders.length; i++){
+          for(var j=0; j < processes_inventory.length; j++){
+            if ( orders[i].name == processes_inventory[j].name ){
+              var diff = processes_inventory[j].total - orders[i].total ;
+
+              if ( diff<0 ){
+                diff = diff* -1;
+                extra_orders.innerHTML += "<h6> تعداد  "+diff+" شفارش در فرآیند "+ processes_inventory[j].name +" بیشتر از موجودی است. </hr> <br>";
+              }
+
+            }
+          }
+        }
+
+//----------------------------------------------------------------------------
+
+
+
+
+
+
+
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+    });
+
+
+
+  </script>
+
+{% endblock javascripts %}
