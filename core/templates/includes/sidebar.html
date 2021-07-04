@@ -29,6 +29,13 @@
             </a>
           </li>
 
+          <li class="{% if 'app:materials' in segment %} active {% endif %}">
+            <a href="{% url 'app:materials' %}">
+              <i class="tim-icons icon-app"></i>
+              <p> قطعات </p>
+            </a>
+          </li>
+
 
           <li class="{% if 'notices' in segment %} active {% endif %}">
             <a href="{% url 'app:notices' %}">

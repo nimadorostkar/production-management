@@ -1,0 +1,59 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} UI Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card" align="right" dir="rtl">
+      <div class="card-header">
+        <h4 class="card-title"> قطعات </h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  نام
+                </th>
+                <th>
+                  کد
+                </th>
+                <th>
+                  توضیحات
+                </th>
+                <th class="text-center">
+                  تصویر
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for Material in materials %}
+              <tr>
+                <td><a href="{{ Material.get_absolute_url }}"> {{ Material.name }} </a></td>
+                <td> {{ Material.code }} </td>
+                <td> {{ Material.description|slice:":50" }}... </td>
+                <td class="text-center">
+                  <div class="photo">
+                    <img src="{{ Material.image.url }}" alt="Profile Photo">
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

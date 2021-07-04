@@ -14,6 +14,9 @@ urlpatterns = [
     # products
     path('products', views.products, name='products'),
     path('products_detail/<int:id>/',views.products_detail,name='products_detail'),
+    # material
+    path('materials', views.materials, name='materials'),
+    path('materials_detail/<int:id>/',views.materials_detail,name='materials_detail'),
     # mother stations
     path('mother_station', views.mother_station, name='mother_station'),
     path('mother_station_detail/<int:id>/',views.mother_station_detail,name='mother_station_detail'),

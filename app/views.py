@@ -136,6 +136,24 @@ def products_detail(request, id):
 
 
 
+
+#------------------------------------------------------------------------------
+@login_required()
+def materials(request):
+    materials = models.Material.objects.all()
+    return render(request, 'materials.html', {'materials': materials})
+
+
+@login_required()
+def materials_detail(request, id):
+    material = get_object_or_404(models.Material, id=id)
+    context = {'material': material}
+    return render(request, 'materials_detail.html', context)
+
+
+
+
+
 #------------------------------------------------------------------------------
 @login_required()
 @transaction.atomic
@@ -179,8 +197,7 @@ def mother_station(request):
 @login_required()
 def mother_station_detail(request, id):
     mother_stations = get_object_or_404(models.Mother_Station, id=id)
-    processes = models.Process.objects.filter(mother_station=mother_stations)
-    return render(request, 'mother_station_detail.html', {'mother_stations':mother_stations, 'processes':processes })
+    return render(request, 'mother_station_detail.html', {'mother_stations':mother_stations })
 
 
 
