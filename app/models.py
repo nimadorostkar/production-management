@@ -5,20 +5,8 @@ from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-import uuid
 from django.template.defaultfilters import truncatechars
 from extensions.utils import jalali_converter
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -43,18 +31,15 @@ class Profile(models.Model):
   def save_user_profile(sender, instance, **kwargs):
       instance.profile.save()
 
-
   def image_tag(self):
         return format_html("<img width=50 src='{}'>".format(self.user_photo.url))
 
   def user_name(self):
         return str(self.user)
 
-
   class Meta:
       verbose_name = "پروفایل"
       verbose_name_plural = " پروفایل ها "
-
 
   def __str__(self):
     return "پروفایل : " + str(self.user)
@@ -63,13 +48,126 @@ class Profile(models.Model):
 
 
 
+#------------------------------------------------------------------------------
+class Product(models.Model):
+    name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
+    code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
+    descriptions = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
+    inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " موجودی ")
+    image = models.ImageField(upload_to='media', default='media/Default.png', null=True, blank=True,verbose_name = "تصویر")
+
+
+    class Meta:
+        verbose_name = "محصول"
+        verbose_name_plural = "محصولات"
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('app:products_detail',args=[self.id])
+
+    def image_tag(self):
+        return format_html("<img width=50 src='{}'>".format(self.image.url))
+
+    @property
+    def short_description(self):
+        return truncatechars(self.description, 70)
+
+
+
+
+
+
+#------------------------------------------------------------------------------
+class Material(models.Model):
+    name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
+    code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
+    descriptions = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
+    inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " موجودی ")
+    min_inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " حداقل موجودی ")
+    image = models.ImageField(upload_to='media', default='media/Default.png', null=True, blank=True,verbose_name = "تصویر")
+
+
+    class Meta:
+        verbose_name = " قطعه "
+        verbose_name_plural = " قطعات "
+
+    def __str__(self):
+        return self.name
+
+    def image_tag(self):
+        return format_html("<img width=50 src='{}'>".format(self.image.url))
+
+    def get_absolute_url(self):
+        return reverse('app:materials_detail',args=[self.id])
+
+    @property
+    def short_description(self):
+        return truncatechars(self.description, 70)
+
+
+
+
+
+#------------------------------------------------------------------------------
+class Station(models.Model):
+    name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
+    code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
+    descriptions = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
+    inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " موجودی ")
+    min_inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " حداقل موجودی ")
+    manager = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True,verbose_name = "مسئول")
+    mother_station = models.ForeignKey(Mother_Station ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " ایستگاه مادر ")
+    pro_cap_day = models.IntegerField(default='1', null=True,blank=True, verbose_name = " ظرفیت تولید در روز ")
+    percent_error = models.IntegerField(default='1', null=True,blank=True, verbose_name = " درصد خطا ")
+    input_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعات ورودی ")
+    output_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعه خروجی ")
+
+
+
+    class Meta:
+        verbose_name = " ایستگاه "
+        verbose_name_plural = " ایستگاه ها "
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('app:stations_detail',args=[self.id])
+
+    @property
+    def short_description(self):
+        return truncatechars(self.description, 70)
+
+
+
+
+
+
+#------------------------------------------------------------------------------
+class Tree(models.Model):
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True,verbose_name = " ایستگاه ")
+    parent_station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True,verbose_name = " ایستگاه والد ")
+    quantity = models.IntegerField(default='1',verbose_name = "تعداد در یک محصول")
+    relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
+
+
+
+    class Meta:
+        verbose_name = "درخت محصول"
+        verbose_name_plural = "درخت محصولات"
+
+    def __str__(self):
+        return str(self.name)
+
+
 
 
 #------------------------------------------------------------------------------
 class Ticket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name = "از طرف")
     to = models.ForeignKey(User, on_delete=models.CASCADE, related_name="to" ,verbose_name = "ارسال به")
-    #ticket_number = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=300,null=True, blank=True,verbose_name = " عنوان ")
     descriptions = models.TextField(max_length=800,null=True, blank=True,verbose_name = "توضیحات")
     updated_on = models.DateTimeField(auto_now= True)
@@ -90,8 +188,6 @@ class Ticket(models.Model):
 
     def j_created_on(self):
         return jalali_converter(self.created_on)
-
-
 
 
 
