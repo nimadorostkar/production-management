@@ -4,7 +4,7 @@ from django.contrib.admin.models import LogEntry
 from mptt.admin import MPTTModelAdmin
 from mptt.admin import DraggableMPTTAdmin
 from mapbox_location_field.admin import MapAdmin
-from .models import Profile, Tree, Ticket
+from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from jalali_date import datetime2jalali, date2jalali
@@ -20,6 +20,54 @@ admin.site.register(LogEntry)
 
 
 
+#------------------------------------------------------------------------------
+class ProfileAdmin(ImportExportModelAdmin):
+    list_display = ('user_name','phone','address')
+
+admin.site.register(models.Profile, ProfileAdmin)
+
+
+
+
+#------------------------------------------------------------------------------
+class ProductAdmin(ImportExportModelAdmin):
+    list_display = ('name','code','short_description','image_tag')
+
+admin.site.register(models.Product, ProductAdmin)
+
+
+
+#------------------------------------------------------------------------------
+class Mother_StationAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'manager')
+
+admin.site.register(models.Mother_Station, Mother_StationAdmin)
+
+
+
+#------------------------------------------------------------------------------
+class MaterialAdmin(ImportExportModelAdmin):
+    list_display = ('name','code','short_description','inventory', 'image_tag')
+
+admin.site.register(models.Material, MaterialAdmin)
+
+
+
+
+#------------------------------------------------------------------------------
+class StationAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'code', 'manager', 'inventory', 'output_material')
+
+admin.site.register(models.Station, StationAdmin)
+
+
+
+#------------------------------------------------------------------------------
+class TreeAdmin(ImportExportModelAdmin):
+    list_display = ('station','parent_station','relatedProduct','quantity')
+    list_filter = ("relatedProduct", "parent_station", "quantity")
+
+admin.site.register(models.Tree, TreeAdmin)
 
 
 
@@ -31,13 +79,6 @@ class TicketAdmin(ImportExportModelAdmin):
 
 admin.site.register(models.Ticket, TicketAdmin)
 
-
-
-#------------------------------------------------------------------------------
-class ProfileAdmin(ImportExportModelAdmin):
-    list_display = ('user_name','phone','address')
-
-admin.site.register(models.Profile, ProfileAdmin)
 
 
 

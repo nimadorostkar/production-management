@@ -12,8 +12,6 @@ from extensions.utils import jalali_converter
 
 
 
-
-
 #------------------------------------------------------------------------------
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE,unique=True,related_name='profile',verbose_name = "کاربر")
@@ -173,7 +171,7 @@ class Tree(models.Model):
         verbose_name_plural = "درخت محصولات"
 
     def __str__(self):
-        return str(self.name)
+        return str(self.station)
 
 
 
