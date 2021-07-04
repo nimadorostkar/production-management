@@ -47,7 +47,6 @@ class Profile(models.Model):
 
 
 
-
 #------------------------------------------------------------------------------
 class Product(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
@@ -77,6 +76,27 @@ class Product(models.Model):
 
 
 
+#------------------------------------------------------------------------------
+class Mother_Station(models.Model):
+    name = models.CharField(max_length=400,verbose_name = "نام")
+    description=models.TextField(max_length=1000,null=True, blank=True,verbose_name = "مشخصات")
+    manager = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True,verbose_name = "مسئول")
+
+
+    class Meta:
+        verbose_name = "ایستگاه مادر"
+        verbose_name_plural = " ایستگاه های مادر  "
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('app:mother_station_detail',args=[self.id])
+
+    @property
+    def short_description(self):
+        return truncatechars(self.description, 70)
+
 
 
 #------------------------------------------------------------------------------
@@ -87,7 +107,6 @@ class Material(models.Model):
     inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " موجودی ")
     min_inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " حداقل موجودی ")
     image = models.ImageField(upload_to='media', default='media/Default.png', null=True, blank=True,verbose_name = "تصویر")
-
 
     class Meta:
         verbose_name = " قطعه "
@@ -109,7 +128,6 @@ class Material(models.Model):
 
 
 
-
 #------------------------------------------------------------------------------
 class Station(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
@@ -123,7 +141,6 @@ class Station(models.Model):
     percent_error = models.IntegerField(default='1', null=True,blank=True, verbose_name = " درصد خطا ")
     input_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعات ورودی ")
     output_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعه خروجی ")
-
 
 
     class Meta:
@@ -143,15 +160,12 @@ class Station(models.Model):
 
 
 
-
-
 #------------------------------------------------------------------------------
 class Tree(models.Model):
     station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True,verbose_name = " ایستگاه ")
     parent_station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True,verbose_name = " ایستگاه والد ")
     quantity = models.IntegerField(default='1',verbose_name = "تعداد در یک محصول")
     relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
-
 
 
     class Meta:
@@ -188,9 +202,6 @@ class Ticket(models.Model):
 
     def j_created_on(self):
         return jalali_converter(self.created_on)
-
-
-
 
 
 
