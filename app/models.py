@@ -169,6 +169,7 @@ class Tree(models.Model):
         verbose_name = "درخت محصول"
         verbose_name_plural = "درخت محصولات"
 
+
     def __str__(self):
         return str(self.station)
 

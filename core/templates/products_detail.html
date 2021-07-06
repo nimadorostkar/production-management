@@ -44,25 +44,94 @@
   </div>
 </div>
 
-
+  <a href="{{ product.get_absolute_url }}"> <button class="btn btn-primary btn-block"> open tree </button> </a>
 
 
 <div class="row">
   <div class="col-md-12">
     <div class="card card-user">
       <div class="card-header">
-        <h4 class="card-title" dir="rtl" align="center"> hhhh </h4>
+        <h4 class="card-title" dir="rtl" align="center"> tree </h4> <hr>
       </div>
       <div class="card-body">
-        <div  class="card-description">
-          <p class="category"> ggggggg gg </p>
-        </div>
+
+
+
+         <div id="tree"> <div>
+         <script charset="utf-8" type="text/javascript">
+
+            window.onload = function () {
+                OrgChart.templates.ana.plus = '<circle cx="15" cy="15" r="15" fill="#ffffff" stroke="#aeaeae" stroke-width="1"></circle>'
+                    + '<text text-anchor="middle" style="font-size: 18px;cursor:pointer;" fill="#757575" x="15" y="22">{collapsed-children-count}</text>';
+
+                var chart = new OrgChart(document.getElementById("tree"), {
+                    template: "ana",
+                    enableDragDrop: true,
+                    assistantSeparation: 170,
+                    align: OrgChart.ORIENTATION,
+                    toolbar: {
+                        fullScreen: true,
+                        zoom: true,
+                        fit: true,
+                        expandAll: true
+                    },
+                    tags: {
+                            "محصول نهایی": {
+                                template: "rony"
+                            },
+                            "----": {
+                                template: "polina"
+                            },
+                            "قطعه خریداری شده": {
+                                template: "ula"
+                            },
+                            "---": {
+                                template: "ana"
+                            },
+                            "نیرو خانگی": {
+                                template: "belinda"
+                            }
+                        },
+                    nodeBinding: {
+                        field_0: "name",
+                        field_1: "title",
+                        field_2: "content",
+                        img_0: "img"
+                    },
+                });
+
+                chart.load([
+                    { id: 1, pid: 0, name: "سوکت هالوژن", title: "محصول نهایی", content:"تست تست تست ۳۳۳ تست", img: "img/sooket_halooj.jpg", tags: ["محصول نهایی"] },
+                    { id: 2, pid: 1, name: "بسته بندی نیرو خانگی", title: "نیرو خانگی", img: "img/packing.png", tags: ["نیرو خانگی"] },
+                    { id: 3, pid: 2, name: "مونتاژ نیرو خانگی", title: "نیرو خانگی", img: "img/asembeling.png", tags: ["نیرو خانگی"] },
+                    { id: 4, pid: 3, name: "مغزی سوکت هالوژن", title: "نیمه آماده", img: "img/maghzi.png" },
+                    { id: 5, pid: 3, name: "سیم ترمینال خورده", title: "نیمه آماده", img: "img/wireter.png" },
+                    { id: 6, pid: 3, name: "کش بسته بندی", title: "قطعه خریداری شده", content:"gggg", img: "img/kesh.jpg", tags: ["قطعه خریداری شده"] },
+                    { id: 7, pid: 5, name: "برش سیم و پرچ", title: "صائمیان", img: "img/wirecut.png" },
+                    { id: 8, pid: 4, name: "بسته بندی پلاتین زنی", title: "خیرآباد", img: "img/packing.png" },
+                    { id: 9, pid: 7, name: "ترمینال MR16", title: "قطعه خریداری شده", img: "img/mr16.jpg", tags: ["قطعه خریداری شده"] },
+                    { id: 10, pid: 7, name: "کلاف ۵۰۰ متری", title: "قطعه خریداری شده", img: "img/wire.jpg", tags: ["قطعه خریداری شده"] },
+                    { id: 11, pid: 8, name: "تزریق مغزی خیرآباد", title: "تزریق خیرآباد", img: "img/wire.jpg" },
+                    { id: 12, pid: 8, name: "نایلون", title: "قطعه خریداری شده", img: "img/naylon.jpg", tags: ["قطعه خریداری شده"] },
+                    { id: 13, pid: 8, name: "منگنه", title: "قطعه خریداری شده", img: "img/mangane.jpg", tags: ["قطعه خریداری شده"] },
+                    { id: 14, pid: 11, name: "مواد PC", title: "قطعه خریداری شده", img: "img/pc.jpg", tags: ["قطعه خریداری شده"] },
+                    { id: 15, pid: 11, name: "کیسه", title: "قطعه خریداری شده", img: "img/kise.jpg", tags: ["قطعه خریداری شده"] },
+                    { id: 18, pid: 11, name: "نخ", title: "قطعه خریداری شده", content:"تست تست تست ۳۳۳ تست", img: "img/nakh.jpg", tags: ["قطعه خریداری شده"] },
+                  ]);
+
+
+            };
+
+        </script>
+
+        <script src="{% static 'tree/orgchart.js' %}"></script>
+
+
+
       </div>
     </div>
   </div>
 </div>
-
-
 
 
 
@@ -79,86 +148,6 @@
 {% block javascripts %}
 
   <script>
-
-
-
-    // zoom tree with input renge
-
-    var p = document.getElementById("input"),
-        res = document.getElementById("sampleDiv");
-
-    p.addEventListener("input", function() {
-        res.style.zoom = p.value+'%';
-    }, false);
-
-
-//----------------------------------------------------------------------------
-
-
-
-
-    // compare processes order with inventory in tree
-
-        var array = [
-          {% for Order in orders %}
-           {% for Tree in tree %}
-            {% for relatedProduct in Tree.relatedProduct.all %}
-              {% if relatedProduct == Order.product %}
-               {% if Order.confirmed %}
-                 {% if Order.completed == False %}
-                    { "name":"{{Tree.name}}", "tot":{% widthratio Tree.quantity 1 Order.circulation %} },
-                 {% endif %}
-               {% endif %}
-              {% endif %}
-            {% endfor %}
-           {% endfor %}
-          {% endfor %}
-        ];
-
-        var orders = array.reduce(function (agg, obj) {
-          var objForName = agg.filter(function (nameObj) { return nameObj.name === obj.name})[0]
-
-          if (objForName) {
-            objForName.total += obj.tot;
-          } else {
-            agg.push({
-              name: obj.name,
-              total: obj.tot
-            })
-          }
-          return agg;
-        }, [])
-
-
-
-        var processes_inventory = [
-           {% for Process in processes %}
-              { "name":"{{Process.name}}", "total":"{{Process.inventory}}" },
-           {% endfor %}
-         ];
-
-
-
-        var extra_orders = document.getElementById("extra_orders");
-
-        for(var i=0; i < orders.length; i++){
-          for(var j=0; j < processes_inventory.length; j++){
-            if ( orders[i].name == processes_inventory[j].name ){
-              var diff = processes_inventory[j].total - orders[i].total ;
-
-              if ( diff<0 ){
-                diff = diff* -1;
-                extra_orders.innerHTML += "<h6> تعداد  "+diff+" شفارش در فرآیند "+ processes_inventory[j].name +" بیشتر از موجودی است. </hr> <br>";
-              }
-
-            }
-          }
-        }
-
-//----------------------------------------------------------------------------
-
-
-
 
 
 

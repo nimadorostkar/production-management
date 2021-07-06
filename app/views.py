@@ -135,8 +135,6 @@ def products_detail(request, id):
 
 
 
-
-
 #------------------------------------------------------------------------------
 @login_required()
 def materials(request):
