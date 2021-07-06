@@ -215,7 +215,8 @@ def mother_station(request):
 @login_required()
 def mother_station_detail(request, id):
     mother_stations = get_object_or_404(models.Mother_Station, id=id)
-    return render(request, 'mother_station_detail.html', {'mother_stations':mother_stations })
+    sub_stations = models.Station.objects.filter(mother_station=mother_stations)
+    return render(request, 'mother_station_detail.html', {'mother_stations':mother_stations, 'sub_stations':sub_stations })
 
 
 
