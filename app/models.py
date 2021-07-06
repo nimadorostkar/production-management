@@ -101,8 +101,8 @@ class Material(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
-    inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " موجودی ")
-    min_inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " حداقل موجودی ")
+    inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " موجودی ")
+    min_inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " حداقل موجودی ")
     image = models.ImageField(upload_to='media', default='media/Default.png', null=True, blank=True,verbose_name = "تصویر")
 
     class Meta:
@@ -130,13 +130,13 @@ class Station(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
-    inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " موجودی ")
-    min_inventory = models.DecimalField(max_digits=30, decimal_places=15, null=True, blank=True, verbose_name = " حداقل موجودی ")
+    inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " موجودی ")
+    min_inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " حداقل موجودی ")
     manager = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True,verbose_name = "مسئول")
     mother_station = models.ForeignKey(Mother_Station ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " ایستگاه مادر ")
     pro_cap_day = models.IntegerField(default='1', null=True,blank=True, verbose_name = " ظرفیت تولید در روز ")
     percent_error = models.IntegerField(default='1', null=True,blank=True, verbose_name = " درصد خطا ")
-    input_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,related_name='input', verbose_name = " قطعات ورودی ")
+    input_material = models.ManyToManyField(Material, blank=True,related_name='input', verbose_name = " قطعات ورودی ")
     output_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,related_name='output', verbose_name = " قطعه خروجی ")
 
 
@@ -161,7 +161,7 @@ class Station(models.Model):
 class Tree(models.Model):
     station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='station', verbose_name = " ایستگاه ")
     parent_station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='parent_station', verbose_name = " ایستگاه والد ")
-    quantity = models.IntegerField(default='1',verbose_name = "تعداد در یک محصول")
+    quantity = models.DecimalField(default='1', max_digits=30, decimal_places=1, verbose_name = "تعداد در یک محصول")
     relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
 
 

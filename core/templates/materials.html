@@ -27,6 +27,9 @@
                 <th>
                   توضیحات
                 </th>
+                <th>
+                  موجودی 
+                </th>
                 <th class="text-center">
                   تصویر
                 </th>
@@ -37,7 +40,8 @@
               <tr>
                 <td><a href="{{ Material.get_absolute_url }}"> {{ Material.name }} </a></td>
                 <td> {{ Material.code }} </td>
-                <td> {{ Material.description|slice:":50" }}... </td>
+                <td> {{ Material.description|slice:":70" }}... </td>
+                <td> {{ Material.inventory }}</td>
                 <td class="text-center">
                   <div class="photo">
                     <img src="{{ Material.image.url }}" alt="Profile Photo">

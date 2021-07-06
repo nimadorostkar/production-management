@@ -15,7 +15,9 @@
 <div class="col-md-12">
   <div class="card  card-plain" align="right" dir="rtl">
     <div class="card-header">
-      <h4 class="card-title" dir="rtl" align="center"> محصول {{ material.name }} <small> ({{ material.code }}) </small> </h4> <br>
+      <h4 class="card-title" dir="rtl" align="center"> قطعه {{ material.name }} <small> ({{ material.code }}) </small> </h4> <br>
+      <p> موجودی:   {{ material.inventory }}  </p>
+      <p> حداقل موجودی:   {{ material.min_inventory }}  </p>
     </div>
   </div>
 </div>
@@ -32,7 +34,7 @@
             <div class="block block-two"></div>
             <div class="block block-three"></div>
             <div class="block block-four"></div>
-            <img width="20%" src="{{ product.image.url }}">
+            <img width="20%" src="{{ material.image.url }}">
           </div>
         </p>
         <div align="right" dir="rtl" class="card-description">
