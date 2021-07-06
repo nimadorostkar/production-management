@@ -15,9 +15,14 @@
 <div class="col-md-12">
   <div class="card  card-plain" align="right" dir="rtl">
     <div class="card-header">
-      <h4 class="card-title" dir="rtl" align="center"> محصول {{ station.name }} <small> ({{ station.code }}) </small> </h4> <br>
+      <h4 class="card-title" dir="rtl" align="center"> ایستگاه {{ station.name }} <small> ({{ station.code }}) </small> </h4> <br>
       <p> موجودی:   {{ station.inventory }}  </p>
       <p> حداقل موجودی:   {{ station.min_inventory }}  </p>
+      <hr>
+      <p> {{ station.manager }} </p>
+      <p> {{ station.mother_station }} </p>
+      <p> {{ station.pro_cap_day }} </p>
+      <p> {{ station.percent_error }} </p>
     </div>
   </div>
 </div>
@@ -28,15 +33,6 @@
   <div class="col-md-12">
     <div class="card card-user">
       <div class="card-body">
-        <p class="card-text">
-          <div class="author">
-            <div class="block block-one"></div>
-            <div class="block block-two"></div>
-            <div class="block block-three"></div>
-            <div class="block block-four"></div>
-            <img width="20%" src="{{ station.image.url }}">
-          </div>
-        </p>
         <div align="right" dir="rtl" class="card-description">
           <p class="category"> {{ station.description|linebreaks }} </p>
         </div>
@@ -45,6 +41,34 @@
   </div>
 </div>
 
+
+
+
+<div class="row" align="right" dir="rtl">
+
+  <div class="col-md-6">
+    <div class="card card-user">
+      <div class="card-header">
+         <h4> قطعات ورودی :</h4>
+      </div>
+      <div class="card-body">
+        {% for input_material in station.input_material.all %}{{ input_material }}<br/>{% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card card-user">
+      <div class="card-header">
+         <h4> قطعه خروجی :</h4>
+      </div>
+      <div class="card-body">
+        {{ station.output_material }}
+      </div>
+    </div>
+  </div>
+
+</div>
 
 
 

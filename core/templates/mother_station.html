@@ -24,13 +24,17 @@
                 <th>
                   توضیحات
                 </th>
+                <th>
+                  مسئول
+                </th>
               </tr>
             </thead>
             <tbody>
             {% for Mother_Station in mother_station %}
               <tr>
                 <td><a href="{{ Mother_Station.get_absolute_url }}"> {{ Mother_Station.name }} </a></td>
-                <td> {{ Mother_Station.description|slice:":50" }}... </td>
+                <td> {{ Mother_Station.description|slice:":70" }}... </td>
+                <td> {{ Mother_Station.manager }} </td>
               </tr>
             {% endfor %}
             </tbody>
@@ -42,6 +46,9 @@
 </div>
 
 {% endblock content %}
+
+
+
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}
