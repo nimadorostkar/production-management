@@ -66,11 +66,6 @@
 
 
 
-
-
-
-
-
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
@@ -113,20 +108,31 @@
                 },
             nodeBinding: {
                 field_0: "name",
-                field_1: "title",
-                field_2: "content",
+                field_1: "inventory",
+                field_2: "quantity",
+                field_3: "output",
+                field_4: "link",
                 img_0: "img"
             },
         });
 
         chart.load([
               {% for Tree in tree %}
-                    { id: "{{ Tree.station }}", pid: "{{ Tree.parent_station }}", name: "{{ Tree.station }}", title: "{{ Tree.station }}" , content: "{{ Tree.quantity }}", img: "https://avatars.githubusercontent.com/u/54316106?v=4", tags: ["محصول نهایی"] },
+                    {
+                      id: "{{ Tree.station }}",
+                      pid: "{{ Tree.parent_station }}",
+                      name: "{{ Tree.station }}",
+                      inventory: "{{ Tree.station.inventory }}",
+                      quantity: "{{ Tree.quantity }}",
+                      link: "http://127.0.0.1:8000/{{ Tree.station.get_absolute_url }}" ,
+                      output:" {{ Tree.station.output_material }} " ,
+                      img: "https://avatars.githubusercontent.com/u/54316106?v=4",
+                      tags: ["محصول نهایی"]
+                    },
               {% endfor %}
           ]);
 
     };
-
 
 
 
