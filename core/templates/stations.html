@@ -25,10 +25,16 @@
                   کد
                 </th>
                 <th>
+                  مسئول
+                </th>
+                <th>
                   توضیحات
                 </th>
+                <th>
+                  موجودی
+                </th>
                 <th class="text-center">
-                  تصویر
+                  قطعه خروجی
                 </th>
               </tr>
             </thead>
@@ -37,12 +43,10 @@
               <tr>
                 <td><a href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a></td>
                 <td> {{ Station.code }} </td>
-                <td> {{ Station.description|slice:":50" }}... </td>
-                <td class="text-center">
-                  <div class="photo">
-                    <img src="{{ Station.image.url }}" alt="Profile Photo">
-                  </div>
-                </td>
+                <td> {{ Station.manager }} </td>
+                <td> {{ Station.description|slice:":60" }}... </td>
+                <td> {{ Station.inventory }} </td>
+                <td class="text-center"> {{ Station.output_material }} </td>
               </tr>
             {% endfor %}
             </tbody>
