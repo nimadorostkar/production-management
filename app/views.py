@@ -129,7 +129,8 @@ def products(request):
 @login_required()
 def products_detail(request, id):
     product = get_object_or_404(models.Product, id=id)
-    context = {'product': product}
+    tree = models.Tree.objects.filter(relatedProduct=product)
+    context = {'product': product, 'tree':tree}
     return render(request, 'products_detail.html', context)
 
 
