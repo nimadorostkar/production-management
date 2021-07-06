@@ -16,3 +16,4 @@ django-import-export
 django-admin-shortcuts
 django-extra-settings
 django-jalali-date
+django-mptt

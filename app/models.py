@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.template.defaultfilters import truncatechars
 from extensions.utils import jalali_converter
-
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 
@@ -125,10 +125,55 @@ class Material(models.Model):
 
 
 
+
+#------------------------------------------------------------------------------
+# MPTT Model -->  https://django-mptt.readthedocs.io/en/latest/index.html
+class Bom_material(MPTTModel):
+    name = models.ForeignKey(Material, on_delete=models.CASCADE, related_name = "mat_name", verbose_name = " نام قطعه ")
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children',verbose_name = "والد")
+    quantity = models.IntegerField(default='1',verbose_name = " تعداد ")
+    related_material=models.ForeignKey(Material, on_delete=models.CASCADE, related_name = "rel_mat", verbose_name = " قطعه مربوطه ")
+
+    class MPTTMeta:
+        level_attr = 'mptt_level'
+        order_insertion_by = ['name']
+
+    class Meta:
+        verbose_name = " درخت قطعه "
+        verbose_name_plural = " درخت قطعه "
+
+    def __str__(self):
+        return str(self.name +" ["+ self.quantity +"]" )
+
+
+
+
+
+
+#------------------------------------------------------------------------------
+class Stations_inputs(models.Model):
+    material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعه ")
+    inventory = models.IntegerField( verbose_name = " تعداد ")
+
+    class Meta:
+        verbose_name = " ورودی ایستگاه "
+        verbose_name_plural = " ورودی ایستگاه ها "
+
+
+    def __str__(self):
+        return str(self.material +" ["+ self.inventory +"]" )
+
+
+
+
+
+
 #------------------------------------------------------------------------------
 class Station(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
+    CHOICES = ( ('M','Manpower'), ('R','Repository'), ('T','Transfer'), ('S','Station'),('P','Product') )
+    position=models.CharField(max_length=1,choices=CHOICES,verbose_name = "وضعیت")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
     inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " موجودی ")
     min_inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " حداقل موجودی ")
@@ -136,7 +181,7 @@ class Station(models.Model):
     mother_station = models.ForeignKey(Mother_Station ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " ایستگاه مادر ")
     pro_cap_day = models.IntegerField(default='1', null=True,blank=True, verbose_name = " ظرفیت تولید در روز ")
     percent_error = models.IntegerField(default='1', null=True,blank=True, verbose_name = " درصد خطا ")
-    input_material = models.ManyToManyField(Material, blank=True,related_name='input', verbose_name = " قطعات ورودی ")
+    input_material = models.ManyToManyField(Stations_inputs, blank=True,related_name='input', verbose_name = " قطعات ورودی ")
     output_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,related_name='output', verbose_name = " قطعه خروجی ")
 
 

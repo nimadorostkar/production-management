@@ -1,11 +1,14 @@
 from django.contrib import admin
 from . import models
 from django.contrib.admin.models import LogEntry
-from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice
+from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice, Bom_material, Stations_inputs
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from jalali_date import datetime2jalali, date2jalali
 from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
+from mptt.admin import MPTTModelAdmin
+from mptt.admin import DraggableMPTTAdmin
+
 
 
 
@@ -48,6 +51,28 @@ class MaterialAdmin(ImportExportModelAdmin):
 
 admin.site.register(models.Material, MaterialAdmin)
 
+
+
+#------------------------------------------------------------------------------
+ #https://django-mptt.readthedocs.io/en/latest/admin.html#mptt-admin-draggablempttadmin
+class Bom_materialMPTTModelAdmin(ImportExportMixin, MPTTModelAdmin):
+    mptt_level_indent = 15   # specify pixel amount for this ModelAdmin only
+    #mptt_indent_field = "some_node_field"
+
+admin.site.register(Bom_material, DraggableMPTTAdmin,
+    list_display=('tree_actions', 'indented_title'),
+    #list_editable = ('relatedProduct','relatedProduct'),
+    list_display_links=('indented_title',),)
+
+
+
+
+
+#------------------------------------------------------------------------------
+class Stations_inputsAdmin(ImportExportModelAdmin):
+    list_display = ('material', 'inventory')
+
+admin.site.register(models.Stations_inputs, Stations_inputsAdmin)
 
 
 
