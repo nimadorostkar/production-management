@@ -81,6 +81,9 @@
               <a href="{{ Material.get_absolute_url }}"> {{ Bom_product.material }} </a> <br>
               {{ Bom_product.inventory }} <br>
               <p> --------------- </p>
+              {% for Bom_material in material_bom %}
+                {{ Bom_material.name }}
+              {% endfor %}
 
             {% endfor %}
 
