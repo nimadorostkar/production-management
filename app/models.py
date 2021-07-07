@@ -130,9 +130,9 @@ class Material(models.Model):
 # MPTT Model -->  https://django-mptt.readthedocs.io/en/latest/index.html
 class Bom_material(MPTTModel):
     name = models.ForeignKey(Material, on_delete=models.CASCADE, related_name = "mat_name", verbose_name = " نام قطعه ")
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children',verbose_name = "والد")
+    parent = TreeForeignKey(Material, on_delete=models.CASCADE, null=True, blank=True, related_name='children',verbose_name = "والد")
     quantity = models.DecimalField(max_digits=30, decimal_places=4,default='1',verbose_name = " تعداد ")
-    related_material=models.ForeignKey(Material, on_delete=models.CASCADE, related_name = "rel_mat", verbose_name = " قطعه مربوطه ")
+
 
     class MPTTMeta:
         level_attr = 'mptt_level'

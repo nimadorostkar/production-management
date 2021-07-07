@@ -130,7 +130,8 @@ def products(request):
 def products_detail(request, id):
     product = get_object_or_404(models.Product, id=id)
     tree = models.Tree.objects.filter(relatedProduct=product)
-    context = {'product': product, 'tree':tree}
+    bom = models.Bom_product.objects.filter(relatedProduct=product)
+    context = {'product': product, 'tree':tree, 'bom':bom}
     return render(request, 'products_detail.html', context)
 
 

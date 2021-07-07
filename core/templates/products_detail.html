@@ -71,11 +71,18 @@
   <div class="col-md-12">
     <div class="card card-user">
       <div class="card-header">
-        <h4 class="card-title" dir="rtl" align="right"> BOM محصول </h4> 
+        <h4 class="card-title" dir="rtl" align="right"> BOM محصول </h4>
       </div>
       <div class="card-body">
 
-          gggg gggg
+
+            {% for Bom_product in bom %}
+
+              <a href="{{ Material.get_absolute_url }}"> {{ Bom_product.material }} </a> <br>
+              {{ Bom_product.inventory }} <br>
+              <p> --------------- </p>
+
+            {% endfor %}
 
       </div>
     </div>
