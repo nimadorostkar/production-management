@@ -1,7 +1,7 @@
 from django.contrib import admin
 from . import models
 from django.contrib.admin.models import LogEntry
-from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice, Bom_material, Stations_inputs
+from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice, Bom_material, Stations_inputs, Bom_product
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from jalali_date import datetime2jalali, date2jalali
@@ -50,6 +50,18 @@ class MaterialAdmin(ImportExportModelAdmin):
     list_display = ('name','code','short_description','inventory', 'image_tag')
 
 admin.site.register(models.Material, MaterialAdmin)
+
+
+
+
+#------------------------------------------------------------------------------
+class Bom_productAdmin(ImportExportModelAdmin):
+    list_display = ('material','inventory', 'relatedProduct')
+    list_filter = ("relatedProduct", "material", "inventory")
+
+admin.site.register(models.Bom_product, Bom_productAdmin)
+
+
 
 
 

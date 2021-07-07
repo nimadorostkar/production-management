@@ -167,6 +167,26 @@ class Stations_inputs(models.Model):
 
 
 
+
+
+#------------------------------------------------------------------------------
+class Bom_product(models.Model):
+    material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعه ")
+    inventory = models.DecimalField(default='1',max_digits=30, decimal_places=4, verbose_name = " تعداد ")
+    relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
+
+    class Meta:
+        verbose_name = " BOM محصول "
+        verbose_name_plural = " BOM محصولات "
+
+
+    def __str__(self):
+        return str(self.material) + " [" + str(self.inventory) + "]"
+
+
+
+
+
 #------------------------------------------------------------------------------
 class Station(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
