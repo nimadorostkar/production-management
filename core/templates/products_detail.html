@@ -78,21 +78,18 @@
 
             {% for Bom_product in bom %}
 
-              <a href="{{ Material.get_absolute_url }}"> {{ Bom_product.material }} </a> <br>
-              {{ Bom_product.inventory }} <br>
-              <p> --------------- </p>
+              <a href="{{ Material.get_absolute_url }}"> {{ Bom_product.material }} </a> -- {{ Bom_product.inventory }} <br>
+
               <ul>
                   {% recursetree material_bom %}
-                      <li>
-                        {% if node.name == {{ Bom_product.material }} %}
-                             {{ node.name }}
-                        {% endif %}
-                          {% if not node.is_leaf_node %}
-                              <ul class="children">
-                                  {{ children }}
-                              </ul>
-                          {% endif %}
-                      </li>
+                     {% if node.name == Bom_product.material %}
+                         <li>
+                            {{ node.name }}
+                            {% if not node.is_leaf_node %}
+                              <ul> {{ children }} </ul>
+                            {% endif %}
+                         </li>
+                     {% endif %}
                   {% endrecursetree %}
               </ul>
 
