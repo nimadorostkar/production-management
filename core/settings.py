@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'bootstrapform',  # https://django-bootstrap-form.readthedocs.io/en/latest/
     'jalali_date',    # https://pypi.org/project/django-jalali-date/
     'extensions',
+    'mptt',
     'allauth',        # Third Party - 1) All Auth
     'allauth.account',
     'allauth.socialaccount'
