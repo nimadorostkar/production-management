@@ -161,7 +161,7 @@ class Stations_inputs(models.Model):
 
 
     def __str__(self):
-        return str(self.material +" "+ self.inventory)
+        return str(self.material) + " [" + str(self.inventory) + "]"
 
 
 
@@ -171,8 +171,8 @@ class Stations_inputs(models.Model):
 class Station(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
-    CHOICES = ( ('M','Manpower'), ('R','Repository'), ('T','Transfer'), ('S','Station'),('P','Product') )
-    position=models.CharField(max_length=1,choices=CHOICES,verbose_name = "وضعیت")
+    CHOICES = ( ('نیرو خانگی','Manpower'), ('انبار','Repository'), ('حمل و نقل','Transfer'), ('ایستگاه','Station'), ('برون سپاری','Outsourcing'))
+    position=models.CharField(max_length=15,choices=CHOICES,verbose_name = "وضعیت")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
     inventory = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " موجودی ")
     min_inventory = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " حداقل موجودی ")

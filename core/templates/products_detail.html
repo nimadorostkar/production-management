@@ -90,20 +90,20 @@
                 expandAll: true
             },
             tags: {
-                    "محصول نهایی": {
-                        template: "rony"
-                    },
-                    "----": {
+                    "نیرو خانگی": {
                         template: "polina"
                     },
-                    "قطعه خریداری شده": {
-                        template: "ula"
+                    "انبار": {
+                        template: "belinda"
                     },
-                    "---": {
+                    "حمل و نقل": {
+                        template: "rony"
+                    },
+                    "ایستگاه": {
                         template: "ana"
                     },
-                    "نیرو خانگی": {
-                        template: "belinda"
+                    "برون سپاری": {
+                        template: "ula"
                     }
                 },
             nodeBinding: {
@@ -127,7 +127,7 @@
                       link: "http://127.0.0.1:8000/{{ Tree.station.get_absolute_url }}" ,
                       output:" {{ Tree.station.output_material }} " ,
                       img: "https://avatars.githubusercontent.com/u/54316106?v=4",
-                      tags: ["محصول نهایی"]
+                      tags: ["{{ Tree.station.position }}"]
                     },
               {% endfor %}
           ]);
