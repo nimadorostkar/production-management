@@ -131,7 +131,7 @@ class Material(models.Model):
 class Bom_material(MPTTModel):
     name = models.ForeignKey(Material, on_delete=models.CASCADE, related_name = "mat_name", verbose_name = " نام قطعه ")
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children',verbose_name = "والد")
-    quantity = models.IntegerField(default='1',verbose_name = " تعداد ")
+    quantity = models.DecimalField(max_digits=30, decimal_places=4,default='1',verbose_name = " تعداد ")
     related_material=models.ForeignKey(Material, on_delete=models.CASCADE, related_name = "rel_mat", verbose_name = " قطعه مربوطه ")
 
     class MPTTMeta:
@@ -143,7 +143,7 @@ class Bom_material(MPTTModel):
         verbose_name_plural = " درخت قطعه "
 
     def __str__(self):
-        return str(self.name +" ["+ self.quantity +"]" )
+        return str(self.name)
 
 
 
@@ -153,7 +153,7 @@ class Bom_material(MPTTModel):
 #------------------------------------------------------------------------------
 class Stations_inputs(models.Model):
     material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعه ")
-    inventory = models.IntegerField( verbose_name = " تعداد ")
+    inventory = models.DecimalField(max_digits=30, decimal_places=4, verbose_name = " تعداد ")
 
     class Meta:
         verbose_name = " ورودی ایستگاه "
@@ -161,8 +161,7 @@ class Stations_inputs(models.Model):
 
 
     def __str__(self):
-        return str(self.material +" ["+ self.inventory +"]" )
-
+        return str(self.material +" "+ self.inventory)
 
 
 
@@ -175,8 +174,8 @@ class Station(models.Model):
     CHOICES = ( ('M','Manpower'), ('R','Repository'), ('T','Transfer'), ('S','Station'),('P','Product') )
     position=models.CharField(max_length=1,choices=CHOICES,verbose_name = "وضعیت")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
-    inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " موجودی ")
-    min_inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " حداقل موجودی ")
+    inventory = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " موجودی ")
+    min_inventory = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " حداقل موجودی ")
     manager = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True,verbose_name = "مسئول")
     mother_station = models.ForeignKey(Mother_Station ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " ایستگاه مادر ")
     pro_cap_day = models.IntegerField(default='1', null=True,blank=True, verbose_name = " ظرفیت تولید در روز ")
