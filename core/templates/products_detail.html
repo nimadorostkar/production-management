@@ -126,7 +126,7 @@
                       quantity: "{{ Tree.quantity }}",
                       link: "http://127.0.0.1:8000/{{ Tree.station.get_absolute_url }}" ,
                       output:" {{ Tree.station.output_material }} " ,
-                      img: "https://avatars.githubusercontent.com/u/54316106?v=4",
+                      img: "{{ Tree.station.output_material.image.url }}",
                       tags: ["{{ Tree.station.position }}"]
                     },
               {% endfor %}
