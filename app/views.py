@@ -148,7 +148,8 @@ def materials(request):
 @login_required()
 def materials_detail(request, id):
     material = get_object_or_404(models.Material, id=id)
-    context = {'material': material}
+    bom = models.Bom_material.objects.filter(name=material)
+    context = {'material': material, 'bom':bom}
     return render(request, 'materials_detail.html', context)
 
 
