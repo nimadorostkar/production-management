@@ -132,6 +132,8 @@ class Bom_material(MPTTModel):
     name = models.ForeignKey(Material, on_delete=models.CASCADE, related_name = "mat_name", verbose_name = " نام قطعه ")
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children',verbose_name = "والد")
     quantity = models.DecimalField(max_digits=30, decimal_places=4,default='1',verbose_name = " تعداد ")
+    relatedProduct=models.ForeignKey(Material, on_delete=models.CASCADE,verbose_name = " قطعه مربوطه ")
+
 
 
 
