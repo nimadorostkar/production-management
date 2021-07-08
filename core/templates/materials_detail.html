@@ -77,6 +77,64 @@
            {% endrecursetree %}
          </ul>
 
+
+
+
+          <hr><br>
+
+
+
+          <section id='eg1' class="ladder tree">
+            <ul>
+              <li><a href=".">Dog ></a>
+                <ul>
+                  <li><a>Snoopy</a></li>
+                  <li><a>Scooby</a></li>
+                  <li><a href=".">ccccc > </a>
+                    <ul>
+                      <li><a>Snoopy</a></li>
+                      <li><a>Scooby</a></li>
+                      <li><a>Krypto</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li><a href=".">Cat ></a>
+                <ul>
+                  <li><a>Garfield</a></li>
+                  <li><a>Bill</a></li>
+                  <li><a>Grumpy</a></li>
+                </ul>
+              </li>
+              <li><a href=".">Cow ></a>
+                <ul>
+                  <li><a>Cosmic</a></li>
+                  <li><a>Delicious</a></li>
+                  <li><a href=".">Your Mom ></a>
+                    <ul>
+                      <li><a>Just</a></li>
+                      <li><a>Joking</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+
+
+          <script type="text/javascript">
+              $("#eg1 li ul").slideToggle(); // hide all nested lists
+              $("#eg1 li ul").prev("a").click(function(){ // add fn to list items that have a nested list
+                  $(this).next("ul").slideToggle(100); // show/hide the nested list
+                  return false; // prevent scrolling
+              });
+          </script>
+
+
+
+
+
+
         </div>
       </div>
 
