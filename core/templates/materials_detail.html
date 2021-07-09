@@ -64,18 +64,52 @@
       <div class="card-body">
         <div align="right" dir="rtl" class="card-description">
 
-          <ul>
-           {% recursetree bom %}
-               <li>
-                 <div class="user">
-                      {{ node.name }}
-                 </div>
-                  {% if not node.is_leaf_node %}
-                   <ul> {{ children }} </ul>
-                  {% endif %}
-               </li>
-           {% endrecursetree %}
-         </ul>
+          <div class="table-responsive">
+            <table class="table tablesorter " id="">
+              <thead class=" text-primary">
+                <tr>
+                  <th>
+                    نام
+                  </th>
+                  <th>
+                    کد
+                  </th>
+                  <th>
+                    توضیحات
+                  </th>
+                  <th>
+                    تعداد
+                  </th>
+                  <th class="text-center">
+                    تصویر
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+              {% recursetree bom %}
+                <tr>
+                  <td><a href="{{ node.name.get_absolute_url }}"> {{ node.name.name }} </a></td>
+                  <td> {{ node.name.code }} </td>
+                  <td> {{ node.name.description|slice:":70" }}... </td>
+                  <td> {{ node.quantity }}</td>
+                  <td class="text-center">
+                    <div class="photo">
+                      <img src="{{ node.name.image.url }}" alt="Profile Photo">
+                    </div>
+                  </td>
+                </tr>
+                {% if not node.is_leaf_node %}
+                   <tr> {{ children }} </tr>
+                 {% endif %}
+              {% endrecursetree %}
+              </tbody>
+            </table>
+          </div>
+
+
+
+
+
 
 
 
@@ -84,40 +118,21 @@
 
 
           <section id='eg1' class="ladder tree">
+
             <ul>
-              <li><a href=".">Dog ></a>
+              {% recursetree bom %}
+              <li><a href="."> {{ node.name.name }} </a>
                 <ul>
-                  <li><a>Snoopy</a></li>
-                  <li><a>Scooby</a></li>
-                  <li><a href=".">ccccc > </a>
-                    <ul>
-                      <li><a>Snoopy</a></li>
-                      <li><a>Scooby</a></li>
-                      <li><a>Krypto</a></li>
-                    </ul>
-                  </li>
+                  {% if not node.is_leaf_node %}
+                    <li>
+                      <a href="."> {{ children }} </a>
+                    </li>
+                  {% endif %}
                 </ul>
               </li>
-              <li><a href=".">Cat ></a>
-                <ul>
-                  <li><a>Garfield</a></li>
-                  <li><a>Bill</a></li>
-                  <li><a>Grumpy</a></li>
-                </ul>
-              </li>
-              <li><a href=".">Cow ></a>
-                <ul>
-                  <li><a>Cosmic</a></li>
-                  <li><a>Delicious</a></li>
-                  <li><a href=".">Your Mom ></a>
-                    <ul>
-                      <li><a>Just</a></li>
-                      <li><a>Joking</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
+              {% endrecursetree %}
             </ul>
+
           </section>
 
 
