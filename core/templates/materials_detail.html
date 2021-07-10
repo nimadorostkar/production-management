@@ -18,6 +18,20 @@
       <h4 class="card-title" dir="rtl" align="center"> قطعه {{ material.name }} <small> ({{ material.code }}) </small> </h4> <br>
       <p> موجودی:   {{ material.inventory }}  </p>
       <p> حداقل موجودی:   {{ material.min_inventory }}  </p>
+      <hr>
+
+      <p> product use it:</p>
+      {% for Tree in products %}
+        <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }}  <br>
+      {% endfor %}
+
+      <hr>
+
+      <p> stations use it:</p>
+      {% for Station in stations %}
+        <a href="{{ Station.get_absolute_url }}"> {{ Station.name }}  <br>
+      {% endfor %}
+
     </div>
   </div>
 </div>
