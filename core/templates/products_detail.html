@@ -67,11 +67,11 @@
 
 
 
-<div class="row">
+<div class="row" dir="rtl" align="right">
   <div class="col-md-12">
     <div class="card card-user">
       <div class="card-header">
-        <h4 class="card-title" dir="rtl" align="right"> BOM محصول </h4>
+        <h4 class="card-title"> BOM محصول </h4>
       </div>
       <div class="card-body">
 
@@ -82,15 +82,17 @@
               <section id='eg1' class="ladder tree">
                 <ul>
                   {% recursetree material_bom %}
-                  <li><a href=".">  {{ node.name.name }}  {{ node.quantity }} <hr> </a>
-                    <ul>
-                      {% if not node.is_leaf_node %}
-                        <li>
-                          <a href="."> {{ children }} </a>
-                        </li>
-                      {% endif %}
-                    </ul>
-                  </li>
+                   {% if node.relatedProduct.name == Bom_product.material.name %}
+                      <li><a href="."> {{ node.quantity }} ----- {{ node.name.name }}   <hr> </a>
+                        <ul>
+                          {% if not node.is_leaf_node %}
+                            <li>
+                              <a href="."> {{ children }} </a>
+                            </li>
+                          {% endif %}
+                        </ul>
+                      </li>
+                    {% endif %}
                   {% endrecursetree %}
                 </ul>
               </section>
