@@ -20,15 +20,9 @@
       <p> حداقل موجودی:   {{ station.min_inventory }}  </p>
       <hr>
       <p> {{ station.manager }} </p>
-      <p> {{ station.mother_station }} </p>
       <p> {{ station.pro_cap_day }} </p>
       <p> {{ station.percent_error }} </p>
       <hr>
-
-      <p> mahsoolate estefade konande az in isgah:</p>
-      {% for Tree in products %}
-        <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }}  <br>
-      {% endfor %}
 
     </div>
   </div>
@@ -51,26 +45,52 @@
 
 
 
-<div class="row" align="right" dir="rtl">
+<div class="row" align="center" dir="rtl">
 
-  <div class="col-md-6">
-    <div class="card card-user">
+  <div class="col-md-5">
+    <div class="card">
       <div class="card-header">
          <h4> قطعات ورودی :</h4>
       </div>
       <div class="card-body">
-        {% for input_material in station.input_material.all %}{{ input_material }}<br/>{% endfor %}
+        {% for input_material in station.input_material.all %}
+          {{ input_material }} <br/>
+        {% endfor %}
       </div>
     </div>
   </div>
 
-  <div class="col-md-6">
-    <div class="card card-user">
+  <div class="col-md-2">
+    <div class="card">
       <div class="card-header">
          <h4> قطعه خروجی :</h4>
       </div>
       <div class="card-body">
         {{ station.output_material }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card">
+      <div class="card-header">
+         <h4> ایستگاه مادر :</h4>
+      </div>
+      <div class="card-body">
+        {{ station.mother_station }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card ">
+      <div class="card-header">
+         <h4>  محصولات استفاده کننده: :</h4>
+      </div>
+      <div class="card-body">
+        {% for Tree in products %}
+          <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }}  <br> </a>
+        {% endfor %}
       </div>
     </div>
   </div>
