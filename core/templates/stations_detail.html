@@ -23,6 +23,13 @@
       <p> {{ station.mother_station }} </p>
       <p> {{ station.pro_cap_day }} </p>
       <p> {{ station.percent_error }} </p>
+      <hr>
+
+      <p> mahsoolate estefade konande az in isgah:</p>
+      {% for Tree in products %}
+        <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }}  <br>
+      {% endfor %}
+
     </div>
   </div>
 </div>

@@ -166,7 +166,8 @@ def stations(request):
 @login_required()
 def stations_detail(request, id):
     station = get_object_or_404(models.Station, id=id)
-    context = {'station': station}
+    products = models.Tree.objects.filter(station__name=station.name)
+    context = {'station': station, 'products':products}
     return render(request, 'stations_detail.html', context)
 
 
