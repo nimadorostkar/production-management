@@ -78,6 +78,13 @@
               <td>
                 <p class="category">  حداقل موجودی : {{ material.min_inventory }} </p>
               </td>
+              <td>
+                <p class="category">  ایستگاه تولید کننده :
+                  {% for Station in exit_station %}
+                     <a href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>
+                  {% endfor %}
+                </p>
+              </td>
             </tr>
           </tbody>
           <tbody>
@@ -117,18 +124,16 @@
 
 
 <div class="row">
-  <div class="col-md-12">
-    <div class="card card-user">
 
+  <div class="col-md-6">
+    <div class="card card-user">
       <div class="card-header">
         <h4 class="card-title" dir="rtl" align="center">
             BOM
         </h4>
       </div>
-
       <div class="card-body">
         <div align="right" dir="rtl" class="card-description">
-
           <section id='eg1' class="ladder tree">
             <ul>
               {% recursetree bom %}
@@ -142,14 +147,11 @@
               {% endrecursetree %}
             </ul>
           </section>
-
-
-
         </div>
       </div>
-
     </div>
   </div>
+
 </div>
 
 
