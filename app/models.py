@@ -302,5 +302,4 @@ class Notice(models.Model):
 
 
 
-
 #-------------------------------------------------------- by Nima Dorostkar ---

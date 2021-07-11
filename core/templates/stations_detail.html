@@ -93,7 +93,7 @@
       </div>
       <div class="card-body">
         {% for input_material in station.input_material.all %}
-          {{ input_material }} <br/>
+          <a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> با ضریب {{ input_material.inventory }}   <br>
         {% endfor %}
       </div>
     </div>
@@ -116,22 +116,74 @@
 
 
 
-      {% if request.user == station.manager %}
-         <form action="#" method="post" align="right" dir="rtl">
-           {% csrf_token %}
-           <div class="row">
-             <div class="col-md-12">
-               <div class="form-group">
-                 <label for="exampleInputEmail1"> افزایش موجودی </label>
-                 <input name="inventory" type="text" class="form-control">
-               </div>
-             </div>
+{% if request.user == station.manager %}
+  <div class="row" align="center" dir="rtl">
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+           <h4>  افزایش موجودی </h4>
+        </div>
+        <div class="card-body">
+
+          <form action="#" method="post" align="right" dir="rtl">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="exampleInputEmail1"> افزودن موجودی  {{ station.output_material }} به تعداد: </label>
+                  <input name="inventory" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+           <div class="card-footer">
+             <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
            </div>
-          <div class="card-footer">
-            <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
-          </div>
-        </form>
-      {% endif %}
+         </form>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+           <h4>  خروج قطعه  </h4>
+        </div>
+        <div class="card-body">
+
+          <form action="#" method="post" align="right" dir="rtl">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="exampleInputEmail1"> خروج قطعه {{ station.output_material }} به تعداد: </label>
+                  <input name="inventory" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+           <div class="card-footer">
+             <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+           </div>
+         </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

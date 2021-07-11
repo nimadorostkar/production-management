@@ -40,6 +40,15 @@ class InventoryForm(forms.ModelForm):
 
 
 
+#------------------------------------------------------------------------------
+class Exit_stationForm(forms.ModelForm):
+	class Meta:
+		model = Station
+		fields = ['inventory']
+
+
+
+
 
 
 
