@@ -33,21 +33,13 @@ class TicketForm(forms.ModelForm):
 
 
 #------------------------------------------------------------------------------
-class InventoryForm(forms.ModelForm):
-	class Meta:
-		model = Station
-		fields = ['inventory']
-
+class InventoryForm(forms.Form):
+	b = forms.DecimalField(max_digits=30, decimal_places=4)
 
 
 #------------------------------------------------------------------------------
-class Exit_stationForm(forms.ModelForm):
-	class Meta:
-		model = Station
-		fields = ['inventory']
-
-
-
+class Exit_stationForm(forms.Form):
+	a = forms.DecimalField(max_digits=30, decimal_places=4)
 
 
 
