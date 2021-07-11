@@ -175,6 +175,11 @@ def stations_detail(request, id):
             obj = get_object_or_404(models.Station, id=id)
             added_value = inventory_form.cleaned_data['inventory']
             obj.inventory += added_value
+
+            for input_material in obj.input_material.all():
+                print(input_material.material , " - " , input_material.inventory)
+
+
             obj.save()
             return redirect(obj.get_absolute_url())
     else:
@@ -182,10 +187,6 @@ def stations_detail(request, id):
 
     context = {'station': station, 'products':products, 'inventory_form':inventory_form}
     return render(request, 'stations_detail.html', context)
-
-
-
-
 
 
 
