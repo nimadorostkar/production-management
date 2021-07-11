@@ -32,8 +32,11 @@ class TicketForm(forms.ModelForm):
 		fields = ['to','title','descriptions']
 
 
-
-
+#------------------------------------------------------------------------------
+class InventoryForm(forms.ModelForm):
+	class Meta:
+		model = Station
+		fields = ['inventory']
 
 
 

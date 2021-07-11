@@ -135,8 +135,6 @@ class Bom_material(MPTTModel):
     relatedProduct=models.ForeignKey(Material, on_delete=models.CASCADE,verbose_name = " قطعه مربوطه ")
 
 
-
-
     class MPTTMeta:
         level_attr = 'mptt_level'
         order_insertion_by = ['name']
