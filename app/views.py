@@ -178,18 +178,10 @@ def stations_detail(request, id):
 
             for input_material in obj.input_material.all():
                 #print(input_material.material , " - " , input_material.inventory)
-                #input_material.material.inventory -= ( input_material.inventory * added_value )
                 material_obj = models.Material.objects.filter(name=input_material.material)
                 for Material in material_obj:
                     Material.inventory -= ( input_material.inventory * added_value )
                 Material.save()
-
-
-
-
-            #m_obj.inventory -= (input_material.inventory * added_value)
-            #m_obj.save()
-
 
             obj.save()
             return redirect(obj.get_absolute_url())
