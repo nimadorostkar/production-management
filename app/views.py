@@ -6,7 +6,7 @@ from django import template
 from . import models
 from django.contrib.auth.models import User
 from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice
-from .forms import ProfileForm, UserForm, TicketForm, InventoryForm
+from .forms import ProfileForm, UserForm, TicketForm, InventoryForm, Exit_stationForm
 from itertools import chain
 from django.contrib.auth import get_user_model
 from django.db import transaction
@@ -171,6 +171,21 @@ def stations_detail(request, id):
     products = models.Tree.objects.filter(station__name=station.name)
     if request.method == 'POST':
         inventory_form = InventoryForm(request.POST)
+        exit_station_form = Exit_stationForm(request.POST)
+
+        if exit_station_form.is_valid():
+            exit_obj = get_object_or_404(models.Station, id=id)
+            exit_value = exit_station_form.cleaned_data['inventory']
+            exit_obj.inventory -= exit_value
+
+            material_obj = models.Material.objects.filter(name=exit_obj.output_material)
+            for Material in material_obj:
+                Material.inventory += exit_value
+                Material.save()
+
+            exit_obj.save()
+            return redirect(exit_obj.get_absolute_url())
+
         if inventory_form.is_valid():
             obj = get_object_or_404(models.Station, id=id)
             added_value = inventory_form.cleaned_data['inventory']
@@ -186,6 +201,7 @@ def stations_detail(request, id):
             obj.save()
             return redirect(obj.get_absolute_url())
     else:
+        exit_station_form = Exit_stationForm(request.POST)
         inventory_form = InventoryForm(request.POST)
 
     context = {'station': station, 'products':products, 'inventory_form':inventory_form}
