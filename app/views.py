@@ -176,7 +176,7 @@ def stations_detail(request, id):
 
         if inventory_form.is_valid():
             obj = get_object_or_404(models.Station, id=id)
-            added_value = inventory_form.cleaned_data['b']
+            added_value = inventory_form.cleaned_data['inventory_field']
             obj.inventory += added_value
             for input_material in obj.input_material.all():
                 #print(input_material.material , " - " , input_material.inventory)
@@ -189,7 +189,7 @@ def stations_detail(request, id):
 
         if exit_station_form.is_valid():
                 obj = get_object_or_404(models.Station, id=id)
-                exit_value = exit_station_form.cleaned_data['a']
+                exit_value = exit_station_form.cleaned_data['exit_station_field']
                 obj.inventory -= exit_value
                 material_obj = models.Material.objects.filter(name=obj.output_material)
                 for Material in material_obj:
