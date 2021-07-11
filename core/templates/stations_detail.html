@@ -115,16 +115,15 @@
 
 
 
-<hr>
 
       {% if request.user == station.manager %}
-         <form action="#" method="post">
+         <form action="#" method="post" align="right" dir="rtl">
            {% csrf_token %}
            <div class="row">
              <div class="col-md-12">
                <div class="form-group">
-                 <label for="exampleInputEmail1"> موجودی </label>
-                 <input name="inventory" type="text" class="form-control" value="{{ station.inventory }}">
+                 <label for="exampleInputEmail1"> افزایش موجودی </label>
+                 <input name="inventory" type="text" class="form-control">
                </div>
              </div>
            </div>

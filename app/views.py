@@ -6,7 +6,7 @@ from django import template
 from . import models
 from django.contrib.auth.models import User
 from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice
-from .forms import ProfileForm, UserForm, TicketForm
+from .forms import ProfileForm, UserForm, TicketForm, InventoryForm
 from itertools import chain
 from django.contrib.auth import get_user_model
 from django.db import transaction
@@ -169,8 +169,22 @@ def stations(request):
 def stations_detail(request, id):
     station = get_object_or_404(models.Station, id=id)
     products = models.Tree.objects.filter(station__name=station.name)
-    context = {'station': station, 'products':products}
+    if request.method == 'POST':
+        inventory_form = InventoryForm(request.POST)
+        if inventory_form.is_valid():
+            obj = get_object_or_404(models.Station, id=id)
+            added_value = inventory_form.cleaned_data['inventory']
+            obj.inventory += added_value
+            obj.save()
+            return redirect(obj.get_absolute_url())
+    else:
+        inventory_form = InventoryForm(request.POST)
+
+    context = {'station': station, 'products':products, 'inventory_form':inventory_form}
     return render(request, 'stations_detail.html', context)
+
+
+
 
 
 
