@@ -152,6 +152,23 @@
     </div>
   </div>
 
+  <div class="col-md-6">
+    <div class="card card-user">
+      <div class="card-header">
+        <h4 class="card-title" dir="rtl" align="center">
+            موجودی خارج نشده
+        </h4>
+      </div>
+      <div class="card-body">
+        <div align="right" dir="rtl" class="card-description">
+          {% for Station in exit_station %}
+              <p> <a href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>: {{ Station.inventory }}  </p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 
