@@ -152,7 +152,9 @@ def materials_detail(request, id):
     products = models.Tree.objects.filter(station__input_material__material__name=material.name)
     stations = models.Station.objects.filter(input_material__material__name=material.name)
     exit_station = models.Station.objects.filter(output_material__name=material.name)
-    context = {'material': material, 'bom':bom, 'products':products, 'stations':stations, 'exit_station':exit_station}
+    bom_material = models.Bom_material.objects.filter(name__name=material.name)
+    print(bom_material)
+    context = {'material': material, 'bom':bom, 'products':products, 'stations':stations, 'exit_station':exit_station, 'bom_material':bom_material}
     return render(request, 'materials_detail.html', context)
 
 
