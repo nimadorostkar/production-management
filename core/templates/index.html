@@ -387,8 +387,17 @@
 
 
 
-<hr>
+<hr><hr><br>
 
+{% for Material in material %}
+  {% if Material.inventory <= Material.min_inventory %}
+    <p align="right" dir="rtl" style="color:red;"> موجودی <a href="{{ Material.get_absolute_url }}"> {{ Material.name }} </a> از حداقل کمتر است </p>
+  {% endif %}
+{% endfor %}
+
+
+
+<hr>
 
 
 {% endblock content %}

@@ -23,8 +23,8 @@ from django.urls import reverse
 #------------------------------------------------------------------------------
 @login_required()
 def index(request):
-    a = "a"
-    context = {'a':a}
+    material = models.Material.objects.all()
+    context = {'material':material}
     return render(request, 'index.html', context)
 
 
