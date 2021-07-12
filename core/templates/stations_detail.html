@@ -21,9 +21,9 @@
   </div>
 </div>
 
-
-
-
+{% if station.inventory <= station.min_inventory %}
+  <p align="right" dir="rtl" style="color:red;"> موجودی از حداقل کمتر است </p>
+{% endif %}
 
 <div class="row">
 <div class="col-md-12">
@@ -92,7 +92,7 @@
       </div>
       <div class="card-body">
         {% for input_material in station.input_material.all %}
-          <a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> با ضریب {{ input_material.inventory }}   <br>
+          <a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> با ضریب {{ input_material.inventory }} &nbsp;&nbsp; موجودی: {{ input_material.material.inventory }}  <br>
         {% endfor %}
       </div>
     </div>

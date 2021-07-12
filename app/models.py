@@ -292,6 +292,35 @@ class Notice(models.Model):
 
 
 
+'''
+#------------------------------------------------------------------------------
+class Order(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name = " محصول ")
+    code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
+    description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
+    circulation = models.IntegerField(default='1',verbose_name = " تیراژ ")
+    confirmed = models.BooleanField(default=False, verbose_name = " تایید شده " )
+    completed = models.BooleanField(default=False, verbose_name = " تکمیل شده " )
+
+
+    def get_absolute_url(self):
+        return reverse('app:orders_detail',args=[self.id])
+
+    class Meta:
+        verbose_name = " سفارش محصول "
+        verbose_name_plural = "سفارشات محصول"
+
+    def __str__(self):
+        return self.product.name + ' (' + self.code + ') '
+
+    def image(self):
+        return  self.product.image
+'''
+
+
+
+
+
 
 
 
