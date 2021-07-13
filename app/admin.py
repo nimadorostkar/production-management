@@ -55,7 +55,7 @@ admin.site.register(models.Mother_Station, Mother_StationAdmin)
 class MaterialAdmin(ImportExportModelAdmin):
     list_display = ('name','code','short_description','inventory', 'image_tag', 'position')
     list_filter = ("position", "inventory")
-    search_fields = ['name', 'code', 'short_description']
+    search_fields = ['name', 'code']
 
 admin.site.register(models.Material, MaterialAdmin)
 

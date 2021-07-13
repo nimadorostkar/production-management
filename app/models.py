@@ -105,7 +105,7 @@ class Mother_Station(models.Model):
 class Material(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
-    CHOICES = ( ('محصول نهایی','Product'), ('نیمه ساخته','Semimade'), ('سطح اولیه','Primary'))
+    CHOICES = ( ('محصول نهایی','محصول نهایی'), ('نیمه ساخته','نیمه ساخته'), ('سطح اولیه','سطح اولیه'), ('اقلام مصرفی','اقلام مصرفی'))
     position=models.CharField(max_length=15,choices=CHOICES,verbose_name = "وضعیت")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
     inventory = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " موجودی ")
@@ -147,8 +147,8 @@ class Bom_material(MPTTModel):
         order_insertion_by = ['name']
 
     class Meta:
-        verbose_name = " درخت قطعه "
-        verbose_name_plural = " درخت قطعه "
+        verbose_name = " BOM قطعه "
+        verbose_name_plural = " BOM قطعه ها "
 
     def __unicode__(self):
         return u"%s" % (self.name)
