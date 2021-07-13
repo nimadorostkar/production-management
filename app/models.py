@@ -174,9 +174,11 @@ class Stations_inputs(models.Model):
 
 
     def __str__(self):
-        return str(self.material) + " [" + str(self.inventory) + "]"
+        return str(self.material.name) + " [" + str(self.inventory) + "]"
 
 
+    def name(self):
+        return str(self.material.name) + " [" + str(self.inventory) + "]"
 
 
 
@@ -204,11 +206,11 @@ class Bom_product(models.Model):
 class Station(models.Model):
     name = models.CharField(max_length=300,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
-    CHOICES = ( ('نیرو خانگی','Manpower'), ('انبار','Repository'), ('حمل و نقل','Transfer'), ('ایستگاه','Station'), ('برون سپاری','Outsourcing'))
+    CHOICES = ( ('نیرو خانگی','نیرو خانگی'), ('انبار','انبار'), ('حمل و نقل','حمل و نقل'), ('ایستگاه','ایستگاه'), ('برون سپاری','برون سپاری'))
     position=models.CharField(max_length=15,choices=CHOICES,verbose_name = "وضعیت")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
-    inventory = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " موجودی ")
-    min_inventory = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " حداقل موجودی ")
+    inventory = models.DecimalField(max_digits=30, default='0', decimal_places=4, null=True, blank=True, verbose_name = " موجودی ")
+    min_inventory = models.DecimalField(max_digits=30, default='0', decimal_places=4, null=True, blank=True, verbose_name = " حداقل موجودی ")
     manager = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True,verbose_name = "مسئول")
     mother_station = models.ForeignKey(Mother_Station ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " ایستگاه مادر ")
     pro_cap_day = models.IntegerField(default='1', null=True,blank=True, verbose_name = " ظرفیت تولید در روز ")

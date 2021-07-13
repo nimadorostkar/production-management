@@ -78,11 +78,8 @@ def profile(request):
             user_photo = profile_form.cleaned_data['user_photo']
             user_form.save()
             profile_form.save()
-            messages.success(request, _('Your profile was successfully updated!'))
             context = {'profile': profile,'user_form': user_form,'profile_form': profile_form }
             return render(request, 'page-user.html', context)
-        else:
-            messages.error(request, _('Please correct the error below.'))
   else:
       user_form = UserForm(instance=request.user)
       profile_form = ProfileForm(instance=request.user.profile)

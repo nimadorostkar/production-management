@@ -93,8 +93,8 @@ admin.site.register(Bom_material, DraggableMPTTAdmin,
 
 #------------------------------------------------------------------------------
 class Stations_inputsAdmin(ImportExportModelAdmin):
-    list_display = ('material', 'inventory')
-    search_fields = ['material', 'inventory']
+    list_display = ('id', 'material', 'inventory')
+    search_fields = ['material', 'id']
     raw_id_fields = ('material',)
 
 admin.site.register(models.Stations_inputs, Stations_inputsAdmin)
