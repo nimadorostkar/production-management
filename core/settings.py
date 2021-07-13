@@ -120,7 +120,7 @@ JALALI_DATE_DEFAULTS = {
 
 
 
-TEMPLATE_DIR = os.path.join(BASE_DIR, "core/templates")  # ROOT dir for templates
+TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")  # ROOT dir for templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
