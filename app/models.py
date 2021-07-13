@@ -48,7 +48,7 @@ class Profile(models.Model):
 
 #------------------------------------------------------------------------------
 class Product(models.Model):
-    name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
+    name = models.CharField(max_length=300,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
     #inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " موجودی ")
@@ -63,6 +63,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
 
     def get_absolute_url(self):
         return reverse('app:products_detail',args=[self.id])
@@ -159,7 +160,7 @@ class Bom_material(MPTTModel):
 
 #------------------------------------------------------------------------------
 class Stations_inputs(models.Model):
-    material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعه ")
+    material = models.ForeignKey(Material ,on_delete=models.CASCADE, verbose_name = " قطعه ")
     inventory = models.DecimalField(max_digits=30, decimal_places=4, verbose_name = " تعداد ")
 
     class Meta:
@@ -178,9 +179,9 @@ class Stations_inputs(models.Model):
 
 #------------------------------------------------------------------------------
 class Bom_product(models.Model):
-    material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " قطعه ")
+    material = models.ForeignKey(Material ,on_delete=models.CASCADE, verbose_name = " قطعه ")
     inventory = models.DecimalField(default='1',max_digits=30, decimal_places=4, verbose_name = " تعداد ")
-    relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
+    relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name = "محصول مرتبط")
 
     class Meta:
         verbose_name = " BOM محصول "
@@ -196,7 +197,7 @@ class Bom_product(models.Model):
 
 #------------------------------------------------------------------------------
 class Station(models.Model):
-    name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
+    name = models.CharField(max_length=300,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
     CHOICES = ( ('نیرو خانگی','Manpower'), ('انبار','Repository'), ('حمل و نقل','Transfer'), ('ایستگاه','Station'), ('برون سپاری','Outsourcing'))
     position=models.CharField(max_length=15,choices=CHOICES,verbose_name = "وضعیت")
@@ -231,7 +232,7 @@ class Station(models.Model):
 
 #------------------------------------------------------------------------------
 class Tree(models.Model):
-    station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='station', verbose_name = " ایستگاه ")
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='station', verbose_name = " ایستگاه ")
     parent_station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='parent_station', verbose_name = " ایستگاه والد ")
     quantity = models.DecimalField(default='1', max_digits=30, decimal_places=1, verbose_name = "تعداد در یک محصول")
     relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
@@ -278,7 +279,7 @@ class Ticket(models.Model):
 
 #------------------------------------------------------------------------------
 class Notice(models.Model):
-    title = models.CharField(max_length=200,null=True, blank=True,verbose_name = " عنوان ")
+    title = models.CharField(max_length=200,verbose_name = " عنوان ")
     content = models.TextField(null=True, blank=True,verbose_name = " متن ")
     updated_on = models.DateTimeField(auto_now= True)
     created_on = models.DateTimeField(auto_now_add=True)

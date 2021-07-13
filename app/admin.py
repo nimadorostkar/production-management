@@ -35,6 +35,7 @@ class ProductAdmin(ImportExportModelAdmin):
     list_display = ('name','code','short_description','image_tag')
     search_fields = ['name', 'code']
     raw_id_fields = ('synch_to',)
+    #autocomplete_fields = ('synch_to',)
 
 admin.site.register(models.Product, ProductAdmin)
 
