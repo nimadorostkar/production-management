@@ -90,6 +90,7 @@ admin.site.register(Bom_material, DraggableMPTTAdmin,
 
 
 
+
 #------------------------------------------------------------------------------
 class Stations_inputsAdmin(ImportExportModelAdmin):
     list_display = ('material', 'inventory')

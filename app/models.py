@@ -150,8 +150,13 @@ class Bom_material(MPTTModel):
         verbose_name = " درخت قطعه "
         verbose_name_plural = " درخت قطعه "
 
+    def __unicode__(self):
+        return u"%s" % (self.name)
+
     def __str__(self):
         return str(self.name)
+
+
 
 
 
