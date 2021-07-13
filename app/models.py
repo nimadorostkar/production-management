@@ -207,6 +207,7 @@ class Station(models.Model):
     mother_station = models.ForeignKey(Mother_Station ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " ایستگاه مادر ")
     pro_cap_day = models.IntegerField(default='1', null=True,blank=True, verbose_name = " ظرفیت تولید در روز ")
     percent_error = models.IntegerField(default='1', null=True,blank=True, verbose_name = " درصد خطا ")
+    process_time = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " زمان مصرفی به ساعت ")
     input_material = models.ManyToManyField(Stations_inputs, blank=True,related_name='input', verbose_name = " قطعات ورودی ")
     output_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,related_name='output', verbose_name = " قطعه خروجی ")
 
@@ -298,7 +299,6 @@ class Notice(models.Model):
 
 
 
-'''
 #------------------------------------------------------------------------------
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name = " محصول ")
@@ -321,7 +321,7 @@ class Order(models.Model):
 
     def image(self):
         return  self.product.image
-'''
+
 
 
 
