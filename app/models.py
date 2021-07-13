@@ -49,11 +49,7 @@ class Profile(models.Model):
 #------------------------------------------------------------------------------
 class Product(models.Model):
     name = models.CharField(max_length=300,verbose_name = " نام ")
-    code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
-    description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
-    #inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " موجودی ")
     synch_to = models.ForeignKey('Material', on_delete=models.CASCADE,verbose_name = " قطعه مربوطه ")
-    #image = models.ImageField(upload_to='media', default='media/Default.png', null=True, blank=True,verbose_name = "تصویر")
     file = models.FileField(null=True, blank=True,verbose_name ="فایل")
 
 
@@ -73,7 +69,10 @@ class Product(models.Model):
 
     @property
     def short_description(self):
-        return truncatechars(self.description, 70)
+        return truncatechars(self.synch_to.description, 70)
+
+    def code(self):
+        return self.synch_to.code
 
 
 

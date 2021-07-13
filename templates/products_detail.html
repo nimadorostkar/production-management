@@ -15,8 +15,8 @@
 <div class="col-md-12">
   <div class="card  card-plain" align="right" dir="rtl">
     <div class="card-header">
-      <h4 class="card-title" dir="rtl" align="center"> محصول {{ product.name }} <small> ({{ product.code }}) </small> </h4> <br>
-      <p> موجودی:   {{ product.inventory }}  </p>
+      <h4 class="card-title" dir="rtl" align="center"> محصول {{ product.name }} <small> ({{ product.synch_to.code }}) </small> </h4> <br>
+      <p> موجودی:   {{ product.synch_to.inventory }}  </p>
     </div>
   </div>
 </div>
@@ -37,7 +37,7 @@
           </div>
         </p>
         <div align="right" dir="rtl" class="card-description">
-          <p class="category"> {{ product.description|linebreaks }} </p>
+          <p class="category"> {{ product.synch_to.description|linebreaks }} </p>
         </div>
       </div>
     </div>
@@ -152,10 +152,10 @@
                         template: "polina"
                     },
                     "انبار": {
-                        template: "belinda"
+                        template: "rony"
                     },
                     "حمل و نقل": {
-                        template: "rony"
+                        template: "belinda"
                     },
                     "ایستگاه": {
                         template: "ana"
@@ -182,7 +182,7 @@
                       name: "{{ Tree.station }}",
                       inventory: "{{ Tree.station.inventory }}",
                       quantity: "{{ Tree.quantity }}",
-                      link: "http://127.0.0.1:8000/{{ Tree.station.get_absolute_url }}" ,
+                      link: "http://127.0.0.1:8000{{ Tree.station.get_absolute_url }}" ,
                       output:" {{ Tree.station.output_material }} " ,
                       img: "{{ Tree.station.output_material.image.url }}",
                       tags: ["{{ Tree.station.position }}"]
