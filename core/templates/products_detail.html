@@ -1,0 +1,210 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load mptt_tags %}
+
+
+
+
+
+<div class="col-md-12">
+  <div class="card  card-plain" align="right" dir="rtl">
+    <div class="card-header">
+      <h4 class="card-title" dir="rtl" align="center"> محصول {{ product.name }} <small> ({{ product.code }}) </small> </h4> <br>
+      <p> موجودی:   {{ product.inventory }}  </p>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-user">
+      <div class="card-body">
+        <p class="card-text">
+          <div class="author">
+            <div class="block block-one"></div>
+            <div class="block block-two"></div>
+            <div class="block block-three"></div>
+            <div class="block block-four"></div>
+            <img width="20%" src="{{ product.synch_to.image.url }}">
+          </div>
+        </p>
+        <div align="right" dir="rtl" class="card-description">
+          <p class="category"> {{ product.description|linebreaks }} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-user">
+      <div class="card-header">
+        <h4 class="card-title" dir="rtl" align="center"> درخت محصول </h4> <hr>
+      </div>
+      <div class="card-body">
+
+          <div id="tree"> <div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="row" dir="rtl" align="right">
+  <div class="col-md-12">
+    <div class="card card-user">
+      <div class="card-header">
+        <h4 class="card-title"> BOM محصول </h4>
+      </div>
+      <div class="card-body">
+
+
+            {% for Bom_product in bom %}
+              <a href="{{ Bom_product.material.get_absolute_url }}"> {{ Bom_product.material }} </a> -------- {{ Bom_product.inventory }} <br>
+
+              <section id='eg1' class="ladder tree">
+                <ul>
+                  {% recursetree material_bom %}
+                   {% if node.relatedProduct.name == Bom_product.material.name %}
+                      <li><a href="."> {{ node.quantity }} ----- {{ node.name.name }}   <hr> </a>
+                        <ul>
+                          {% if not node.is_leaf_node %}
+                            <li>
+                              <a href="."> {{ children }} </a>
+                            </li>
+                          {% endif %}
+                        </ul>
+                      </li>
+                    {% endif %}
+                  {% endrecursetree %}
+                </ul>
+              </section>
+
+
+              <hr>
+            {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script>
+
+
+
+    $("#eg1 li ul").slideToggle(); // hide all nested lists
+    $("#eg1 li ul").prev("a").click(function(){ // add fn to list items that have a nested list
+        $(this).next("ul").slideToggle(100); // show/hide the nested list
+        return false; // prevent scrolling
+    });
+
+
+
+
+
+
+    window.onload = function () {
+        OrgChart.templates.ana.plus = '<circle cx="15" cy="15" r="15" fill="#ffffff" stroke="#aeaeae" stroke-width="1"></circle>'
+            + '<text text-anchor="middle" style="font-size: 18px;cursor:pointer;" fill="#757575" x="15" y="22">{collapsed-children-count}</text>';
+
+        var chart = new OrgChart(document.getElementById("tree"), {
+            template: "ana",
+            enableDragDrop: true,
+            assistantSeparation: 170,
+            align: OrgChart.ORIENTATION,
+            toolbar: {
+                fullScreen: true,
+                zoom: true,
+                fit: true,
+                expandAll: true
+            },
+            tags: {
+                    "نیرو خانگی": {
+                        template: "polina"
+                    },
+                    "انبار": {
+                        template: "belinda"
+                    },
+                    "حمل و نقل": {
+                        template: "rony"
+                    },
+                    "ایستگاه": {
+                        template: "ana"
+                    },
+                    "برون سپاری": {
+                        template: "ula"
+                    }
+                },
+            nodeBinding: {
+                field_0: "name",
+                field_1: "inventory",
+                field_2: "quantity",
+                field_3: "output",
+                field_4: "link",
+                img_0: "img"
+            },
+        });
+
+        chart.load([
+              {% for Tree in tree %}
+                    {
+                      id: "{{ Tree.station }}",
+                      pid: "{{ Tree.parent_station }}",
+                      name: "{{ Tree.station }}",
+                      inventory: "{{ Tree.station.inventory }}",
+                      quantity: "{{ Tree.quantity }}",
+                      link: "http://127.0.0.1:8000/{{ Tree.station.get_absolute_url }}" ,
+                      output:" {{ Tree.station.output_material }} " ,
+                      img: "{{ Tree.station.output_material.image.url }}",
+                      tags: ["{{ Tree.station.position }}"]
+                    },
+              {% endfor %}
+          ]);
+
+    };
+
+
+
+
+
+
+
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+    });
+
+
+
+  </script>
+
+{% endblock javascripts %}
