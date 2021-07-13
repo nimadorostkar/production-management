@@ -11,6 +11,8 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 
+
+
 #------------------------------------------------------------------------------
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE,unique=True,related_name='profile',verbose_name = "کاربر")
@@ -50,7 +52,9 @@ class Product(models.Model):
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
     inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " موجودی ")
+    synch_to = models.ForeignKey('Material', on_delete=models.CASCADE,verbose_name = " قطعه مربوطه ")
     image = models.ImageField(upload_to='media', default='media/Default.png', null=True, blank=True,verbose_name = "تصویر")
+    file = models.FileField(null=True, blank=True,verbose_name ="فایل")
 
 
     class Meta:
@@ -100,6 +104,8 @@ class Mother_Station(models.Model):
 class Material(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
+    CHOICES = ( ('محصول نهایی','Product'), ('نیمه ساخته','Semimade'), ('سطح اولیه','Primary'))
+    position=models.CharField(max_length=15,choices=CHOICES,verbose_name = "وضعیت")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
     inventory = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " موجودی ")
     min_inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " حداقل موجودی ")
