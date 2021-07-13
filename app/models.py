@@ -51,9 +51,9 @@ class Product(models.Model):
     name = models.CharField(max_length=300,null=True, blank=True,verbose_name = " نام ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
-    inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " موجودی ")
+    #inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " موجودی ")
     synch_to = models.ForeignKey('Material', on_delete=models.CASCADE,verbose_name = " قطعه مربوطه ")
-    image = models.ImageField(upload_to='media', default='media/Default.png', null=True, blank=True,verbose_name = "تصویر")
+    #image = models.ImageField(upload_to='media', default='media/Default.png', null=True, blank=True,verbose_name = "تصویر")
     file = models.FileField(null=True, blank=True,verbose_name ="فایل")
 
 
@@ -68,7 +68,7 @@ class Product(models.Model):
         return reverse('app:products_detail',args=[self.id])
 
     def image_tag(self):
-        return format_html("<img width=50 src='{}'>".format(self.image.url))
+        return format_html("<img width=50 src='{}'>".format(self.synch_to.image.url))
 
     @property
     def short_description(self):
@@ -320,7 +320,7 @@ class Order(models.Model):
         return self.product.name + ' (' + self.code + ') '
 
     def image(self):
-        return  self.product.image
+        return  self.product.synch_to.image
 
 
 
