@@ -93,8 +93,8 @@
             <tr>
               <td>
                 <p class="category"> محصولات استفاده کننده:
-                  {% for Tree in products %}
-                   &nbsp;&nbsp;&nbsp;  <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }} </a>
+                  {% for Product in products %}
+                   &nbsp;&nbsp;&nbsp;  <a href="{{ Product.get_absolute_url }}"> {{ Product.name }} </a>
                   {% endfor %}
                 </p>
               </td>
