@@ -160,8 +160,6 @@ class Bom_material(MPTTModel):
 
 
 
-
-
 #------------------------------------------------------------------------------
 class Stations_inputs(models.Model):
     material = models.ForeignKey(Material ,on_delete=models.CASCADE, verbose_name = " قطعه ")
