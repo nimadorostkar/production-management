@@ -93,9 +93,7 @@
             <tr>
               <td>
                 <p class="category"> محصولات استفاده کننده:
-                  {% for Product in products %}
-                   &nbsp;&nbsp;&nbsp;  <a href="{{ Product.get_absolute_url }}"> {{ Product.name }} </a>
-                  {% endfor %}
+                     <div  dir="rtl" align="right" id="relProduct">  </div>
                 </p>
               </td>
               <td>
@@ -206,6 +204,37 @@
 {% block javascripts %}
 
   <script>
+
+
+
+    var tree = [
+      {% for Tree in tree %}
+        { "name":"{{Tree.relatedProduct.name}}", "tot":1 },
+      {% endfor %}
+     ];
+
+      var relProduct_div = document.getElementById("relProduct");
+      var relProduct = tree.reduce(function (agg, obj) {
+        var objForName = agg.filter(function (nameObj) { return nameObj.name === obj.name})[0]
+
+        if (objForName) {
+          objForName.total += obj.tot;
+        } else {
+          agg.push({
+            name: obj.name,
+            total: obj.tot
+          })
+        }
+        return agg;
+      }, [])
+
+    for(var i=0; i < relProduct.length; i++){
+      relProduct_div.innerHTML += "<p>"+relProduct[i].name+"</p> ";
+    }
+
+
+
+
 
 
 

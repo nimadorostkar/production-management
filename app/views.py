@@ -146,14 +146,19 @@ def materials(request):
 def materials_detail(request, id):
     material = get_object_or_404(models.Material, id=id)
     bom = models.Bom_material.objects.filter(relatedProduct=material)
-    tree = models.Tree.objects.filter(station__input_material__material__name=material.name)
-    print(tree)
-    stations = models.Station.objects.filter(input_material__material__name=material.name)
+    stations = models.Station.objects.filter(input_material__material__name=material.name, position='نیرو خانگی'or'ایستگاه'or'برون سپاری')
     exit_station = models.Station.objects.filter(output_material__name=material.name, position='نیرو خانگی'or'ایستگاه'or'برون سپاری' )
     bom_material = models.Bom_material.objects.filter(name__name=material.name)
-    products = models.Product.objects.filter(name__in=tree__relatedProduct.name)
-
-    context = {'material': material, 'bom':bom, 'products':products, 'stations':stations, 'exit_station':exit_station, 'bom_material':bom_material}
+    tree = models.Tree.objects.filter(station__input_material__material__name=material.name)
+    
+    context = {
+    'material': material,
+    'bom':bom,
+    'tree':tree,
+    'stations':stations,
+    'exit_station':exit_station,
+    'bom_material':bom_material
+    }
     return render(request, 'materials_detail.html', context)
 
 
