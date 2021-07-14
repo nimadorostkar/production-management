@@ -55,46 +55,55 @@
 
 <div class="row" dir="rtl" align="right">
 
-  <div class="col-md-6">
+  <div class="col-md-7">
     <div class="card card-user">
       <div class="card-header">
-        <h4 class="card-title"> BOM محصول </h4>
+        <h4 class="card-title"> fff </h4>
       </div>
       <div class="card-body">
-            {% for Bom_product in bom %}
-              <a href="{{ Bom_product.material.get_absolute_url }}"> {{ Bom_product.material }} </a> -------- {{ Bom_product.inventory }} <br>
-              <section id='eg1' class="ladder tree">
-                <ul>
-                  {% recursetree material_bom %}
-                   {% if node.relatedProduct.name == Bom_product.material.name %}
-                      <li><a href="."> {{ node.quantity }} ----- {{ node.name.name }}   <hr> </a>
-                        <ul>
-                          {% if not node.is_leaf_node %}
-                            <li>
-                              <a href="."> {{ children }} </a>
-                            </li>
-                          {% endif %}
-                        </ul>
-                      </li>
-                    {% endif %}
-                  {% endrecursetree %}
-                </ul>
-              </section>
-              <hr>
-            {% endfor %}
+           hhhh hhhh
       </div>
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-5">
     <div class="card card-user">
       <div class="card-header">
         <h4 class="card-title"> اقلام مصرفی </h4>
       </div>
       <div class="card-body">
-        {% for Bom_product in bom_s1 %}
-           <a href="{{ Bom_product.material.get_absolute_url }}"> {{ Bom_product.material }} </a> -------- {{ Bom_product.inventory }} <br>   <hr>
-        {% endfor %}
+        <table class="table tablesorter " id="">
+          <thead class=" text-primary">
+            <tr>
+              <th>
+                نام
+              </th>
+              <th>
+                کد
+              </th>
+              <th>
+                ضریب مصرف
+              </th>
+              <th class="text-center">
+                تصویر
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for Bom_product in bom_masrafi %}
+            <tr>
+              <td><a href="{{ Bom_product.material.get_absolute_url }}"> {{ Bom_product.material.name }} </a></td>
+              <td> {{ Bom_product.material.code }} </td>
+              <td> {{ Bom_product.inventory }}</td>
+              <td class="text-center">
+                <div class="photo">
+                  <img src="{{ Bom_product.material.image.url }}" alt="Profile Photo">
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -162,7 +171,7 @@
           {% for Tree in tree %}
             <tr>
               <td><a href="{{ Tree.station.get_absolute_url }}"> {{ Tree.station.name }} </a></td>
-              <td> {{ Tree.station.code }} </td>
+              <td> {{ Tree.station.position }} </td>
               <td> {{ Tree.station.manager }} </td>
               <td> {{ Tree.station.description|slice:":60" }}... </td>
               <td> {{ Tree.station.inventory }} </td>
@@ -178,6 +187,61 @@
 
 </div>
 
+
+
+
+
+
+
+
+
+<div class="row" dir="rtl" align="right">
+
+  <div class="col-md-12">
+    <div class="card card-user">
+      <div class="card-header">
+        <h4 class="card-title"> BOM محصول </h4>
+      </div>
+      <div class="card-body">
+
+
+
+
+
+
+          {% for Bom_product in bom %}
+            {{ Bom_product.material }}
+                <section id='eg1' class="ladder tree">
+                  <ul>
+                    {% recursetree material_bom %}
+                     {% if node.relatedProduct.name == Bom_product.material.name %}
+                        <li><a href="."> {{ node.quantity }} ----- {{ node.name.name }}   <hr> </a>
+                          <ul>
+                            {% if not node.is_leaf_node %}
+                              <li>
+                                <a href="."> {{ children }} </a>
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
+                      {% endif %}
+                    {% endrecursetree %}
+                  </ul>
+                </section>
+            
+          {% endfor %}
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
 
 
 
