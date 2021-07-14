@@ -127,7 +127,7 @@ def products(request):
 def products_detail(request, id):
     product = get_object_or_404(models.Product, id=id)
     tree = models.Tree.objects.filter(relatedProduct=product)
-    bom = models.Bom_product.objects.filter(relatedProduct=product )
+    bom = models.Bom_product.objects.filter(relatedProduct=product).exclude(material__position='اقلام مصرفی')
     bom_masrafi = models.Bom_product.objects.filter(relatedProduct=product, material__position='اقلام مصرفی')
     material_bom = models.Bom_material.objects.all()
     context = {'product': product, 'tree':tree, 'bom':bom, 'bom_masrafi':bom_masrafi, 'material_bom':material_bom}

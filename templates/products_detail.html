@@ -58,10 +58,39 @@
   <div class="col-md-7">
     <div class="card card-user">
       <div class="card-header">
-        <h4 class="card-title"> fff </h4>
+        <h4 class="card-title"> BOM محصول </h4>
       </div>
       <div class="card-body">
-           hhhh hhhh
+        {% for Bom_product in bom %}
+          <section id='eg1' class="ladder tree">
+            <ul>
+              <li>
+                <a href=".">
+                  {{ Bom_product.material }} &nbsp;&nbsp;&nbsp;&nbsp;
+                   ضریب مصرف: {{ Bom_product.inventory }} &nbsp;&nbsp;&nbsp;&nbsp;
+                  <img width="30px" src="{{ Bom_product.material.image.url }}" alt="Profile Photo">
+                  <hr>
+                </a>
+                 <ul>
+                  {% recursetree material_bom %}
+                   {% if node.relatedProduct.name == Bom_product.material.name %}
+                      <li>
+                        <a href=".">
+                          {{ node.name.name }} &nbsp;&nbsp;&nbsp;&nbsp;
+                          ضریب مصرف: {{ node.quantity }} &nbsp;&nbsp;&nbsp;&nbsp;
+                          <img width="30px" src="{{ node.name.image.url }}" alt="Profile Photo">
+                          <hr>
+                        </a>
+                         <ul>{% if not node.is_leaf_node %}<li>{{ children }}</li>{% endif %}</ul>
+                      </li>
+                    {% endif %}
+                  {% endrecursetree %}
+                </ul>
+              </li>
+            </ul>
+          </section>
+        {% endfor %}
+
       </div>
     </div>
   </div>
@@ -194,54 +223,25 @@
 
 
 
-
 <div class="row" dir="rtl" align="right">
 
   <div class="col-md-12">
     <div class="card card-user">
       <div class="card-header">
-        <h4 class="card-title"> BOM محصول </h4>
+        <h4 class="card-title"> orders </h4>
       </div>
       <div class="card-body">
-
-
-
-
-
-
-          {% for Bom_product in bom %}
-            {{ Bom_product.material }}
-                <section id='eg1' class="ladder tree">
-                  <ul>
-                    {% recursetree material_bom %}
-                     {% if node.relatedProduct.name == Bom_product.material.name %}
-                        <li><a href="."> {{ node.quantity }} ----- {{ node.name.name }}   <hr> </a>
-                          <ul>
-                            {% if not node.is_leaf_node %}
-                              <li>
-                                <a href="."> {{ children }} </a>
-                              </li>
-                            {% endif %}
-                          </ul>
-                        </li>
-                      {% endif %}
-                    {% endrecursetree %}
-                  </ul>
-                </section>
-            
-          {% endfor %}
-
-
-
-
-
-
-
+          gggg ggggg ggggg
       </div>
     </div>
   </div>
 
 </div>
+
+
+
+
+
 
 
 
