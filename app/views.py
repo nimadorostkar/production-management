@@ -128,8 +128,9 @@ def products_detail(request, id):
     product = get_object_or_404(models.Product, id=id)
     tree = models.Tree.objects.filter(relatedProduct=product)
     bom = models.Bom_product.objects.filter(relatedProduct=product)
+    bom_s1 = models.Bom_product.objects.filter(relatedProduct=product, material__position='اقلام مصرفی')
     material_bom = models.Bom_material.objects.all()
-    context = {'product': product, 'tree':tree, 'bom':bom, 'material_bom':material_bom}
+    context = {'product': product, 'tree':tree, 'bom':bom, 'bom_s1':bom_s1, 'material_bom':material_bom}
     return render(request, 'products_detail.html', context)
 
 
@@ -150,7 +151,7 @@ def materials_detail(request, id):
     exit_station = models.Station.objects.filter(output_material__name=material.name, position='نیرو خانگی'or'ایستگاه'or'برون سپاری' )
     bom_material = models.Bom_material.objects.filter(name__name=material.name)
     tree = models.Tree.objects.filter(station__input_material__material__name=material.name)
-    
+
     context = {
     'material': material,
     'bom':bom,
