@@ -71,9 +71,9 @@
                 <p class="category">  حداقل موجودی : {{ material.min_inventory }} </p>
               </td>
               <td>
-                <p class="category">  ایستگاه تولید کننده :
+                <p class="category">   خروجی ایستگاه های:
                   {% for Station in exit_station %}
-                     <a href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>
+                     &nbsp;&nbsp;&nbsp; <a href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>
                   {% endfor %}
                 </p>
               </td>
