@@ -29,6 +29,9 @@
                   توضیحات
                 </th>
                 <th>
+                  وضعیت
+                </th>
+                <th>
                   موجودی 
                 </th>
                 <th class="text-center">
@@ -42,6 +45,7 @@
                 <td><a href="{{ Material.get_absolute_url }}"> {{ Material.name }} </a></td>
                 <td> {{ Material.code }} </td>
                 <td> {{ Material.description|slice:":70" }}... </td>
+                <td> {{ Material.position }}</td>
                 <td> {{ Material.inventory }}</td>
                 <td class="text-center">
                   <div class="photo">
