@@ -71,6 +71,8 @@
 
 <div class="row" dir="rtl" align="right">
 
+  {% if material.position != 'سطح اولیه' %}
+  {% if material.position !=  'اقلام مصرفی' %}
   <div class="col-md-6">
     <div class="card card-user">
       <div class="card-header">
@@ -97,6 +99,8 @@
       </div>
     </div>
   </div>
+  {% endif %}
+  {% endif %}
 
   <div class="col-md-6">
     <div class="card card-user">
@@ -122,6 +126,8 @@
             {% endfor %}
         <hr><br>
             <div id="relProduct"></div>
+        {% if material.position != 'سطح اولیه' %}
+        {% if material.position !=  'اقلام مصرفی' %}
         <hr><br>
             خروجی ایستگاه های:
             {% for Station in exit_station %}
@@ -134,6 +140,8 @@
                 &nbsp;&nbsp;&nbsp;  <a style="color:black;" href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>[ {{ Station.inventory }} ]
               {% endif %}
             {% endfor %}
+        {% endif %}
+        {% endif %}
         </p>
 
 
