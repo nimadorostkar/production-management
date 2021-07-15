@@ -304,6 +304,33 @@ class Notice(models.Model):
 
 
 
+
+#------------------------------------------------------------------------------
+class Inventory_history(models.Model):
+    material = models.ForeignKey(Material, on_delete=models.CASCADE,verbose_name = " قطعه ")
+    quantity = models.DecimalField(default='1', max_digits=30, decimal_places=4, verbose_name = " تعداد ")
+    manager = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name = "مسئول")
+    time = models.DateTimeField(verbose_name = "زمان")
+
+
+    class Meta:
+        verbose_name = " سابقه افزایش موجودی "
+        verbose_name_plural = " سابقه افزایش موجودی ها "
+
+    def j_time(self):
+        return jalali_converter(self.time)
+
+    def __str__(self):
+        return self.material.name + '-' + self.quantity + '-' + self.j_time
+
+
+
+
+
+
+
+
+
 #------------------------------------------------------------------------------
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name = " محصول ")
