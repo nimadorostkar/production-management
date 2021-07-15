@@ -310,7 +310,7 @@ class Inventory_history(models.Model):
     material = models.ForeignKey(Material, on_delete=models.CASCADE,verbose_name = " قطعه ")
     quantity = models.DecimalField(default='1', max_digits=30, decimal_places=4, verbose_name = " تعداد ")
     manager = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name = "مسئول")
-    time = models.DateTimeField(verbose_name = "زمان")
+    time = models.DateTimeField(auto_now_add=True, verbose_name = "زمان")
 
 
     class Meta:

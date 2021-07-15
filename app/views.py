@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django import template
 from . import models
 from django.contrib.auth.models import User
-from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice
+from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Inventory_history
 from .forms import ProfileForm, UserForm, TicketForm, InventoryForm, Exit_stationForm
 from itertools import chain
 from django.contrib.auth import get_user_model
@@ -193,6 +193,11 @@ def stations_detail(request, id):
                     Material.inventory -= ( input_material.inventory * added_value )
                 Material.save()
             obj.save()
+            history = Inventory_history()
+            history.material = station.output_material
+            history.quantity = added_value
+            history.manager = station.manager
+            history.save()
             return redirect(obj.get_absolute_url())
 
         if exit_station_form.is_valid():
