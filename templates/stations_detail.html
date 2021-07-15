@@ -16,57 +16,25 @@
 <div class="col-md-12">
   <div class="card  card-plain" align="right" dir="rtl">
     <div class="card-header">
-      <h4 class="card-title" dir="rtl" align="center"> ایستگاه {{ station.name }} <small> ({{ station.code }}) </small> </h4> <br>
+      <h4 class="card-title" dir="rtl" align="center"> ایستگاه {{ station.name }} </h4>
+
+      <div class="row">
+        <div class="col-md-6" align="right">
+          <button style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:8px;padding:10px;font-size:16px;border:none;"> کد:&nbsp;{{ station.code }} </button>
+        </div>
+        <div class="col-md-6" align="left">
+          <button style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:8px;padding:10px;font-size:16px;border:none;"> {{ station.position }} </button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
+
 
 {% if station.inventory <= station.min_inventory %}
   <p align="right" dir="rtl" style="color:red;"> موجودی از حداقل کمتر است </p>
 {% endif %}
-
-<div class="row">
-<div class="col-md-12">
-  <div class="card  card-plain" align="center" dir="rtl">
-    <div class="card-body">
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>
-                <p class="category"> موجودی :  {{ station.inventory }} </p>
-              </td>
-              <td>
-                <p class="category">  حداقل موجودی : {{ station.min_inventory }} </p>
-              </td>
-              <td>
-                <p class="category">  ظرفیت تولید در روز : {{ station.pro_cap_day }} </p>
-              </td>
-              <td>
-                <p class="category">   درصد خطا : {{ station.percent_error }}</p>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr>
-              <td>
-                <p class="category"> قطعه خروجی : {{ station.output_material }} </p>
-              </td>
-              <td>
-                <p class="category"> ایستگاه مادر :   {{ station.mother_station }} </p>
-              </td>
-              <td>
-                <p class="category">  مسئول : {{ station.manager }}  </p>
-              </td>
-              <td>
-                <p class="category">  وضعیت : {{ station.position }}  </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-    </div>
-  </div>
-</div>
-</div>
 
 
 
@@ -84,6 +52,86 @@
 
 
 
+
+
+
+<div class="row" dir="rtl" align="right" style="font-size:11px; color:black;">
+
+  <div class="col-md-2">
+    <div class="card ">
+      <div class="card-header">
+        <h6 class="card-title" align="center"> موجودی  </h6>
+      </div>
+      <div class="card-body">
+          {{ station.inventory }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card ">
+      <div class="card-header">
+        <h6 class="card-title" align="center"> حداقل موجودی  </h6>
+      </div>
+      <div class="card-body">
+          {{ station.min_inventory }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card ">
+      <div class="card-header">
+        <h6 class="card-title" align="center"> ظرفیت تولید در روز   </h6>
+      </div>
+      <div class="card-body">
+          {{ station.pro_cap_day }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card ">
+      <div class="card-header">
+        <h6 class="card-title" align="center"> درصد خطا  </h6>
+      </div>
+      <div class="card-body">
+         {{ station.percent_error }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card ">
+      <div class="card-header">
+        <h6 class="card-title" align="center">  ایستگاه مادر </h6>
+      </div>
+      <div class="card-body">
+         {{ station.mother_station|default:'ندارد' }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card ">
+      <div class="card-header">
+        <h6 class="card-title" align="center"> مسئول  </h6>
+      </div>
+      <div class="card-body">
+         {{ station.manager }}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+  <p class="category"> قطعه خروجی : {{ station.output_material }} </p>
+
+
+
+
 <div class="row" align="center" dir="rtl">
   <div class="col-md-6">
     <div class="card">
@@ -97,7 +145,8 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
+
+  <div class="col-md-3">
     <div class="card ">
       <div class="card-header">
          <h4>  محصولات استفاده کننده: :</h4>
@@ -109,6 +158,20 @@
       </div>
     </div>
   </div>
+  
+  <div class="col-md-3">
+    <div class="card ">
+      <div class="card-header">
+         <h4>  محصولات استفاده کننده: :</h4>
+      </div>
+      <div class="card-body">
+        {% for Tree in products %}
+          <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }}  <br> </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
 </div>
 
 
