@@ -147,25 +147,6 @@
 
 
 
-
-
-  <br><br><hr> mojoodie kolle ghete: <br><br>
-
-  [ {{ material.inventory }} ] self(here) <br>
-
-  {% for Station in exit_station %}
-    [ {{ Station.name }} {{ Station.inventory }} ] dont exit station <br>
-  {% endfor %}
-
-  {% for Bom_material in bom_material %}
-    [ {{ Bom_material.parent.name }} -- {% widthratio Bom_material.parent.name.inventory Bom_material.quantity 1 %} ] Material uper step <br>
-  {% endfor %}
-
-
-
-
-
-
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
