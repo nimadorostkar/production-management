@@ -24,10 +24,10 @@
 
         <div class="row">
           <div class="col-md-6" align="right">
-            <button style="background-color:#fb8826e0;color:white;text-align:center;border-radius:8px;padding:10px;font-size:16px;border:none;"> {{ material.position }} </button>
+            <button style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:8px;padding:10px;font-size:16px;border:none;"> کد:&nbsp;{{ material.code }} </button>
           </div>
           <div class="col-md-6" align="left">
-            <b> code: &nbsp; </b> <i> {{ material.code }} </i>
+            <button style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:8px;padding:10px;font-size:16px;border:none;"> {{ material.position }} </button>
           </div>
         </div>
 
@@ -69,31 +69,31 @@
 
 
 
-<div class="row">
+<div class="row" dir="rtl" align="right">
 
   <div class="col-md-6">
     <div class="card card-user">
       <div class="card-header">
-        <h4 class="card-title" dir="rtl" align="center">
+        <h4 class="card-title" align="center">
             BOM
         </h4>
       </div>
-      <div class="card-body">
-        <div align="right" dir="rtl" class="card-description">
+      <div class="card-body" style="font-size:11px; color:black;">
           <section id='eg1' class="ladder tree">
-            <ul>
-              {% recursetree bom %}
-              <li> <a href="."> <p> {{ node.quantity }} --- {{ node.name.name }} </p> </a>
-                <ul>
-                  {% if not node.is_leaf_node %}
-                    <li> {{ children }}  </li>
-                  {% endif %}
+                 <ul>
+                  {% recursetree bom %}
+                      <li>
+                        <a style="color:black;" href=".">
+                          {{ node.name.name }} &nbsp;&nbsp;&nbsp;
+                          ضریب مصرف: {{ node.quantity }} &nbsp;&nbsp;&nbsp;&nbsp;
+                          <img width="30px" src="{{ node.name.image.url }}" alt="Profile Photo">
+                          <hr>
+                        </a>
+                         <ul>{% if not node.is_leaf_node %}<li>{{ children }}</li>{% endif %}</ul>
+                      </li>
+                  {% endrecursetree %}
                 </ul>
-              </li>
-              {% endrecursetree %}
-            </ul>
           </section>
-        </div>
       </div>
     </div>
   </div>
@@ -101,16 +101,42 @@
   <div class="col-md-6">
     <div class="card card-user">
       <div class="card-header">
-        <h4 class="card-title" dir="rtl" align="center">
-            موجودی خارج نشده
-        </h4>
+        <h4 class="card-title" align="center"> آمار  </h4>
       </div>
-      <div class="card-body">
-        <div align="right" dir="rtl" class="card-description">
-          {% for Station in exit_station %}
-              <p> <a href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>: {{ Station.inventory }}  </p>
-          {% endfor %}
+      <div class="card-body" style="font-size:11px; color:black; ">
+
+        <div class="row">
+          <div class="col-md-6">
+            <p>  موجودی :  {{ material.inventory }}   </p>
+          </div>
+          <div class="col-md-6">
+            <p> حداقل موجودی : {{ material.min_inventory }} </p>
+          </div>
         </div>
+        <hr><br>
+
+        <p style="color:black;">
+            ایستگاه های استفاده کننده:
+            {% for Station in stations %}
+             &nbsp;&nbsp;&nbsp;  <a style="color:black;" href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>
+            {% endfor %}
+        <hr><br>
+            <div id="relProduct"></div>
+        <hr><br>
+            خروجی ایستگاه های:
+            {% for Station in exit_station %}
+               &nbsp;&nbsp;&nbsp; <a style="color:black;" href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>
+            {% endfor %}
+        <hr><br>
+            موجودی های خارج نشده
+            {% for Station in exit_station %}
+              {% if Station.inventory != 0 %}
+                &nbsp;&nbsp;&nbsp;  <a style="color:black;" href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>[ {{ Station.inventory }} ]
+              {% endif %}
+            {% endfor %}
+        </p>
+
+
       </div>
     </div>
   </div>
@@ -123,137 +149,7 @@
 
 
 
-
-
-<hr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<hr>
-
-
-
-
-
-<div class="row">
-<div class="col-md-12">
-  <div class="card  card-plain" align="center" dir="rtl">
-    <div class="card-body">
-
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>
-                <p class="category"> موجودی :  {{ material.inventory }} </p>
-              </td>
-              <td>
-                <p class="category">  حداقل موجودی : {{ material.min_inventory }} </p>
-              </td>
-              <td>
-                <p class="category">   خروجی ایستگاه های:
-                  {% for Station in exit_station %}
-                     &nbsp;&nbsp;&nbsp; <a href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>
-                  {% endfor %}
-                </p>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr>
-              <td>
-                <p class="category"> محصولات استفاده کننده:
-                     <div  dir="rtl" align="right" id="relProduct">  </div>
-                </p>
-              </td>
-              <td>
-                <p class="category"> ایستگاه های استفاده کننده:
-                  {% for Station in stations %}
-                   &nbsp;&nbsp;&nbsp;  <a href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>
-                  {% endfor %}
-                </p>
-              </td>
-
-            </tr>
-          </tbody>
-        </table>
-
-    </div>
-  </div>
-</div>
-</div>
-
-
-
-
-
-
-
-
-<div class="row">
-
-  <div class="col-md-6">
-    <div class="card card-user">
-      <div class="card-header">
-        <h4 class="card-title" dir="rtl" align="center">
-            BOM
-        </h4>
-      </div>
-      <div class="card-body">
-        <div align="right" dir="rtl" class="card-description">
-          <section id='eg1' class="ladder tree">
-            <ul>
-              {% recursetree bom %}
-              <li> <a href="."> <p> {{ node.quantity }} --- {{ node.name.name }} </p> </a>
-                <ul>
-                  {% if not node.is_leaf_node %}
-                    <li> {{ children }}  </li>
-                  {% endif %}
-                </ul>
-              </li>
-              {% endrecursetree %}
-            </ul>
-          </section>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6">
-    <div class="card card-user">
-      <div class="card-header">
-        <h4 class="card-title" dir="rtl" align="center">
-            موجودی خارج نشده
-        </h4>
-      </div>
-      <div class="card-body">
-        <div align="right" dir="rtl" class="card-description">
-          {% for Station in exit_station %}
-              <p> <a href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>: {{ Station.inventory }}  </p>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-
-
-
-
-<hr><hr><br> mojoodie kolle ghete: <br><br>
+  <br><br><hr> mojoodie kolle ghete: <br><br>
 
   [ {{ material.inventory }} ] self(here) <br>
 
@@ -264,12 +160,6 @@
   {% for Bom_material in bom_material %}
     [ {{ Bom_material.parent.name }} -- {% widthratio Bom_material.parent.name.inventory Bom_material.quantity 1 %} ] Material uper step <br>
   {% endfor %}
-
-
-
-
-<hr>
-
 
 
 
@@ -307,7 +197,7 @@
       }, [])
 
     for(var i=0; i < relProduct.length; i++){
-      relProduct_div.innerHTML += "<p>"+relProduct[i].name+"</p> ";
+      relProduct_div.innerHTML += "<p>  محصولات استفاده کننده: &nbsp;&nbsp;&nbsp;"+relProduct[i].name+"</p> ";
     }
 
 
