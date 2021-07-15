@@ -127,9 +127,6 @@
 
 
 
-  <p class="category"> قطعه خروجی : {{ station.output_material }} </p>
-
-
 
 
 <div class="row" align="center" dir="rtl">
@@ -149,24 +146,24 @@
   <div class="col-md-3">
     <div class="card ">
       <div class="card-header">
-         <h4>  محصولات استفاده کننده: :</h4>
+         <h4> محصولات استفاده کننده:</h4>
       </div>
       <div class="card-body">
         {% for Tree in products %}
-          <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }}  <br> </a>
+          <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }} <br> </a>
         {% endfor %}
       </div>
     </div>
   </div>
-  
+
   <div class="col-md-3">
     <div class="card ">
       <div class="card-header">
-         <h4>  محصولات استفاده کننده: :</h4>
+         <h4> قطعه خروج: </h4>
       </div>
       <div class="card-body">
         {% for Tree in products %}
-          <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }}  <br> </a>
+          <a href="{{ station.output_material.get_absolute_url }}"> {{ station.output_material }}  <br> </a>
         {% endfor %}
       </div>
     </div>
