@@ -136,9 +136,38 @@
          <h4> قطعات ورودی :</h4>
       </div>
       <div class="card-body">
-        {% for input_material in station.input_material.all %}
-          <a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> با ضریب {{ input_material.inventory }} &nbsp;&nbsp; موجودی: {{ input_material.material.inventory }}  <br>
-        {% endfor %}
+        <table class="table tablesorter " id="">
+          <thead class=" text-primary">
+            <tr>
+              <th>
+                نام
+              </th>
+              <th>
+                موجودی
+              </th>
+              <th>
+                ضریب مصرف
+              </th>
+              <th class="text-center">
+                تصویر
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for input_material in station.input_material.all %}
+            <tr>
+              <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a></td>
+              <td> {{ input_material.material.inventory }} </td>
+              <td> {{ input_material.inventory }} </td>
+              <td class="text-center">
+                <div class="photo">
+                  <img src="{{ input_material.material.image.url }}" alt="Profile Photo">
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -150,7 +179,9 @@
       </div>
       <div class="card-body">
         {% for Tree in products %}
-          <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }} <br> </a>
+          <a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }} </a>
+          <img width="30px" src="{{ Tree.relatedProduct.synch_to.image.url }}" alt="Profile Photo">
+          <br>
         {% endfor %}
       </div>
     </div>
@@ -163,7 +194,9 @@
       </div>
       <div class="card-body">
         {% for Tree in products %}
-          <a href="{{ station.output_material.get_absolute_url }}"> {{ station.output_material }}  <br> </a>
+          <a href="{{ station.output_material.get_absolute_url }}"> {{ station.output_material }} </a>
+          <img width="30px" src="{{ station.output_material.image.url }}" alt="Profile Photo">
+          <br>
         {% endfor %}
       </div>
     </div>
@@ -201,6 +234,20 @@
          </form>
 
         </div>
+        <div align="right" dir="rtl">
+
+          <hr>
+          <p id='history'>If you click on the "Hide" button, I will disappear.</p>
+          <hr>
+
+          <button id="hide">Hide</button>
+          <button id="show">Show</button>
+
+
+
+        </div>
+
+
       </div>
     </div>
 
@@ -244,7 +291,7 @@
 
 
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 {% endblock content %}
 
@@ -252,6 +299,17 @@
 {% block javascripts %}
 
   <script>
+
+    $(document.getElementById('history')).hide();
+
+    $(document).ready(function(){
+      $("#hide").click(function(){
+        $(document.getElementById('history')).hide();
+      });
+      $("#show").click(function(){
+        $(document.getElementById('history')).show();
+      });
+    });
 
 
 
