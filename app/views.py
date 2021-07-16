@@ -179,6 +179,7 @@ def stations_detail(request, id):
     products = models.Tree.objects.filter(station__name=station.name)
     inventory_form = InventoryForm(request.POST)
     exit_station_form = Exit_stationForm(request.POST)
+    inventory_history = models.Inventory_history.objects.all()
 
     if request.method == 'POST':
 
