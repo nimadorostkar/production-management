@@ -311,6 +311,7 @@ class Inventory_history(models.Model):
     quantity = models.DecimalField(default='1', max_digits=30, decimal_places=4, verbose_name = " تعداد ")
     manager = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name = "مسئول")
     time = models.DateTimeField(auto_now_add=True, verbose_name = "زمان")
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name = " ایستگاه ")
 
 
     class Meta:

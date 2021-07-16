@@ -198,6 +198,7 @@ def stations_detail(request, id):
             history.material = station.output_material
             history.quantity = added_value
             history.manager = station.manager
+            history.station = station
             history.save()
             return redirect(obj.get_absolute_url())
 

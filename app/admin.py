@@ -150,9 +150,9 @@ admin.site.register(models.Notice, NoticeAdmin)
 
 #------------------------------------------------------------------------------
 class Inventory_historyAdmin(ImportExportModelAdmin):
-    list_display = ('material', 'quantity', 'manager', 'j_time')
-    list_filter = ("material", "manager", "time")
-    search_fields = ['material',]
+    list_display = ('station', 'material', 'quantity', 'manager', 'j_time')
+    list_filter = ("station", "material", "manager", "time")
+    search_fields = ['material','station',]
 
 admin.site.register(models.Inventory_history, Inventory_historyAdmin)
 
