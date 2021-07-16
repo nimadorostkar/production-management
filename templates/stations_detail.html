@@ -234,10 +234,49 @@
          </form>
 
         </div>
-        <div align="right" dir="rtl">
 
-          <hr>
-          ggg
+
+        <div class="card-body" align="right" dir="rtl">
+
+          <table class="table tablesorter">
+            <thead class=" text-primary">
+              <tr>
+                <th class="text-center">
+                  تصویر
+                </th>
+                <th class="text-center">
+                  قطعه
+                </th>
+                <th class="text-center">
+                  مسئول
+                </th>
+                <th class="text-center">
+                  تعداد
+                </th>
+                <th class="text-center">
+                  تاریخ
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for Inventory_history in inventory_history %}
+              <tr>
+                <td class="text-center">
+                  <div class="photo">
+                    <img src="{{ Inventory_history.material.image.url }}" alt="Profile Photo">
+                  </div>
+                </td>
+                <td class="text-center"> {{ Inventory_history.material }} </td>
+                <td class="text-center"> {{ Inventory_history.manager }} </td>
+                <td class="text-center"> {{ Inventory_history.quantity }} </td>
+                <td class="text-center"> {{ Inventory_history.j_time }} </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+
+
+
 
           <hr>
           <p id='history'>If you click on the "Hide" button, I will disappear.</p>

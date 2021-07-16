@@ -179,7 +179,7 @@ def stations_detail(request, id):
     products = models.Tree.objects.filter(station__name=station.name)
     inventory_form = InventoryForm(request.POST)
     exit_station_form = Exit_stationForm(request.POST)
-    inventory_history = models.Inventory_history.objects.all()
+    inventory_history = models.Inventory_history.objects.filter(station=station)
 
     if request.method == 'POST':
 
@@ -213,7 +213,7 @@ def stations_detail(request, id):
                 obj.save()
                 return redirect(obj.get_absolute_url())
 
-    context = {'station': station, 'products':products, 'inventory_form':inventory_form, 'exit_station_form':exit_station_form}
+    context = {'station': station, 'products':products, 'inventory_form':inventory_form, 'exit_station_form':exit_station_form, 'inventory_history':inventory_history}
     return render(request, 'stations_detail.html', context)
 
 
