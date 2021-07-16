@@ -301,6 +301,49 @@
          </form>
 
         </div>
+
+        <div id='exit_history' class="card-body" align="right" dir="rtl">
+          <table class="table tablesorter">
+            <thead class=" text-primary">
+              <tr>
+                <th class="text-center">
+                  تصویر
+                </th>
+                <th class="text-center">
+                  قطعه
+                </th>
+                <th class="text-center">
+                  مسئول
+                </th>
+                <th class="text-center">
+                  تعداد
+                </th>
+                <th class="text-center">
+                  تاریخ
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for Inventory_history in station_exit_history %}
+              <tr>
+                <td class="text-center">
+                  <div class="photo">
+                    <img src="{{ Inventory_history.material.image.url }}" alt="Profile Photo">
+                  </div>
+                </td>
+                <td class="text-center"> {{ Inventory_history.material }} </td>
+                <td class="text-center"> {{ Inventory_history.manager }} </td>
+                <td class="text-center"> {{ Inventory_history.quantity }} </td>
+                <td class="text-center"> {{ Inventory_history.j_time }} </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          <button id="exit_hide" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;"> مخفی سازی </button>
+        </div>
+        <button id="exit_show" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;">  مشاهده تاریخچه  </button>
+
+
       </div>
     </div>
 
@@ -331,6 +374,20 @@
       });
       $("#show").click(function(){
         $(document.getElementById('history')).show();
+      });
+    });
+
+
+
+
+    $(document.getElementById('exit_history')).hide();
+
+    $(document).ready(function(){
+      $("#exit_hide").click(function(){
+        $(document.getElementById('exit_history')).hide();
+      });
+      $("#exit_show").click(function(){
+        $(document.getElementById('exit_history')).show();
       });
     });
 

@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django import template
 from . import models
 from django.contrib.auth.models import User
-from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Inventory_history
+from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Inventory_history, Station_exit_history
 from .forms import ProfileForm, UserForm, TicketForm, InventoryForm, Exit_stationForm
 from itertools import chain
 from django.contrib.auth import get_user_model
@@ -173,6 +173,7 @@ def stations_detail(request, id):
     inventory_form = InventoryForm(request.POST)
     exit_station_form = Exit_stationForm(request.POST)
     inventory_history = models.Inventory_history.objects.filter(station=station)
+    station_exit_history = models.Station_exit_history.objects.filter(station=station)
 
     if request.method == 'POST':
 
@@ -203,9 +204,15 @@ def stations_detail(request, id):
                     Material.inventory += exit_value
                     Material.save()
                 obj.save()
+                history = Station_exit_history()
+                history.material = station.output_material
+                history.quantity = exit_value
+                history.manager = station.manager
+                history.station = station
+                history.save()
                 return redirect(obj.get_absolute_url())
 
-    context = {'station': station, 'products':products, 'inventory_form':inventory_form, 'exit_station_form':exit_station_form, 'inventory_history':inventory_history}
+    context = {'station': station, 'products':products, 'inventory_form':inventory_form, 'exit_station_form':exit_station_form, 'inventory_history':inventory_history, 'station_exit_history':station_exit_history}
     return render(request, 'stations_detail.html', context)
 
 

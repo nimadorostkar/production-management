@@ -320,6 +320,26 @@ class Inventory_history(models.Model):
 
 
 #------------------------------------------------------------------------------
+class Station_exit_history(models.Model):
+    material = models.ForeignKey(Material, on_delete=models.CASCADE,verbose_name = " قطعه ")
+    quantity = models.DecimalField(default='1', max_digits=30, decimal_places=4, verbose_name = " تعداد ")
+    manager = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name = "مسئول")
+    time = models.DateTimeField(auto_now_add=True, verbose_name = "زمان")
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name = " ایستگاه ")
+
+
+    class Meta:
+        verbose_name = " سابقه خروج قطعه "
+        verbose_name_plural = "  سابقه خروج قطعه ها "
+
+    def j_time(self):
+        return jalali_converter(self.time)
+
+    def __str__(self):
+        return self.material.name + '-' + self.quantity + '-' + self.j_time
+
+
+#------------------------------------------------------------------------------
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name = " محصول ")
     code = models.CharField(max_length=50,null=True, blank=True,verbose_name = "کد ")

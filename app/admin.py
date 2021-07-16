@@ -1,7 +1,7 @@
 from django.contrib import admin
 from . import models
 from django.contrib.admin.models import LogEntry
-from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice, Bom_material, Stations_inputs, Bom_product,Inventory_history, Order
+from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice, Bom_material, Stations_inputs, Bom_product,Inventory_history,Station_exit_history, Order
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from jalali_date import datetime2jalali, date2jalali
@@ -155,6 +155,17 @@ class Inventory_historyAdmin(ImportExportModelAdmin):
     search_fields = ['material','station',]
 
 admin.site.register(models.Inventory_history, Inventory_historyAdmin)
+
+
+
+
+#------------------------------------------------------------------------------
+class Station_exit_historyAdmin(ImportExportModelAdmin):
+    list_display = ('station', 'material', 'quantity', 'manager', 'j_time')
+    list_filter = ("station", "material", "manager", "time")
+    search_fields = ['material','station',]
+
+admin.site.register(models.Station_exit_history, Station_exit_historyAdmin)
 
 
 
