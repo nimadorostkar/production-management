@@ -1,0 +1,92 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} UI Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+
+
+<div class="row" align="right" dir="rtl">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"> سفارشات </h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  نام
+                </th>
+                <th>
+                  کد
+                </th>
+                <th>
+                  تیراژ
+                </th>
+                <th class="text-center">
+                 تایید شده
+                </th>
+                <th class="text-center">
+                 تکمیل شده
+                </th>
+                <th class="text-center">
+                  تصویر
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for Order in orders %}
+              <tr>
+                <td><a href="{{ Order.get_absolute_url }}"> {{ Order.product.name }} </a></td>
+                <td> {{ Order.code }} </td>
+                <td> {{ Order.circulation }} </td>
+                <td class="text-center">
+                  {% if Order.confirmed %}
+                    <i style="color:green;" class="tim-icons icon-check-2"></i>
+                  {% else %}
+                    <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+                  {% endif %}
+                 </td>
+                <td class="text-center">
+                  {% if Order.completed %}
+                    <i style="color:green;" class="tim-icons icon-check-2"></i>
+                  {% else %}
+                    <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+                  {% endif %}
+                </td>
+                <td class="text-center">
+                  <div class="photo">
+                    <img src="{{ Order.product.synch_to.image.url }}" alt="Profile Photo">
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+{% endblock content %}
+
+
+
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

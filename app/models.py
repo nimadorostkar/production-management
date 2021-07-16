@@ -339,6 +339,7 @@ class Station_exit_history(models.Model):
         return self.material.name + '-' + self.quantity + '-' + self.j_time
 
 
+
 #------------------------------------------------------------------------------
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name = " محصول ")

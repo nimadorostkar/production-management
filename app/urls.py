@@ -23,6 +23,9 @@ urlpatterns = [
     # mother stations
     path('mother_station', views.mother_station, name='mother_station'),
     path('mother_station_detail/<int:id>/',views.mother_station_detail,name='mother_station_detail'),
+    # orders
+    path('orders', views.orders, name='orders'),
+    path('orders_detail/<int:id>/',views.orders_detail,name='orders_detail'),
     # other
     path('profile', views.profile, name='profile'),
     path('search',views.search,name='search'),

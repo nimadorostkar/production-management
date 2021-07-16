@@ -275,6 +275,20 @@ def notices(request):
 
 
 
+#------------------------------------------------------------------------------
+@login_required()
+def orders(request):
+    orders = models.Order.objects.all()
+    return render(request, 'orders.html', {'orders': orders})
+
+
+@login_required()
+def orders_detail(request, id):
+    order = get_object_or_404(models.Order, id=id)
+    context = { 'order': order }
+    return render(request, 'orders_detail.html', context)
+
+
 
 
 

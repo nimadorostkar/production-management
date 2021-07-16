@@ -29,6 +29,13 @@
             </a>
           </li>
 
+          <li class="{% if 'app:orders' in segment %} active {% endif %}">
+            <a href="{% url 'app:orders' %}">
+              <i class="tim-icons icon-notes"></i>
+              <p> سفارشات </p>
+            </a>
+          </li>
+
           <li class="{% if 'app:materials' in segment %} active {% endif %}">
             <a href="{% url 'app:materials' %}">
               <i class="tim-icons icon-align-center"></i>

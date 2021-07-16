@@ -1,0 +1,56 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load mptt_tags %}
+
+
+
+
+
+<div class="col-md-12">
+  <div class="card  card-plain" align="right" dir="rtl">
+    <div class="card-header">
+      <h4 class="card-title" dir="rtl" align="center"> سفارش {{ order.product.name }} <small> ({{ order.code }}) </small> </h4> <br>
+      <p> تیراژ: {{ order.circulation }}  </p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script>
+
+
+
+
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+    });
+
+
+
+  </script>
+
+{% endblock javascripts %}
