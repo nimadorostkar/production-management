@@ -159,7 +159,6 @@ class Bom_material(MPTTModel):
 
 
 
-
 #------------------------------------------------------------------------------
 class Stations_inputs(models.Model):
     material = models.ForeignKey(Material ,on_delete=models.CASCADE, verbose_name = " قطعه ")
@@ -169,14 +168,11 @@ class Stations_inputs(models.Model):
         verbose_name = " ورودی ایستگاه "
         verbose_name_plural = " ورودی ایستگاه ها "
 
-
     def __str__(self):
         return str(self.material.name) + " [" + str(self.inventory) + "]"
 
-
     def name(self):
         return str(self.material.name) + " [" + str(self.inventory) + "]"
-
 
 
 
@@ -191,10 +187,8 @@ class Bom_product(models.Model):
         verbose_name = " BOM محصول "
         verbose_name_plural = " BOM محصولات "
 
-
     def __str__(self):
         return str(self.material) + " [" + str(self.inventory) + "]"
-
 
 
 
@@ -245,7 +239,6 @@ class Tree(models.Model):
     class Meta:
         verbose_name = "درخت محصول"
         verbose_name_plural = "درخت محصولات"
-
 
     def __str__(self):
         return str(self.station)
@@ -304,7 +297,6 @@ class Notice(models.Model):
 
 
 
-
 #------------------------------------------------------------------------------
 class Inventory_history(models.Model):
     material = models.ForeignKey(Material, on_delete=models.CASCADE,verbose_name = " قطعه ")
@@ -323,11 +315,6 @@ class Inventory_history(models.Model):
 
     def __str__(self):
         return self.material.name + '-' + self.quantity + '-' + self.j_time
-
-
-
-
-
 
 
 

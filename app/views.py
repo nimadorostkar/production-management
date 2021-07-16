@@ -19,15 +19,12 @@ from django.db.models import Q
 
 
 
-
 #------------------------------------------------------------------------------
 @login_required()
 def index(request):
     material = models.Material.objects.all()
     context = {'material':material}
     return render(request, 'index.html', context)
-
-
 
 
 #------------------------------------------------------------------------------
@@ -53,8 +50,6 @@ def pages(request):
 
         html_template = loader.get_template( 'page-500.html' )
         return HttpResponse(html_template.render(context, request))
-
-
 
 
 
@@ -115,7 +110,6 @@ def search(request):
 
 
 
-
 #------------------------------------------------------------------------------
 @login_required()
 def products(request):
@@ -165,7 +159,6 @@ def materials_detail(request, id):
 
 
 
-
 #------------------------------------------------------------------------------
 @login_required()
 def stations(request):
@@ -188,7 +181,6 @@ def stations_detail(request, id):
             added_value = inventory_form.cleaned_data['inventory_field']
             obj.inventory += added_value
             for input_material in obj.input_material.all():
-                #print(input_material.material , " - " , input_material.inventory)
                 material_obj = models.Material.objects.filter(name=input_material.material)
                 for Material in material_obj:
                     Material.inventory -= ( input_material.inventory * added_value )
@@ -219,7 +211,6 @@ def stations_detail(request, id):
 
 
 
-
 #------------------------------------------------------------------------------
 @login_required()
 @transaction.atomic
@@ -238,7 +229,6 @@ def ticket(request):
             obj.to = ticket_form.cleaned_data['to']
             obj.user = ticket_form.created_by=request.user
             obj.save()
-            #messages.success(request, _('done successfully !'))
             context = {'ticket_form': ticket_form, 'ticket':ticket, 'users':users }
             return render(request, 'ticket.html', context)
         else:
@@ -247,7 +237,6 @@ def ticket(request):
       ticket_form=TicketForm(request.POST, request.FILES, instance=request.user)
       context = {'ticket_form': ticket_form, 'ticket':ticket, 'users':users }
       return render(request, 'ticket.html', context)
-
 
 
 
@@ -269,13 +258,14 @@ def mother_station_detail(request, id):
 
 
 
-
 #------------------------------------------------------------------------------
 @login_required()
 def notices(request):
     notices = models.Notice.objects.all().order_by('-created_on')
     context = {'notices':notices}
     return render(request, 'notices.html', context)
+
+
 
 
 
