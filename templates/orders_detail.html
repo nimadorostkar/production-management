@@ -99,7 +99,7 @@
   <div class="col-md-6">
     <div class="card">
       <div class="card-header">
-         <h4> قطعات مورد نیاز :</h4>
+         <h4>   ایستگاه های تایید شده برای سفارش :</h4>
       </div>
       <div class="card-body">
         <table class="table tablesorter " id="">
@@ -145,6 +145,150 @@
 
 
 
+
+
+
+
+
+<div class="row" align="center" dir="rtl">
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+         <h4>  مواد سطح اولیه مورد نیاز :</h4>
+      </div>
+      <div class="card-body">
+        <table class="table tablesorter " id="">
+          <thead class=" text-primary">
+            <tr>
+              <th>
+                a
+              </th>
+              <th>
+                b
+              </th>
+              <th>
+                c
+              </th>
+              <th class="text-center">
+                d
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for a in b %}
+            <tr>
+              <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ a.a }} </a></td>
+              <td> {{ a.a.a }} </td>
+              <td> {{ a.a }} </td>
+              <td class="text-center">
+                <div class="photo">
+                  <img src="{{ a.a.image.url }}" alt="Profile Photo">
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+         <h4>   	اقلام مصرفی مورد نیاز :</h4>
+      </div>
+      <div class="card-body">
+        <table class="table tablesorter " id="">
+          <thead class=" text-primary">
+            <tr>
+              <th>
+                a
+              </th>
+              <th>
+                b
+              </th>
+              <th>
+                c
+              </th>
+              <th class="text-center">
+                d
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for a in b %}
+            <tr>
+              <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ a.a }} </a></td>
+              <td> {{ a.a.a }} </td>
+              <td> {{ a.a }} </td>
+              <td class="text-center">
+                <div class="photo">
+                  <img src="{{ a.a.image.url }}" alt="Profile Photo">
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+<div class="row" align="center" dir="rtl">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+         <h4>   کل قطات سفارش :</h4>
+      </div>
+      <div class="card-body">
+        <table class="table tablesorter " id="">
+          <thead class=" text-primary">
+            <tr>
+              <th>
+                a
+              </th>
+              <th>
+                b
+              </th>
+              <th>
+                c
+              </th>
+              <th class="text-center">
+                d
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for a in b %}
+            <tr>
+              <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ a.a }} </a></td>
+              <td> {{ a.a.a }} </td>
+              <td> {{ a.a }} </td>
+              <td class="text-center">
+                <div class="photo">
+                  <img src="{{ a.a.image.url }}" alt="Profile Photo">
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 
 
