@@ -69,35 +69,35 @@
       <div class="card-header">
          <h4> ایستگاه های درگیر :</h4>
       </div>
-      <div class="card-body">
+      <div class="card-body" style="font-size:11px; color:black;">
         <table class="table tablesorter " id="">
           <thead class=" text-primary">
             <tr>
               <th>
-                a
+                نام
               </th>
               <th>
-                b
+                وضعیت
               </th>
               <th>
-                c
+                مسئول
+              </th>
+              <th>
+                موجودی
               </th>
               <th class="text-center">
-                d
+                قطعه خروجی
               </th>
             </tr>
           </thead>
           <tbody>
-          {% for a in b %}
+          {% for Tree in involved_stations %}
             <tr>
-              <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ a.a }} </a></td>
-              <td> {{ a.a.a }} </td>
-              <td> {{ a.a }} </td>
-              <td class="text-center">
-                <div class="photo">
-                  <img src="{{ a.a.image.url }}" alt="Profile Photo">
-                </div>
-              </td>
+              <td><a href="{{ Tree.station.get_absolute_url }}"> {{ Tree.station.name }} </a></td>
+              <td> {{ Tree.station.position }} </td>
+              <td> {{ Tree.station.manager }} </td>
+              <td> {{ Tree.station.inventory }} </td>
+              <td class="text-center"> {{ Tree.station.output_material }} </td>
             </tr>
           {% endfor %}
           </tbody>
@@ -262,36 +262,46 @@
       <div class="card-header">
          <h4>   کل قطات سفارش :</h4>
       </div>
-      <div class="card-body">
+      <div class="card-body" style="font-size:11px; color:black;">
         <table class="table tablesorter " id="">
           <thead class=" text-primary">
             <tr>
               <th>
-                a
+                نام
               </th>
               <th>
-                b
+                وضعیت
               </th>
               <th>
-                c
+                موجودی
+              </th>
+              <th>
+                ضریب مصرف
+              </th>
+              <th>
+                نیاز سفارش
               </th>
               <th class="text-center">
-                d
+                تصویر
               </th>
             </tr>
           </thead>
           <tbody>
-          {% for a in b %}
-            <tr>
-              <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ a.a }} </a></td>
-              <td> {{ a.a.a }} </td>
-              <td> {{ a.a }} </td>
-              <td class="text-center">
-                <div class="photo">
-                  <img src="{{ a.a.image.url }}" alt="Profile Photo">
-                </div>
-              </td>
-            </tr>
+          {% for Tree in involved_materials %}
+           {% for input_material in Tree.station.input_material.all %}
+              <tr>
+                <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
+                <td> {{ input_material.material.position }} </td>
+                <td> {{ input_material.material.inventory }} </td>
+                <td> {{ input_material.inventory }} </td>
+                <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
+                <td class="text-center">
+                  <div class="photo">
+                    <img src="{{ input_material.material.image.url }}" alt="Profile Photo">
+                  </div>
+                </td>
+              </tr>
+           {% endfor %}
           {% endfor %}
           </tbody>
         </table>

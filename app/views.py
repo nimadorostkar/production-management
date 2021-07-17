@@ -285,7 +285,9 @@ def orders(request):
 @login_required()
 def orders_detail(request, id):
     order = get_object_or_404(models.Order, id=id)
-    context = { 'order': order }
+    involved_stations = models.Tree.objects.filter(relatedProduct=order.product)
+    involved_materials = models.Tree.objects.filter(relatedProduct=order.product).exclude(station__position='حمل و نقل').exclude(station__position= 'انبار')
+    context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials }
     return render(request, 'orders_detail.html', context)
 
 
