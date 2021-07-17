@@ -366,6 +366,21 @@ class Order(models.Model):
 
 
 
+#------------------------------------------------------------------------------
+class Order_confirmation(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,verbose_name = "سفارش")
+    station = models.ForeignKey(Station, on_delete=models.CASCADE,verbose_name = "ایستگاه")
+    confirmed = models.BooleanField(default=False, verbose_name = " تایید شده " )
+
+    class Meta:
+        verbose_name = " تائیدیه "
+        verbose_name_plural = " تأییدها "
+
+    def __str__(self):
+        return self.order.code
+
+
+
 
 
 
