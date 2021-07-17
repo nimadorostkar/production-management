@@ -175,8 +175,6 @@ def stations_detail(request, id):
     exit_station_form = Exit_stationForm(request.POST)
     inventory_history = models.Inventory_history.objects.filter(station=station)
     station_exit_history = models.Station_exit_history.objects.filter(station=station)
-
-
     input = models.Tree.objects.filter(station=station)
     station_products = models.Tree.objects.filter(station=station).values('relatedProduct__name')
     orders = models.Order.objects.filter(product__name__in=station_products)
