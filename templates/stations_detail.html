@@ -514,20 +514,36 @@
 
 
 <br>
-<div class="row" dir="rtl" align="right">
-
-  <div class="col-md-4">
+<div class="row" dir="rtl" align="center">
+  <div class="col-md-6">
     <div class="card card-user">
       <div class="card-header">
         <h4 class="card-title"> تاییده سفارشات تایید نشده </h4>
       </div>
       <div class="card">
-        gg ggg gggg
+            <form method="post">
+               {% csrf_token %}
+               {{ order_confirmation_form|bootstrap }}
+               <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+            </form>
       </div>
+
+      <div id='order_confirm' class="card">
+        <hr>
+        {% for Order_confirmation in order_confirmation_history %}
+             <p> <small>  سفارش {{ Order_confirmation.order }}  توسط {{ station.manager }} تایید شده </small> </p>
+        {% endfor %}
+        <hr>
+        <div>
+          <button id="confirm_hide" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;"> مخفی سازی </button>
+        </div>
+      </div>
+      <div>
+        <button id="confirm_show" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;">  مشاهده تاریخچه  </button>
+      </div>
+
     </div>
   </div>
-
-
 </div>
 
 
@@ -569,6 +585,22 @@
       });
       $("#exit_show").click(function(){
         $(document.getElementById('exit_history')).show();
+      });
+    });
+
+
+
+
+
+
+    $(document.getElementById('order_confirm')).hide();
+
+    $(document).ready(function(){
+      $("#confirm_hide").click(function(){
+        $(document.getElementById('order_confirm')).hide();
+      });
+      $("#confirm_show").click(function(){
+        $(document.getElementById('order_confirm')).show();
       });
     });
 

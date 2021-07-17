@@ -2,7 +2,7 @@ from django import forms
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Order
+from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Order, Order_confirmation
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 
@@ -49,6 +49,12 @@ class OrderForm(forms.ModelForm):
 		fields = ['confirmed', 'completed']
 
 
+
+#------------------------------------------------------------------------------
+class Order_confirmation_Form(forms.ModelForm):
+	class Meta:
+		model = Order_confirmation
+		fields = ['order']
 
 
 

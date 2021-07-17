@@ -5,8 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django import template
 from . import models
 from django.contrib.auth.models import User
-from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Inventory_history, Station_exit_history
-from .forms import ProfileForm, UserForm, TicketForm, InventoryForm, Exit_stationForm, OrderForm
+from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Inventory_history, Station_exit_history, Order_confirmation
+from .forms import ProfileForm, UserForm, TicketForm, InventoryForm, Exit_stationForm, OrderForm, Order_confirmation_Form
 from itertools import chain
 from django.contrib.auth import get_user_model
 from django.db import transaction
@@ -173,12 +173,13 @@ def stations_detail(request, id):
     products = models.Tree.objects.filter(station__name=station.name)
     inventory_form = InventoryForm(request.POST)
     exit_station_form = Exit_stationForm(request.POST)
+    order_confirmation_form = Order_confirmation_Form(request.POST)
     inventory_history = models.Inventory_history.objects.filter(station=station)
     station_exit_history = models.Station_exit_history.objects.filter(station=station)
     input = models.Tree.objects.filter(station=station)
     station_products = models.Tree.objects.filter(station=station).values('relatedProduct__name')
     orders = models.Order.objects.filter(product__name__in=station_products)
-
+    order_confirmation_history = models.Order_confirmation.objects.filter(station=station)
 
     if request.method == 'POST':
         if inventory_form.is_valid():
@@ -199,27 +200,40 @@ def stations_detail(request, id):
             history.save()
             return redirect(obj.get_absolute_url())
         if exit_station_form.is_valid():
-                obj = get_object_or_404(models.Station, id=id)
-                exit_value = exit_station_form.cleaned_data['exit_station_field']
-                obj.inventory -= exit_value
-                material_obj = models.Material.objects.filter(name=obj.output_material)
-                for Material in material_obj:
-                    Material.inventory += exit_value
-                    Material.save()
-                obj.save()
-                history = Station_exit_history()
-                history.material = station.output_material
-                history.quantity = exit_value
-                history.manager = station.manager
-                history.station = station
-                history.save()
-                return redirect(obj.get_absolute_url())
+            obj = get_object_or_404(models.Station, id=id)
+            exit_value = exit_station_form.cleaned_data['exit_station_field']
+            obj.inventory -= exit_value
+            material_obj = models.Material.objects.filter(name=obj.output_material)
+            for Material in material_obj:
+                Material.inventory += exit_value
+                Material.save()
+            obj.save()
+            history = Station_exit_history()
+            history.material = station.output_material
+            history.quantity = exit_value
+            history.manager = station.manager
+            history.station = station
+            history.save()
+            return redirect(obj.get_absolute_url())
+
+        if order_confirmation_form.is_valid():
+            obj = Order_confirmation()
+            obj.order = order_confirmation_form.cleaned_data['order']
+            obj.station = get_object_or_404(models.Station, id=id)
+            obj.confirmed = True
+            obj.save()
+            obj = get_object_or_404(models.Station, id=id)
+            return redirect(obj.get_absolute_url())
+
+
     context = {'station': station,
     'products':products,
     'inventory_form':inventory_form,
     'exit_station_form':exit_station_form,
+    'order_confirmation_form': order_confirmation_form,
     'inventory_history':inventory_history,
     'station_exit_history':station_exit_history,
+    'order_confirmation_history':order_confirmation_history,
     'input':input,
     'station_products':station_products,
     'orders':orders

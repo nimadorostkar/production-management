@@ -1,7 +1,7 @@
 from django.contrib import admin
 from . import models
 from django.contrib.admin.models import LogEntry
-from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice, Bom_material, Stations_inputs, Bom_product,Inventory_history,Station_exit_history, Order
+from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice, Bom_material, Stations_inputs, Bom_product,Inventory_history,Station_exit_history, Order, Order_confirmation
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from jalali_date import datetime2jalali, date2jalali
@@ -177,6 +177,17 @@ class OrderAdmin(ImportExportModelAdmin):
     raw_id_fields = ('product',)
 
 admin.site.register(models.Order, OrderAdmin)
+
+
+
+#------------------------------------------------------------------------------
+class Order_confirmationAdmin(ImportExportModelAdmin):
+    list_display = ('order', 'station', 'confirmed')
+    list_filter = ("order", "station", "confirmed")
+    search_fields = ['order', 'station']
+
+admin.site.register(models.Order_confirmation, Order_confirmationAdmin)
+
 
 
 
