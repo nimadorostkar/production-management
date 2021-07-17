@@ -7,6 +7,7 @@
 
 {% block content %}
 {% load mptt_tags %}
+{% load bootstrap %}
 
 
 
@@ -29,6 +30,17 @@
     </div>
   </div>
 </div>
+
+
+
+<form method="post">
+  {% csrf_token %}
+  {{ order_form|bootstrap }}
+   <div class="card-footer">
+     <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+   </div>
+</form>
+
 
 
 

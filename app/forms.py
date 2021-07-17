@@ -2,7 +2,7 @@ from django import forms
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice
+from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Order
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 
@@ -42,11 +42,11 @@ class Exit_stationForm(forms.Form):
 	exit_station_field = forms.DecimalField(max_digits=30, decimal_places=4)
 
 
-
-
-
-
-
+#------------------------------------------------------------------------------
+class OrderForm(forms.ModelForm):
+	class Meta:
+		model = Order
+		fields = ['confirmed', 'completed']
 
 
 

@@ -6,7 +6,7 @@ from django import template
 from . import models
 from django.contrib.auth.models import User
 from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Inventory_history, Station_exit_history
-from .forms import ProfileForm, UserForm, TicketForm, InventoryForm, Exit_stationForm
+from .forms import ProfileForm, UserForm, TicketForm, InventoryForm, Exit_stationForm, OrderForm
 from itertools import chain
 from django.contrib.auth import get_user_model
 from django.db import transaction
@@ -298,7 +298,17 @@ def orders_detail(request, id):
     order = get_object_or_404(models.Order, id=id)
     involved_stations = models.Tree.objects.filter(relatedProduct=order.product)
     involved_materials = models.Tree.objects.filter(relatedProduct=order.product).exclude(station__position='حمل و نقل').exclude(station__position= 'انبار')
-    context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials }
+    order_form = OrderForm(request.POST)
+
+    if request.method == 'POST':
+        if order_form.is_valid():
+            obj = get_object_or_404(models.Order, id=id)
+            obj.confirmed = order_form.cleaned_data['confirmed']
+            obj.completed = order_form.cleaned_data['completed']
+            obj.save()
+            return redirect(obj.get_absolute_url())
+
+    context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials, 'order_form':order_form }
     return render(request, 'orders_detail.html', context)
 
 
