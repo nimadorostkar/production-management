@@ -320,18 +320,18 @@
 
 
 
+{% if request.user.is_superuser %}
+  <br>
+  <hr>
 
-<br>
-<hr>
-
-<form dir="rtl" align="center" method="post">
-  {% csrf_token %}
-  {{ order_form|bootstrap }}
-   <div class="card-footer">
-     <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
-   </div>
-</form>
-
+  <form dir="rtl" align="center" method="post">
+    {% csrf_token %}
+    {{ order_form|bootstrap }}
+     <div class="card-footer">
+       <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+     </div>
+  </form>
+{% endif %}
 
 
 
