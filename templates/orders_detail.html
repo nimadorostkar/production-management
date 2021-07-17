@@ -168,36 +168,44 @@
       <div class="card-header">
          <h4>  مواد سطح اولیه مورد نیاز :</h4>
       </div>
-      <div class="card-body">
+      <div class="card-body" style="font-size:11px; color:black;">
         <table class="table tablesorter " id="">
           <thead class=" text-primary">
             <tr>
               <th>
-                a
+                نام
               </th>
               <th>
-                b
+                موجودی
               </th>
               <th>
-                c
+                ضریب مصرف
+              </th>
+              <th>
+                نیاز سفارش
               </th>
               <th class="text-center">
-                d
+                تصویر
               </th>
             </tr>
           </thead>
           <tbody>
-          {% for a in b %}
-            <tr>
-              <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ a.a }} </a></td>
-              <td> {{ a.a.a }} </td>
-              <td> {{ a.a }} </td>
-              <td class="text-center">
-                <div class="photo">
-                  <img src="{{ a.a.image.url }}" alt="Profile Photo">
-                </div>
-              </td>
-            </tr>
+          {% for Tree in involved_materials %}
+           {% for input_material in Tree.station.input_material.all %}
+            {% if input_material.material.position == 'سطح اولیه' %}
+              <tr>
+                <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
+                <td> {{ input_material.material.inventory }} </td>
+                <td> {{ input_material.inventory }} </td>
+                <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
+                <td class="text-center">
+                  <div class="photo">
+                    <img src="{{ input_material.material.image.url }}" alt="Profile Photo">
+                  </div>
+                </td>
+              </tr>
+            {% endif %}
+           {% endfor %}
           {% endfor %}
           </tbody>
         </table>
@@ -210,36 +218,44 @@
       <div class="card-header">
          <h4>   	اقلام مصرفی مورد نیاز :</h4>
       </div>
-      <div class="card-body">
+      <div class="card-body" style="font-size:11px; color:black;">
         <table class="table tablesorter " id="">
           <thead class=" text-primary">
             <tr>
               <th>
-                a
+                نام
               </th>
               <th>
-                b
+                موجودی
               </th>
               <th>
-                c
+                ضریب مصرف
+              </th>
+              <th>
+                نیاز سفارش
               </th>
               <th class="text-center">
-                d
+                تصویر
               </th>
             </tr>
           </thead>
           <tbody>
-          {% for a in b %}
-            <tr>
-              <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ a.a }} </a></td>
-              <td> {{ a.a.a }} </td>
-              <td> {{ a.a }} </td>
-              <td class="text-center">
-                <div class="photo">
-                  <img src="{{ a.a.image.url }}" alt="Profile Photo">
-                </div>
-              </td>
-            </tr>
+          {% for Tree in involved_materials %}
+           {% for input_material in Tree.station.input_material.all %}
+            {% if input_material.material.position == 'اقلام مصرفی' %}
+              <tr>
+                <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
+                <td> {{ input_material.material.inventory }} </td>
+                <td> {{ input_material.inventory }} </td>
+                <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
+                <td class="text-center">
+                  <div class="photo">
+                    <img src="{{ input_material.material.image.url }}" alt="Profile Photo">
+                  </div>
+                </td>
+              </tr>
+            {% endif %}
+           {% endfor %}
           {% endfor %}
           </tbody>
         </table>

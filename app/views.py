@@ -120,11 +120,12 @@ def products(request):
 @login_required()
 def products_detail(request, id):
     product = get_object_or_404(models.Product, id=id)
+    order = models.Order.objects.filter(product=product)
     tree = models.Tree.objects.filter(relatedProduct=product)
     bom = models.Bom_product.objects.filter(relatedProduct=product).exclude(material__position='اقلام مصرفی')
     bom_masrafi = models.Bom_product.objects.filter(relatedProduct=product, material__position='اقلام مصرفی')
     material_bom = models.Bom_material.objects.all()
-    context = {'product': product, 'tree':tree, 'bom':bom, 'bom_masrafi':bom_masrafi, 'material_bom':material_bom}
+    context = {'product': product, 'tree':tree, 'bom':bom, 'bom_masrafi':bom_masrafi, 'material_bom':material_bom, 'order':order}
     return render(request, 'products_detail.html', context)
 
 
@@ -175,8 +176,13 @@ def stations_detail(request, id):
     inventory_history = models.Inventory_history.objects.filter(station=station)
     station_exit_history = models.Station_exit_history.objects.filter(station=station)
 
-    if request.method == 'POST':
 
+    input = models.Tree.objects.filter(station=station)
+    station_products = models.Tree.objects.filter(station=station).values('relatedProduct__name')
+    orders = models.Order.objects.filter(product__name__in=station_products)
+
+
+    if request.method == 'POST':
         if inventory_form.is_valid():
             obj = get_object_or_404(models.Station, id=id)
             added_value = inventory_form.cleaned_data['inventory_field']
@@ -194,7 +200,6 @@ def stations_detail(request, id):
             history.station = station
             history.save()
             return redirect(obj.get_absolute_url())
-
         if exit_station_form.is_valid():
                 obj = get_object_or_404(models.Station, id=id)
                 exit_value = exit_station_form.cleaned_data['exit_station_field']
@@ -211,8 +216,16 @@ def stations_detail(request, id):
                 history.station = station
                 history.save()
                 return redirect(obj.get_absolute_url())
-
-    context = {'station': station, 'products':products, 'inventory_form':inventory_form, 'exit_station_form':exit_station_form, 'inventory_history':inventory_history, 'station_exit_history':station_exit_history}
+    context = {'station': station,
+    'products':products,
+    'inventory_form':inventory_form,
+    'exit_station_form':exit_station_form,
+    'inventory_history':inventory_history,
+    'station_exit_history':station_exit_history,
+    'input':input,
+    'station_products':station_products,
+    'orders':orders
+    }
     return render(request, 'stations_detail.html', context)
 
 

@@ -357,6 +357,88 @@
 
 
 
+
+
+
+<div class="row" dir="rtl" align="right">
+
+  <div class="col-md-12">
+    <div class="card card-user">
+      <div class="card-header">
+        <h4 class="card-title"> سفارشات </h4>
+      </div>
+      <div class="card-body">
+        <table class="table tablesorter " id="">
+          <thead class=" text-primary">
+            <tr>
+              <th>
+                نام
+              </th>
+              <th>
+                کد
+              </th>
+              <th>
+                تیراژ
+              </th>
+              <th class="text-center">
+               تایید شده
+              </th>
+              <th class="text-center">
+               تکمیل شده
+              </th>
+              <th class="text-center">
+                تصویر
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for Order in orders %}
+              {% for Tree in input %}
+               {% if Tree.relatedProduct == Order.product %}
+                <tr>
+                  <td><a href="{{ Tree.relatedProduct.get_absolute_url }}"> {{ Tree.relatedProduct }} </a></td>
+                  <td> {{ Order.code }} </td>
+                  <td> {{ Order.circulation }} </td>
+                  <td class="text-center">
+                    {% if Order.confirmed %}
+                      <i style="color:green;" class="tim-icons icon-check-2"></i>
+                    {% else %}
+                      <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+                    {% endif %}
+                   </td>
+                  <td class="text-center">
+                    {% if Order.completed %}
+                      <i style="color:green;" class="tim-icons icon-check-2"></i>
+                    {% else %}
+                      <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+                    {% endif %}
+                  </td>
+                  <td class="text-center">
+                    <div class="photo">
+                      <img src="{{ Order.product.synch_to.image.url }}" alt="Profile Photo">
+                    </div>
+                  </td>
+                </tr>
+             {% endif %}
+            {% endfor %}
+           {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 {% endblock content %}
