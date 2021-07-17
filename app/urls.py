@@ -25,6 +25,7 @@ urlpatterns = [
     path('mother_station_detail/<int:id>/',views.mother_station_detail,name='mother_station_detail'),
     # orders
     path('orders', views.orders, name='orders'),
+    path('add_order', views.add_order, name='add_order'),
     path('orders_detail/<int:id>/',views.orders_detail,name='orders_detail'),
     # other
     path('profile', views.profile, name='profile'),
