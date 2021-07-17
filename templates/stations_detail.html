@@ -358,7 +358,6 @@
 
 
 
-
 <br>
 <div class="row" dir="rtl" align="right">
 
@@ -499,6 +498,62 @@
           </tbody>
         </table>
       </div>
+
+
+      <div id='order_confirm_box' class="card">
+        <hr>
+
+
+          <div class="row" dir="rtl" align="center">
+
+            <div class="col-md-12">
+              <div class="card card-user">
+                <div class="card-header" dir="rtl" align="right">
+                  <h4 class="card-title"> تاییده سفارشات تایید نشده </h4>
+                </div>
+                <div class="card">
+                      <form method="post">
+                         {% csrf_token %}
+                         {{ order_confirmation_form|bootstrap }}
+                         <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+                      </form>
+                </div>
+                <div id='order_confirm' class="card">
+                  <hr>
+                  {% for Order_confirmation in order_confirmation_history %}
+                       <p> <small>  سفارش {{ Order_confirmation.order }}  توسط {{ station.manager }} تایید شده </small> </p>
+                  {% endfor %}
+                  <hr>
+                  <div>
+                    <button id="confirm_hide" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;"> مخفی سازی </button>
+                  </div>
+                </div>
+                <div>
+                  <button id="confirm_show" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;">  مشاهده تاریخچه  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+
+        <hr>
+        <div>
+          <button id="confirm_hide_box" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;"> مخفی سازی </button>
+        </div>
+      </div>
+
+        <button id="confirm_show_box" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;"> تایید سفارش </button>
+
+
+
+
+
+
+
     </div>
   </div>
 
@@ -508,42 +563,11 @@
 
 
 
-
-
-
-
-
 <br>
-<div class="row" dir="rtl" align="center">
-  <div class="col-md-6">
-    <div class="card card-user">
-      <div class="card-header">
-        <h4 class="card-title"> تاییده سفارشات تایید نشده </h4>
-      </div>
-      <div class="card">
-            <form method="post">
-               {% csrf_token %}
-               {{ order_confirmation_form|bootstrap }}
-               <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
-            </form>
-      </div>
+<h5 dir="rtl" align="right">نمودار  سفارشات تایید شده </h5> <hr>
 
-      <div id='order_confirm' class="card">
-        <hr>
-        {% for Order_confirmation in order_confirmation_history %}
-             <p> <small>  سفارش {{ Order_confirmation.order }}  توسط {{ station.manager }} تایید شده </small> </p>
-        {% endfor %}
-        <hr>
-        <div>
-          <button id="confirm_hide" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;"> مخفی سازی </button>
-        </div>
-      </div>
-      <div>
-        <button id="confirm_show" style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:10px;padding:8px;font-size:13px;border:none;">  مشاهده تاریخچه  </button>
-      </div>
-
-    </div>
-  </div>
+<div class="chart-area">
+  <div id="chartdiv"></div>
 </div>
 
 
@@ -563,8 +587,67 @@
 
   <script>
 
-    $(document.getElementById('history')).hide();
 
+
+
+   // Order and Chart code
+
+   var input_data = [
+       {% for Order in orders %}
+       {% for Tree in input %}
+       {% if Tree.relatedProduct == Order.product %}
+       {% if Order.completed == False %}
+       {% if Order.confirmed %}
+                { "a": "{{ Tree.relatedProduct }} {{ Order.code }}", "b": "{{ Order.circulation }}" },
+       {% endif %}
+       {% endif %}
+       {% endif %}
+       {% endfor %}
+       {% endfor %}
+    ];
+
+
+  am4core.ready(function() {
+  // Themes begin
+  am4core.useTheme(am4themes_animated);
+  // Themes end
+  // Create chart instance
+  var chart = am4core.create("chartdiv", am4charts.PieChart);
+
+  // Add data
+  chart.data = input_data;
+
+  // Add and configure Series
+  var pieSeries = chart.series.push(new am4charts.PieSeries());
+  pieSeries.dataFields.value = "b";
+  pieSeries.dataFields.category = "a";
+  pieSeries.slices.template.stroke = am4core.color("#fff");
+  pieSeries.slices.template.strokeWidth = 2;
+  pieSeries.slices.template.strokeOpacity = 1;
+
+  // This creates initial animation
+  pieSeries.hiddenState.properties.opacity = 1;
+  pieSeries.hiddenState.properties.endAngle = -90;
+  pieSeries.hiddenState.properties.startAngle = -90;
+
+  }); // end am4core.ready()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $(document.getElementById('history')).hide();
     $(document).ready(function(){
       $("#hide").click(function(){
         $(document.getElementById('history')).hide();
@@ -575,10 +658,7 @@
     });
 
 
-
-
     $(document.getElementById('exit_history')).hide();
-
     $(document).ready(function(){
       $("#exit_hide").click(function(){
         $(document.getElementById('exit_history')).hide();
@@ -590,17 +670,25 @@
 
 
 
-
-
-
     $(document.getElementById('order_confirm')).hide();
-
     $(document).ready(function(){
       $("#confirm_hide").click(function(){
         $(document.getElementById('order_confirm')).hide();
       });
       $("#confirm_show").click(function(){
         $(document.getElementById('order_confirm')).show();
+      });
+    });
+
+
+
+    $(document.getElementById('order_confirm_box')).hide();
+    $(document).ready(function(){
+      $("#confirm_hide_box").click(function(){
+        $(document.getElementById('order_confirm_box')).hide();
+      });
+      $("#confirm_show_box").click(function(){
+        $(document.getElementById('order_confirm_box')).show();
       });
     });
 
