@@ -27,19 +27,30 @@
         </div>
       </div>
 
+
+      <p align="right" dir="rtl">
+        <small>
+          <br>
+           تایید شده :
+           {% if order.confirmed %}
+             <i style="color:green;" class="tim-icons icon-check-2"></i>
+           {% else %}
+             <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+           {% endif %}
+          <br>
+           تکمیل شده :
+           {% if order.completed %}
+             <i style="color:green;" class="tim-icons icon-check-2"></i>
+           {% else %}
+             <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+           {% endif %}
+        </small>
+      </p>
+
     </div>
   </div>
 </div>
 
-
-
-<form method="post">
-  {% csrf_token %}
-  {{ order_form|bootstrap }}
-   <div class="card-footer">
-     <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
-   </div>
-</form>
 
 
 
@@ -342,7 +353,16 @@
 
 
 
+<br>
+<hr>
 
+<form dir="rtl" align="center" method="post">
+  {% csrf_token %}
+  {{ order_form|bootstrap }}
+   <div class="card-footer">
+     <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+   </div>
+</form>
 
 
 
