@@ -87,7 +87,7 @@
 
 <div class="row" align="center" dir="rtl">
 
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="card">
       <div class="card-header">
          <h4> ایستگاه های درگیر :</h4>
@@ -111,69 +111,37 @@
               <th class="text-center">
                 قطعه خروجی
               </th>
+              <th class="text-center">
+                تایید شده
+              </th>
             </tr>
           </thead>
           <tbody>
           {% for Tree in involved_stations %}
+          {% for Order_confirmation in order_confirmation %}
+
             <tr>
               <td><a href="{{ Tree.station.get_absolute_url }}"> {{ Tree.station.name }} </a></td>
               <td> {{ Tree.station.position }} </td>
               <td> {{ Tree.station.manager }} </td>
               <td> {{ Tree.station.inventory }} </td>
               <td class="text-center"> {{ Tree.station.output_material }} </td>
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header">
-         <h4>   ایستگاه های تایید شده برای سفارش :</h4>
-      </div>
-      <div class="card-body">
-        <table class="table tablesorter " id="">
-          <thead class=" text-primary">
-            <tr>
-              <th>
-                a
-              </th>
-              <th>
-                b
-              </th>
-              <th>
-                c
-              </th>
-              <th class="text-center">
-                d
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for a in b %}
-            <tr>
-              <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ a.a }} </a></td>
-              <td> {{ a.a.a }} </td>
-              <td> {{ a.a }} </td>
               <td class="text-center">
-                <div class="photo">
-                  <img src="{{ a.a.image.url }}" alt="Profile Photo">
-                </div>
+                {% if Order_confirmation.station ==  Tree.station  %}
+                   <i style="color:green;" class="tim-icons icon-check-2"></i>
+                {% else %}
+                   <i style="color:red;" class="tim-icons icon-simple-remove"></i>
+                {% endif %}
               </td>
             </tr>
+
+          {% endfor %}
           {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
-
-
 
 </div>
 

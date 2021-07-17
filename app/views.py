@@ -313,6 +313,7 @@ def orders_detail(request, id):
     involved_stations = models.Tree.objects.filter(relatedProduct=order.product)
     involved_materials = models.Tree.objects.filter(relatedProduct=order.product).exclude(station__position='حمل و نقل').exclude(station__position= 'انبار')
     order_form = OrderForm(request.POST)
+    order_confirmation = models.Order_confirmation.objects.filter(order=order)
 
     if request.method == 'POST':
         if order_form.is_valid():
@@ -322,7 +323,7 @@ def orders_detail(request, id):
             obj.save()
             return redirect(obj.get_absolute_url())
 
-    context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials, 'order_form':order_form }
+    context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials, 'order_form':order_form, 'order_confirmation':order_confirmation }
     return render(request, 'orders_detail.html', context)
 
 
