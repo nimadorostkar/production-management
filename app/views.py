@@ -5,8 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django import template
 from . import models
 from django.contrib.auth.models import User
-from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Inventory_history, Station_exit_history, Order_confirmation
-from .forms import ProfileForm, UserForm, TicketForm, InventoryForm, Exit_stationForm, OrderForm, Order_confirmation_Form
+from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Inventory_history, Station_exit_history, Order_confirmation, Order
+from .forms import ProfileForm, UserForm, TicketForm, InventoryForm, Exit_stationForm, OrderForm, Order_confirmation_Form, Add_Order_Form
 from itertools import chain
 from django.contrib.auth import get_user_model
 from django.db import transaction
@@ -326,6 +326,25 @@ def orders_detail(request, id):
 
     context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials, 'order_form':order_form, 'order_confirmation':order_confirmation }
     return render(request, 'orders_detail.html', context)
+
+
+@login_required()
+def add_order(request):
+    add_order_form = Add_Order_Form(request.POST)
+    if request.method == 'POST':
+        if add_order_form.is_valid():
+            obj = Order()
+            obj.product = add_order_form.cleaned_data['product']
+            obj.code = add_order_form.cleaned_data['code']
+            obj.description = add_order_form.cleaned_data['description']
+            obj.circulation = add_order_form.cleaned_data['circulation']
+            obj.save()
+            return redirect(obj.get_absolute_url())
+    else:
+        return render(request, 'add_order.html', {'add_order_form': add_order_form})
+
+
+
 
 
 

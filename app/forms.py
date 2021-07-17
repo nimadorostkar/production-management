@@ -57,6 +57,12 @@ class Order_confirmation_Form(forms.ModelForm):
 		fields = ['order']
 
 
+#------------------------------------------------------------------------------
+class Add_Order_Form(forms.ModelForm):
+	class Meta:
+		model = Order
+		fields = ['product', 'code', 'description', 'circulation']
+
 
 
 
