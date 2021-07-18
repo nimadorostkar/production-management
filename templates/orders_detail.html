@@ -87,7 +87,7 @@
 
 <div class="row" align="center" dir="rtl">
 
-  <div class="col-md-12">
+  <div class="col-md-6">
     <div class="card">
       <div class="card-header">
          <h4> ایستگاه های درگیر :</h4>
@@ -108,34 +108,76 @@
               <th>
                 موجودی
               </th>
-              <th class="text-center">
-                قطعه خروجی
-              </th>
-              <th class="text-center">
-                تایید شده
-              </th>
             </tr>
           </thead>
           <tbody>
           {% for Tree in involved_stations %}
-          {% for Order_confirmation in order_confirmation %}
-
             <tr>
-              <td><a href="{{ Tree.station.get_absolute_url }}"> {{ Tree.station.name }} </a></td>
+              <td>
+                {% for Order_confirmation in order_confirmation %}
+                  {% if Order_confirmation.station ==  Tree.station  %}
+                     <i style="font-size:15px;color:green;" class="tim-icons icon-check-2"></i>
+                  {% endif %}
+                {% endfor %}
+                <a href="{{ Tree.station.get_absolute_url }}"> {{ Tree.station.name }} </a>
+              </td>
               <td> {{ Tree.station.position }} </td>
               <td> {{ Tree.station.manager }} </td>
               <td> {{ Tree.station.inventory }} </td>
-              <td class="text-center"> {{ Tree.station.output_material }} </td>
-              <td class="text-center">
-                {% if Order_confirmation.station ==  Tree.station  %}
-                   <i style="color:green;" class="tim-icons icon-check-2"></i>
-                {% else %}
-                   <i style="color:red;" class="tim-icons icon-simple-remove"></i>
-                {% endif %}
-              </td>
             </tr>
-
           {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+         <h4>   کل قطات سفارش :</h4>
+      </div>
+      <div class="card-body" style="font-size:11px; color:black;">
+        <table class="table tablesorter " id="">
+          <thead class=" text-primary">
+            <tr>
+              <th>
+                نام
+              </th>
+              <th>
+                وضعیت
+              </th>
+              <th>
+                موجودی
+              </th>
+              <th>
+                ضریب مصرف
+              </th>
+              <th>
+                نیاز سفارش
+              </th>
+              <th class="text-center">
+                تصویر
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for Tree in involved_materials %}
+           {% for input_material in Tree.station.input_material.all %}
+              <tr>
+                <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
+                <td> {{ input_material.material.position }} </td>
+                <td> {{ input_material.material.inventory }} </td>
+                <td> {{ input_material.inventory }} </td>
+                <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
+                <td class="text-center">
+                  <div class="photo">
+                    <img src="{{ input_material.material.image.url }}" alt="Profile Photo">
+                  </div>
+                </td>
+              </tr>
+           {% endfor %}
           {% endfor %}
           </tbody>
         </table>
@@ -261,62 +303,6 @@
 
 
 
-
-<div class="row" align="center" dir="rtl">
-
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-         <h4>   کل قطات سفارش :</h4>
-      </div>
-      <div class="card-body" style="font-size:11px; color:black;">
-        <table class="table tablesorter " id="">
-          <thead class=" text-primary">
-            <tr>
-              <th>
-                نام
-              </th>
-              <th>
-                وضعیت
-              </th>
-              <th>
-                موجودی
-              </th>
-              <th>
-                ضریب مصرف
-              </th>
-              <th>
-                نیاز سفارش
-              </th>
-              <th class="text-center">
-                تصویر
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for Tree in involved_materials %}
-           {% for input_material in Tree.station.input_material.all %}
-              <tr>
-                <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
-                <td> {{ input_material.material.position }} </td>
-                <td> {{ input_material.material.inventory }} </td>
-                <td> {{ input_material.inventory }} </td>
-                <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
-                <td class="text-center">
-                  <div class="photo">
-                    <img src="{{ input_material.material.image.url }}" alt="Profile Photo">
-                  </div>
-                </td>
-              </tr>
-           {% endfor %}
-          {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-</div>
 
 
 
