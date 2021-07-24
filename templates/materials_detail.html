@@ -155,6 +155,42 @@
 
 
 
+
+
+
+
+
+
+
+
+<div class="row" dir="rtl" align="right">
+
+
+  <div class="col-md-6">
+    <div class="card card-user">
+      <div class="card-header">
+        <h4 class="card-title" align="center">
+            کل موجودی در قطعات دیگر
+        </h4>
+      </div>
+      <div class="card-body" style="font-size:11px; color:black;">
+        {% for Bom_material in bom_material %}
+          {{ Bom_material.parent.name }} - {{ Bom_material.parent.inventory }}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->

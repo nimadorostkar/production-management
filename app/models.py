@@ -233,7 +233,6 @@ class Station(models.Model):
 class Tree(models.Model):
     station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='station', verbose_name = " ایستگاه ")
     parent_station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='parent_station', verbose_name = " ایستگاه والد ")
-    #quantity = models.DecimalField(default='1', max_digits=30, decimal_places=1, verbose_name = "تعداد در یک محصول")
     relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
 
 

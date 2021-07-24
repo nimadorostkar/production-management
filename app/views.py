@@ -142,7 +142,7 @@ def materials(request):
 def materials_detail(request, id):
     material = get_object_or_404(models.Material, id=id)
     bom = models.Bom_material.objects.filter(relatedProduct=material)
-    stations = models.Station.objects.filter(input_material__material__name=material.name, position='نیرو خانگی'or'ایستگاه'or'برون سپاری')
+    stations = models.Station.objects.filter(input_material__material__name=material.name)
     exit_station = models.Station.objects.filter(output_material__name=material.name).exclude(position='حمل و نقل')
     bom_material = models.Bom_material.objects.filter(name__name=material.name)
     tree = models.Tree.objects.filter(station__input_material__material__name=material.name)
