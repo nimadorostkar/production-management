@@ -168,7 +168,7 @@
               <tr>
                 <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
                 <td> {{ input_material.material.position }} </td>
-                <td> {{ input_material.material.inventory }} </td>
+                <td> {{ input_material.material.inventory }} {{ input_material.material.unit }} </td>
                 <td> {{ input_material.inventory }} </td>
                 <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
                 <td class="text-center">
@@ -228,7 +228,7 @@
             {% if input_material.material.position == 'سطح اولیه' %}
               <tr>
                 <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
-                <td> {{ input_material.material.inventory }} </td>
+                <td> {{ input_material.material.inventory }} {{ input_material.material.unit }}  </td>
                 <td> {{ input_material.inventory }} </td>
                 <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
                 <td class="text-center">
@@ -278,7 +278,7 @@
             {% if input_material.material.position == 'اقلام مصرفی' %}
               <tr>
                 <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
-                <td> {{ input_material.material.inventory }} </td>
+                <td> {{ input_material.material.inventory }} {{ input_material.material.unit }} </td>
                 <td> {{ input_material.inventory }} </td>
                 <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
                 <td class="text-center">
