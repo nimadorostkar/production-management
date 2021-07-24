@@ -12,7 +12,7 @@ from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.urls import reverse
 from django.db.models import Q
-
+import datetime
 
 
 
@@ -200,7 +200,7 @@ def stations_detail(request, id):
             history.station = station
             history.save()
             return redirect(obj.get_absolute_url())
-        if exit_station_form.is_valid(): 
+        if exit_station_form.is_valid():
             obj = get_object_or_404(models.Station, id=id)
             exit_value = exit_station_form.cleaned_data['exit_station_field']
             obj.inventory -= exit_value
@@ -321,6 +321,7 @@ def orders_detail(request, id):
             obj = get_object_or_404(models.Order, id=id)
             obj.confirmed = order_form.cleaned_data['confirmed']
             obj.completed = order_form.cleaned_data['completed']
+            obj.start_time = datetime.datetime.now()
             obj.save()
             return redirect(obj.get_absolute_url())
 

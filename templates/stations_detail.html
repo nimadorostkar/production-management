@@ -374,7 +374,7 @@
                 نام
               </th>
               <th class="text-center">
-                زمان مورد نیاز
+                زمان مورد نیاز (روز)
               </th>
               <th>
                 کد
@@ -402,8 +402,9 @@
                 <tr>
                   <td><a href="{{ Order.get_absolute_url }}"> {{ Tree.relatedProduct }} </a></td>
                   <td class="text-center">
-                     <label for="progress"> ۱۰ روز </label>
-                     <progress id="progress" value="2" max="10"> 32% </progress>
+                     <label for="progress">   {{ Order.start_time|timesince }}  </label>
+                     <progress id="progress" value="{{ Order.start_time|timesince }}" max="{% widthratio Order.circulation station.pro_cap_day 1 %}"></progress>
+                     <label for="progress"> {% widthratio Order.circulation station.pro_cap_day 1 %} </label>
                   </td>
                   <td> {{ Order.code }} </td>
                   <td> {{ Order.circulation }} </td>

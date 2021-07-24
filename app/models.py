@@ -207,8 +207,8 @@ class Station(models.Model):
     manager = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True,verbose_name = "مسئول")
     mother_station = models.ForeignKey(Mother_Station ,on_delete=models.CASCADE ,null=True, blank=True,verbose_name = " ایستگاه مادر ")
     pro_cap_day = models.IntegerField(default='1', null=True,blank=True, verbose_name = " ظرفیت تولید در روز ")
-    percent_error = models.IntegerField(default='1', null=True,blank=True, verbose_name = " درصد خطا ")
-    process_time = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " زمان مصرفی به ساعت ")
+    percent_error = models.DecimalField(max_digits=30, default='0', decimal_places=4, null=True,blank=True, verbose_name = " درصد خطا ")
+    process_time = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " زمان مصرفی به ساعت (برای حمل و نقل و انبار) ")
     input_material = models.ManyToManyField(Stations_inputs, blank=True,related_name='input', verbose_name = " قطعات ورودی ")
     output_material = models.ForeignKey(Material ,on_delete=models.CASCADE ,null=True, blank=True,related_name='output', verbose_name = " قطعه خروجی ")
 
@@ -351,7 +351,7 @@ class Order(models.Model):
     circulation = models.DecimalField(default='1',max_digits=30, decimal_places=4, verbose_name = " تیراژ ")
     confirmed = models.BooleanField(default=False, verbose_name = " تایید شده " )
     completed = models.BooleanField(default=False, verbose_name = " تکمیل شده " )
-    start_time = models.DateTimeField(verbose_name = "زمان شروع ")
+    start_time = models.DateTimeField(auto_now_add=True,verbose_name = "زمان شروع ")
 
 
     def get_absolute_url(self):
