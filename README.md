@@ -67,7 +67,7 @@ python manage.py migrate --run-syncdb
 
 <hr>
 
-<div dir="ltr">
+<div dir="rtl">
 
 نرم افزار برنامه ریزی تولید
 

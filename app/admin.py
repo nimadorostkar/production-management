@@ -11,7 +11,6 @@ from mptt.admin import DraggableMPTTAdmin
 
 
 
-
 admin.site.site_header= " توانکار "
 admin.site.site_title= "Tavankar"
 admin.site.register(LogEntry)
