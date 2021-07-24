@@ -306,6 +306,85 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row" align="center" dir="rtl">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+         <h4> تولیدات مربوط به این سفارش </h4>
+      </div>
+      <div class="card-body" style="font-size:11px; color:black;">
+        <table class="table tablesorter " id="">
+          <thead class=" text-primary">
+            <tr>
+              <th>
+                نام قطعه
+              </th>
+              <th>
+                ایستگاه تولید کننده
+              </th>
+              <th>
+                 تعداد
+              </th>
+              <th>
+                مسئول
+              </th>
+              <th>
+                تاریخ
+              </th>
+              <th class="text-center">
+                تصویر
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for Station_exit_history in exit_order %}
+
+              <tr>
+                <td> <a href="{{ Station_exit_history.material.get_absolute_url }}"> {{ Station_exit_history.material.name }} </a> </td>
+                <td> <a href="{{ Station_exit_history.station.get_absolute_url }}"> {{ Station_exit_history.station.name }} </a> </td>
+                <td> {{ Station_exit_history.quantity }} </td>
+                <td> {{ Station_exit_history.manager }} </td>
+                <td> {{ Station_exit_history.j_time }} </td>
+                <td class="text-center">
+                  <div class="photo">
+                    <img src="{{ Station_exit_history.material.image.url }}" alt="Profile Photo">
+                  </div>
+                </td>
+              </tr>
+
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
 {% if request.user.is_superuser %}
   <br>
   <hr>

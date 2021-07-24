@@ -161,7 +161,7 @@ admin.site.register(models.Inventory_history, Inventory_historyAdmin)
 
 #------------------------------------------------------------------------------
 class Station_exit_historyAdmin(ImportExportModelAdmin):
-    list_display = ('station', 'material', 'quantity', 'manager', 'j_time')
+    list_display = ('station', 'material', 'quantity', 'manager', 'order_code', 'j_time')
     list_filter = ("station", "material", "manager", "time")
     search_fields = ['material','station',]
 

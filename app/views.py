@@ -214,6 +214,7 @@ def stations_detail(request, id):
             history.quantity = exit_value
             history.manager = station.manager
             history.station = station
+            history.order_code = exit_station_form.cleaned_data['order_code']
             history.save()
             return redirect(obj.get_absolute_url())
 
@@ -315,6 +316,7 @@ def orders_detail(request, id):
     involved_materials = models.Tree.objects.filter(relatedProduct=order.product).exclude(station__position='حمل و نقل').exclude(station__position= 'انبار')
     order_form = OrderForm(request.POST)
     order_confirmation = models.Order_confirmation.objects.filter(order=order)
+    exit_order = models.Station_exit_history.objects.filter(order_code=order.code)
 
     if request.method == 'POST':
         if order_form.is_valid():
@@ -325,7 +327,7 @@ def orders_detail(request, id):
             obj.save()
             return redirect(obj.get_absolute_url())
 
-    context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials, 'order_form':order_form, 'order_confirmation':order_confirmation }
+    context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials, 'order_form':order_form, 'order_confirmation':order_confirmation, 'exit_order':exit_order }
     return render(request, 'orders_detail.html', context)
 
 

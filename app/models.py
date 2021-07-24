@@ -328,7 +328,7 @@ class Station_exit_history(models.Model):
     manager = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name = "مسئول")
     time = models.DateTimeField(auto_now_add=True, verbose_name = "زمان")
     station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name = " ایستگاه ")
-    order = models.ForeignKey('Order', on_delete=models.CASCADE, verbose_name = " برای سفارش ")
+    order_code = models.CharField(max_length=200, null=True, blank=True, verbose_name = "کد سفارش")
 
 
     class Meta:
@@ -339,7 +339,7 @@ class Station_exit_history(models.Model):
         return jalali_converter(self.time)
 
     def __str__(self):
-        return self.material.name + '-' + self.quantity + '-' + self.j_time
+        return self.material.name
 
 
 

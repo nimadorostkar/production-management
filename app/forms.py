@@ -40,6 +40,7 @@ class InventoryForm(forms.Form):
 #------------------------------------------------------------------------------
 class Exit_stationForm(forms.Form):
 	exit_station_field = forms.DecimalField(max_digits=30, decimal_places=4)
+	order_code = forms.CharField(max_length=200)
 
 
 #------------------------------------------------------------------------------
