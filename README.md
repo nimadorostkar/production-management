@@ -29,10 +29,12 @@ Manufacturing process management or Manage inventory statistics, production and 
 #### Pip
 ```bash
 pip install -r requirements.txt
+
 ```
 
 #### Migrations
 ```bash
 python manage.py makemigrations
 python manage.py migrate --run-syncdb
+
 ```
