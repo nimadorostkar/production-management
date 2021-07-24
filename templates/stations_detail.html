@@ -361,7 +361,7 @@
 <br>
 <div class="row" dir="rtl" align="right">
 
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="card card-user">
       <div class="card-header">
         <h4 class="card-title"> سفارشات تایید شده </h4>
@@ -372,6 +372,9 @@
             <tr>
               <th>
                 نام
+              </th>
+              <th class="text-center">
+                زمان مورد نیاز
               </th>
               <th>
                 کد
@@ -398,6 +401,10 @@
                {% if Order.confirmed %}
                 <tr>
                   <td><a href="{{ Order.get_absolute_url }}"> {{ Tree.relatedProduct }} </a></td>
+                  <td class="text-center">
+                     <label for="progress"> ۱۰ روز </label>
+                     <progress id="progress" value="2" max="10"> 32% </progress>
+                  </td>
                   <td> {{ Order.code }} </td>
                   <td> {{ Order.circulation }} </td>
                   <td class="text-center">
@@ -431,7 +438,7 @@
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="card card-user">
       <div class="card-header">
         <h4 class="card-title"> سفارشات تایید نشده  </h4>
