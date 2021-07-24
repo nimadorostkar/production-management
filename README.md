@@ -38,3 +38,17 @@ python manage.py makemigrations
 python manage.py migrate --run-syncdb
 
 ```
+
+
+<br>
+
+
+![example](https://github.com/nimadorostkar/production-management/blob/master/screenshot/Screen%20Shot%201400-05-03%20at%2002.45.02.png)
+![example](https://github.com/nimadorostkar/production-management/blob/master/screenshot/Screen%20Shot%201400-05-03%20at%2002.44.39.png)
+![example](https://github.com/nimadorostkar/production-management/blob/master/screenshot/Screen%20Shot%201400-05-03%20at%2002.44.22.png)
+![example](https://github.com/nimadorostkar/production-management/blob/master/screenshot/Screen%20Shot%201400-05-03%20at%2002.45.13.png)
+![example](https://github.com/nimadorostkar/production-management/blob/master/screenshot/Screen%20Shot%201400-05-03%20at%2002.43.50.png)
+![example](https://github.com/nimadorostkar/production-management/blob/master/screenshot/Screen%20Shot%201400-05-03%20at%2002.43.35.png)
+
+
+<br>
