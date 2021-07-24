@@ -23,5 +23,16 @@ Manufacturing process management or Manage inventory statistics, production and 
 [![](https://img.shields.io/codeclimate/maintainability/fabiocaccamo/django-extra-settings?logo=code-climate)](https://codeclimate.com/github/fabiocaccamo/django-extra-settings/)
 [![](https://requires.io/github/fabiocaccamo/django-extra-settings/requirements.svg?branch=master)](https://requires.io/github/fabiocaccamo/django-extra-settings/requirements/?branch=master)
 
-
 <hr>
+
+
+#### Pip
+```bash
+pip install -r requirements.txt
+```
+
+#### Migrations
+```bash
+python manage.py makemigrations
+python manage.py migrate --run-syncdb
+```
