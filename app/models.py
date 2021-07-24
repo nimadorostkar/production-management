@@ -50,7 +50,7 @@ class Profile(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=300,verbose_name = " نام ")
     synch_to = models.ForeignKey('Material', on_delete=models.CASCADE,verbose_name = " قطعه مربوطه ")
-    file = models.FileField(null=True, blank=True,verbose_name ="فایل")
+    file = models.FileField(default='media/Default.png', null=True, blank=True,verbose_name ="فایل")
 
 
     class Meta:
