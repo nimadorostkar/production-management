@@ -374,12 +374,15 @@
                 نام
               </th>
               <th class="text-center">
-                زمان مورد نیاز (روز)
+               زمان مورد نیاز
               </th>
-              <th>
+              <th class="text-center">
+                زمان سپری شده
+              </th>
+              <th class="text-center">
                 کد
               </th>
-              <th>
+              <th class="text-center">
                 تیراژ
               </th>
               <th class="text-center">
@@ -402,12 +405,13 @@
                 <tr>
                   <td><a href="{{ Order.get_absolute_url }}"> {{ Tree.relatedProduct }} </a></td>
                   <td class="text-center">
-                     <label for="progress">   {{ Order.start_time|timesince }}  </label>
-                     <progress id="progress" value="{{ Order.start_time|timesince }}" max="{% widthratio Order.circulation station.pro_cap_day 1 %}"></progress>
-                     <label for="progress"> {% widthratio Order.circulation station.pro_cap_day 1 %} </label>
+                    {% widthratio Order.circulation station.pro_cap_day 1 %} روز
                   </td>
-                  <td> {{ Order.code }} </td>
-                  <td> {{ Order.circulation }} </td>
+                  <td class="text-center">
+                    {{ Order.start_time|timesince }}
+                  </td>
+                  <td class="text-center"> {{ Order.code }} </td>
+                  <td class="text-center"> {{ Order.circulation }} </td>
                   <td class="text-center">
                     {% if Order.confirmed %}
                       <i style="color:green;" class="tim-icons icon-check-2"></i>
