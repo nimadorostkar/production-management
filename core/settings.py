@@ -5,6 +5,7 @@ import dj_database_url
 
 
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = Path(__file__).parent
@@ -18,7 +19,6 @@ DEBUG = config('DEBUG', default=True)
 
 # load production server from .env
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
-
 
 
 
