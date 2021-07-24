@@ -114,9 +114,9 @@ admin.site.register(models.Station, StationAdmin)
 
 #------------------------------------------------------------------------------
 class TreeAdmin(ImportExportModelAdmin):
-    list_display = ('station','parent_station','relatedProduct','quantity')
-    list_filter = ("relatedProduct", "parent_station", "quantity")
-    search_fields = ['station', 'parent_station', 'relatedProduct', 'quantity']
+    list_display = ('station','parent_station','relatedProduct')
+    list_filter = ("relatedProduct", "parent_station")
+    search_fields = ['station', 'parent_station', 'relatedProduct']
     raw_id_fields = ('station', 'parent_station', 'relatedProduct')
 
 admin.site.register(models.Tree, TreeAdmin)
@@ -171,10 +171,14 @@ admin.site.register(models.Station_exit_history, Station_exit_historyAdmin)
 
 #------------------------------------------------------------------------------
 class OrderAdmin(ImportExportModelAdmin):
-    list_display = ('product', 'code', 'image', 'confirmed', 'completed')
+    list_display = ('product', 'code', 'image', 'confirmed', 'completed', 'j_time')
     list_filter = ("product", "confirmed", "completed")
     search_fields = ['product', 'code']
     raw_id_fields = ('product',)
+
+    def get_created_jalali(self, obj):
+        return datetime2jalali(obj.start_time).strftime('%y/%m/%d _ %H:%M:%S')
+    get_created_jalali.short_description = " زمان شروع "
 
 admin.site.register(models.Order, OrderAdmin)
 

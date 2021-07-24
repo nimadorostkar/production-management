@@ -109,6 +109,8 @@ class Material(models.Model):
     description = models.TextField(max_length=900,null=True, blank=True,verbose_name = "توضیحات")
     inventory = models.DecimalField(max_digits=30, decimal_places=4, null=True, blank=True, verbose_name = " موجودی ")
     min_inventory = models.DecimalField(max_digits=30, decimal_places=1, null=True, blank=True, verbose_name = " حداقل موجودی ")
+    Unit_CHOICES = (('گرم','گرم'), ('عدد','عدد'), ('سانتیمتر','سانتیمتر'))
+    unit = models.CharField(max_length=300,null=True, blank=True, choices=Unit_CHOICES, verbose_name = " واحد ")
     image = models.ImageField(upload_to='media', default='media/Default.png', null=True, blank=True,verbose_name = "تصویر")
 
     class Meta:
@@ -232,7 +234,7 @@ class Station(models.Model):
 class Tree(models.Model):
     station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='station', verbose_name = " ایستگاه ")
     parent_station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='parent_station', verbose_name = " ایستگاه والد ")
-    quantity = models.DecimalField(default='1', max_digits=30, decimal_places=1, verbose_name = "تعداد در یک محصول")
+    #quantity = models.DecimalField(default='1', max_digits=30, decimal_places=1, verbose_name = "تعداد در یک محصول")
     relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
 
 
@@ -326,6 +328,7 @@ class Station_exit_history(models.Model):
     manager = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name = "مسئول")
     time = models.DateTimeField(auto_now_add=True, verbose_name = "زمان")
     station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name = " ایستگاه ")
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, verbose_name = " برای سفارش ")
 
 
     class Meta:
@@ -348,6 +351,7 @@ class Order(models.Model):
     circulation = models.DecimalField(default='1',max_digits=30, decimal_places=4, verbose_name = " تیراژ ")
     confirmed = models.BooleanField(default=False, verbose_name = " تایید شده " )
     completed = models.BooleanField(default=False, verbose_name = " تکمیل شده " )
+    start_time = models.DateTimeField(verbose_name = "زمان شروع ")
 
 
     def get_absolute_url(self):
@@ -362,6 +366,9 @@ class Order(models.Model):
 
     def image(self):
         return  self.product.synch_to.image
+
+    def j_time(self):
+        return jalali_converter(self.start_time)
 
 
 
