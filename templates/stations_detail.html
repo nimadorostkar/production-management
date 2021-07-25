@@ -457,7 +457,7 @@
     </div>
   </div>
 
-  <div class="col-md-12">
+  <div class="col-md-6">
     <div class="card card-user">
       <div class="card-header">
         <h4 class="card-title"> سفارشات تایید نشده  </h4>
@@ -532,7 +532,7 @@
 
           <div class="row" dir="rtl" align="center">
 
-            <div class="col-md-12">
+            <div class="col-md-10">
               <div class="card card-user">
                 <div class="card-header" dir="rtl" align="right">
                   <h4 class="card-title"> تاییده سفارشات تایید نشده </h4>
@@ -541,7 +541,7 @@
                       <form method="post">
                          {% csrf_token %}
                          {{ order_confirmation_form|bootstrap }}
-                         <button type="submit" class="btn btn-fill btn-primary"> ذخیره </button>
+                         <button type="submit" class="btn btn-fill btn-primary">  تایید </button>
                       </form>
                 </div>
                 <div id='order_confirm' class="card">

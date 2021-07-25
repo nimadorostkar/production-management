@@ -5,8 +5,8 @@ from django.contrib.auth import get_user_model
 from .models import Profile, Product, Mother_Station, Material, Station, Tree, Ticket, Notice, Order, Order_confirmation
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-
-
+from django.shortcuts import render, get_object_or_404, redirect
+from . import models
 
 
 #------------------------------------------------------------------------------
@@ -53,6 +53,8 @@ class OrderForm(forms.ModelForm):
 
 #------------------------------------------------------------------------------
 class Order_confirmation_Form(forms.ModelForm):
+	order = forms.ModelChoiceField(queryset=Order.objects.filter(confirmed=False, completed=False), widget=forms.Select(), error_messages={'required': 'این فیلد ضروری است'} )
+
 	class Meta:
 		model = Order_confirmation
 		fields = ['order']
