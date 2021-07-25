@@ -41,7 +41,7 @@
                   </p>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
-                  {% for Material in material %}
+                  {% for Material in n_material %}
                     {% if Material.inventory <= Material.min_inventory %}
                       <li class="nav-link">
                          <a href="{{ Material.get_absolute_url }}" class="nav-item dropdown-item">
