@@ -14,13 +14,6 @@
 
         <ul class="nav">
         {% if user.is_authenticated %}
-          <li class="{% if 'index' in segment %} active {% endif %}">
-            <a href="/">
-              <i class="tim-icons icon-chart-pie-36"></i>
-              <p> داشبورد </p>
-            </a>
-          </li>
-
 
           <li class="{% if 'app:products' in segment %} active {% endif %}">
             <a href="{% url 'app:products' %}">

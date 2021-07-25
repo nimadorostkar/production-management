@@ -16,13 +16,13 @@ import datetime
 
 
 
- 
+
 
 #------------------------------------------------------------------------------
 @login_required()
 def index(request):
-    material = models.Material.objects.all()
-    context = {'material':material}
+    n_material = models.Material.objects.all()
+    context = {'n_material':n_material}
     return render(request, 'index.html', context)
 
 
@@ -56,6 +56,7 @@ def pages(request):
 #------------------------------------------------------------------------------
 @login_required
 def profile(request):
+  n_material = models.Material.objects.all()
   profile = models.Profile.objects.filter(user=request.user)
   if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
@@ -81,7 +82,8 @@ def profile(request):
   context = {
   'profile': profile,
   'user_form': user_form,
-  'profile_form': profile_form }
+  'profile_form': profile_form,
+  'n_material':n_material }
   return render(request, 'page-user.html', context)
 
 
@@ -113,19 +115,21 @@ def search(request):
 #------------------------------------------------------------------------------
 @login_required()
 def products(request):
+    n_material = models.Material.objects.all()
     products = models.Product.objects.all()
-    return render(request, 'products.html', {'products': products})
+    return render(request, 'products.html', {'products': products, 'n_material':n_material})
 
 
 @login_required()
 def products_detail(request, id):
+    n_material = models.Material.objects.all()
     product = get_object_or_404(models.Product, id=id)
     order = models.Order.objects.filter(product=product)
     tree = models.Tree.objects.filter(relatedProduct=product)
     bom = models.Bom_product.objects.filter(relatedProduct=product).exclude(material__position='اقلام مصرفی')
     bom_masrafi = models.Bom_product.objects.filter(relatedProduct=product, material__position='اقلام مصرفی')
     material_bom = models.Bom_material.objects.all()
-    context = {'product': product, 'tree':tree, 'bom':bom, 'bom_masrafi':bom_masrafi, 'material_bom':material_bom, 'order':order}
+    context = {'product': product, 'tree':tree, 'bom':bom, 'bom_masrafi':bom_masrafi, 'material_bom':material_bom, 'order':order, 'n_material':n_material}
     return render(request, 'products_detail.html', context)
 
 
@@ -134,12 +138,14 @@ def products_detail(request, id):
 #------------------------------------------------------------------------------
 @login_required()
 def materials(request):
+    n_material = models.Material.objects.all()
     materials = models.Material.objects.all()
-    return render(request, 'materials.html', {'materials': materials})
+    return render(request, 'materials.html', {'materials': materials, 'n_material':n_material})
 
 
 @login_required()
 def materials_detail(request, id):
+    n_material = models.Material.objects.all()
     material = get_object_or_404(models.Material, id=id)
     bom = models.Bom_material.objects.filter(relatedProduct=material)
     stations = models.Station.objects.filter(input_material__material__name=material.name)
@@ -153,7 +159,8 @@ def materials_detail(request, id):
     'tree':tree,
     'stations':stations,
     'exit_station':exit_station,
-    'bom_material':bom_material
+    'bom_material':bom_material,
+    'n_material':n_material
     }
     return render(request, 'materials_detail.html', context)
 
@@ -163,12 +170,14 @@ def materials_detail(request, id):
 #------------------------------------------------------------------------------
 @login_required()
 def stations(request):
+    n_material = models.Material.objects.all()
     stations = models.Station.objects.all()
-    return render(request, 'stations.html', {'stations': stations})
+    return render(request, 'stations.html', {'stations': stations, 'n_material':n_material})
 
 
 @login_required()
 def stations_detail(request, id):
+    n_material = models.Material.objects.all()
     station = get_object_or_404(models.Station, id=id)
     products = models.Tree.objects.filter(station__name=station.name)
     inventory_form = InventoryForm(request.POST)
@@ -237,7 +246,8 @@ def stations_detail(request, id):
     'order_confirmation_history':order_confirmation_history,
     'input':input,
     'station_products':station_products,
-    'orders':orders
+    'orders':orders,
+    'n_material':n_material
     }
     return render(request, 'stations_detail.html', context)
 
@@ -248,6 +258,7 @@ def stations_detail(request, id):
 @login_required()
 @transaction.atomic
 def ticket(request):
+    n_material = models.Material.objects.all()
     send_tickets = models.Ticket.objects.filter(user=request.user).order_by('-created_on')
     received_tickets = models.Ticket.objects.filter(to=request.user).order_by('-created_on')
     ticket = chain(send_tickets, received_tickets)
@@ -268,7 +279,7 @@ def ticket(request):
             return HttpResponse("Form Failed to Validate")
     else:
       ticket_form=TicketForm(request.POST, request.FILES, instance=request.user)
-      context = {'ticket_form': ticket_form, 'ticket':ticket, 'users':users }
+      context = {'ticket_form': ticket_form, 'ticket':ticket, 'users':users, 'n_material':n_material }
       return render(request, 'ticket.html', context)
 
 
@@ -277,16 +288,18 @@ def ticket(request):
 #------------------------------------------------------------------------------
 @login_required()
 def mother_station(request):
+    n_material = models.Material.objects.all()
     mother_station = models.Mother_Station.objects.all()
-    return render(request, 'mother_station.html', {'mother_station': mother_station})
+    return render(request, 'mother_station.html', {'mother_station': mother_station, 'n_material':n_material})
 
 
 
 @login_required()
 def mother_station_detail(request, id):
+    n_material = models.Material.objects.all()
     mother_stations = get_object_or_404(models.Mother_Station, id=id)
     sub_stations = models.Station.objects.filter(mother_station=mother_stations)
-    return render(request, 'mother_station_detail.html', {'mother_stations':mother_stations, 'sub_stations':sub_stations })
+    return render(request, 'mother_station_detail.html', {'mother_stations':mother_stations, 'sub_stations':sub_stations, 'n_material':n_material })
 
 
 
@@ -294,8 +307,9 @@ def mother_station_detail(request, id):
 #------------------------------------------------------------------------------
 @login_required()
 def notices(request):
+    n_material = models.Material.objects.all()
     notices = models.Notice.objects.all().order_by('-created_on')
-    context = {'notices':notices}
+    context = {'notices':notices, 'n_material':n_material}
     return render(request, 'notices.html', context)
 
 
@@ -304,12 +318,14 @@ def notices(request):
 #------------------------------------------------------------------------------
 @login_required()
 def orders(request):
+    n_material = models.Material.objects.all()
     orders = models.Order.objects.all()
-    return render(request, 'orders.html', {'orders': orders})
+    return render(request, 'orders.html', {'orders': orders, 'n_material':n_material})
 
 
 @login_required()
 def orders_detail(request, id):
+    n_material = models.Material.objects.all()
     order = get_object_or_404(models.Order, id=id)
     involved_stations = models.Tree.objects.filter(relatedProduct=order.product)
     involved_materials = models.Tree.objects.filter(relatedProduct=order.product).exclude(station__position='حمل و نقل').exclude(station__position= 'انبار')
@@ -326,12 +342,13 @@ def orders_detail(request, id):
             obj.save()
             return redirect(obj.get_absolute_url())
 
-    context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials, 'order_form':order_form, 'order_confirmation':order_confirmation, 'exit_order':exit_order }
+    context = { 'order': order, 'involved_stations':involved_stations, 'involved_materials':involved_materials, 'order_form':order_form, 'order_confirmation':order_confirmation, 'exit_order':exit_order, 'n_material':n_material }
     return render(request, 'orders_detail.html', context)
 
 
 @login_required()
 def add_order(request):
+    n_material = models.Material.objects.all()
     add_order_form = Add_Order_Form(request.POST)
     if request.method == 'POST':
         if add_order_form.is_valid():
@@ -343,7 +360,7 @@ def add_order(request):
             obj.save()
             return redirect(obj.get_absolute_url())
     else:
-        return render(request, 'add_order.html', {'add_order_form': add_order_form})
+        return render(request, 'add_order.html', {'add_order_form': add_order_form, 'n_material':n_material })
 
 
 
