@@ -158,7 +158,7 @@ class Bom_material(MPTTModel):
 
 
 
-
+ 
 
 #------------------------------------------------------------------------------
 class Stations_inputs(models.Model):

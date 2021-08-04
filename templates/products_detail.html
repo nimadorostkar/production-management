@@ -208,7 +208,7 @@
 
 </div>
 
- 
+
 
 
 
@@ -377,9 +377,9 @@
                     }
                 },
             nodeBinding: {
-                field_0: "name",
-                field_1: "inventory",
-                field_2: "quantity",
+                field_0: "نام",
+                field_1: "موجودی",
+                field_2: "inputs",
                 field_3: "output",
                 field_4: "link",
                 img_0: "img"
@@ -391,9 +391,9 @@
                     {
                       id: "{{ Tree.station }}",
                       pid: "{{ Tree.parent_station }}",
-                      name: "{{ Tree.station }}",
-                      inventory: "{{ Tree.station.inventory }}",
-                      quantity: "{{ Tree.quantity }}",
+                      نام: "{{ Tree.station }}",
+                      موجودی: "{{ Tree.station.inventory }}",
+                      inputs: "{{ Tree.station.input_material.name }}",     {% for input_material in station.input_material.all %} {{ input_material.material }} {% endfor %}
                       link: "http://127.0.0.1:8000{{ Tree.station.get_absolute_url }}" ,
                       output:" {{ Tree.station.output_material }} " ,
                       img: "{{ Tree.station.output_material.image.url }}",
