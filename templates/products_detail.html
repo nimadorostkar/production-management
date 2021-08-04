@@ -15,8 +15,9 @@
 <div class="col-md-12">
   <div class="card  card-plain" align="right" dir="rtl">
     <div class="card-header">
-      <h4 class="card-title" dir="rtl" align="center"> محصول {{ product.name }} <small> ({{ product.synch_to.code }}) </small> </h4> <br>
-      <p> موجودی:   {{ product.synch_to.inventory }}  {{ product.synch_to.unit }} </p>
+      <h4 class="card-title" dir="rtl" align="center"> محصول {{ product.name }} </h4>
+      <p> کد:   <small> ({{ product.synch_to.code }}) </small> </p>
+      <p> موجودی:   {{ product.synch_to.inventory.normalize }}  {{ product.synch_to.unit }} </p>
     </div>
   </div>
 </div>
@@ -64,7 +65,7 @@
               <li>
                 <a href=".">
                   {{ Bom_product.material }} &nbsp;&nbsp;&nbsp;&nbsp;
-                   ضریب مصرف: {{ Bom_product.inventory }} &nbsp;&nbsp;&nbsp;&nbsp;
+                   ضریب مصرف: {{ Bom_product.inventory.normalize }} &nbsp;&nbsp;&nbsp;&nbsp;
                   <img width="30px" src="{{ Bom_product.material.image.url }}" alt="Profile Photo">
                   <hr>
                 </a>
@@ -74,7 +75,7 @@
                       <li>
                         <a href=".">
                           {{ node.name.name }} &nbsp;&nbsp;&nbsp;&nbsp;
-                          ضریب مصرف: {{ node.quantity }} &nbsp;&nbsp;&nbsp;&nbsp;
+                          ضریب مصرف: {{ node.quantity.normalize }} &nbsp;&nbsp;&nbsp;&nbsp;
                           <img width="30px" src="{{ node.name.image.url }}" alt="Profile Photo">
                           <hr>
                         </a>
@@ -120,7 +121,7 @@
             <tr>
               <td><a href="{{ Bom_product.material.get_absolute_url }}"> {{ Bom_product.material.name }} </a></td>
               <td> {{ Bom_product.material.code }} </td>
-              <td> {{ Bom_product.inventory }}</td>
+              <td> {{ Bom_product.inventory.normalize }}</td>
               <td class="text-center">
                 <div class="photo">
                   <img src="{{ Bom_product.material.image.url }}" alt="Profile Photo">
@@ -195,7 +196,7 @@
               <td> {{ Tree.station.position }} </td>
               <td> {{ Tree.station.manager }} </td>
               <td> {{ Tree.station.description|slice:":60" }}... </td>
-              <td> {{ Tree.station.inventory }} </td>
+              <td> {{ Tree.station.inventory.normalize }} </td>
               <td class="text-center"> {{ Tree.station.output_material }} </td>
             </tr>
           {% endfor %}
@@ -249,7 +250,7 @@
             <tr>
               <td><a href="{{ Order.get_absolute_url }}"> {{ Order.product.name }} </a></td>
               <td> {{ Order.code }} </td>
-              <td> {{ Order.circulation }} </td>
+              <td> {{ Order.circulation.normalize }} </td>
               <td class="text-center">
                 {% if Order.confirmed %}
                   <i style="color:green;" class="tim-icons icon-check-2"></i>
@@ -392,7 +393,7 @@
                       id: "{{ Tree.station }}",
                       pid: "{{ Tree.parent_station }}",
                       نام: "{{ Tree.station }}",
-                      موجودی: "{{ Tree.station.inventory }}",
+                      موجودی: "{{ Tree.station.inventory.normalize }}",
                       ورودی: "{% for input_material in Tree.station.input_material.all %} {{ input_material.name }} , {% endfor %}",
                       مسئول: "{{ Tree.station.manager }}" ,
                       خروجی:" {{ Tree.station.output_material }} " ,

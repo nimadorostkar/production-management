@@ -111,10 +111,10 @@
 
         <div class="row">
           <div class="col-md-6">
-            <p>  موجودی :  {{ material.inventory }} {{ material.unit }} </p>
+            <p>  موجودی :  {{ material.inventory.normalize }} {{ material.unit }} </p>
           </div>
           <div class="col-md-6">
-            <p> حداقل موجودی : {{ material.min_inventory }} {{ material.unit }} </p>
+            <p> حداقل موجودی : {{ material.min_inventory.normalize }} {{ material.unit }} </p>
           </div>
         </div>
         <hr><br>
@@ -137,7 +137,7 @@
             موجودی های خارج نشده
             {% for Station in exit_station %}
               {% if Station.inventory != 0 %}
-                &nbsp;&nbsp;&nbsp;  <a style="color:black;" href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>[ {{ Station.inventory }} ]
+                &nbsp;&nbsp;&nbsp;  <a style="color:black;" href="{{ Station.get_absolute_url }}"> {{ Station.name }} </a>[ {{ Station.inventory.normalize }} ]
               {% endif %}
             {% endfor %}
         {% endif %}

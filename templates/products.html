@@ -32,7 +32,7 @@
   <div class="col-md-12">
     <div class="card" align="right" dir="rtl">
       <div class="card-header">
-      
+
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -62,7 +62,7 @@
                 <td><a href="{{ Product.get_absolute_url }}"> {{ Product.name }} </a></td>
                 <td> {{ Product.synch_to.code }} </td>
                 <td> {{ Product.synch_to.description|slice:":90" }}... </td>
-                <td> {{ Product.synch_to.inventory }} </td>
+                <td> {{ Product.synch_to.inventory.normalize }} </td>
                 <td class="text-center">
                   <div class="photo">
                     <img src="{{ Product.synch_to.image.url }}" alt="Profile Photo">

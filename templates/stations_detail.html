@@ -61,7 +61,7 @@
         <h6 class="card-title" align="center"> موجودی  </h6>
       </div>
       <div class="card-body">
-          {{ station.inventory }}
+          {{ station.inventory.normalize }}
       </div>
     </div>
   </div>
@@ -72,7 +72,7 @@
         <h6 class="card-title" align="center"> حداقل موجودی  </h6>
       </div>
       <div class="card-body">
-          {{ station.min_inventory }}
+          {{ station.min_inventory.normalize }}
       </div>
     </div>
   </div>
@@ -94,7 +94,7 @@
         <h6 class="card-title" align="center"> درصد خطا  </h6>
       </div>
       <div class="card-body">
-         {{ station.percent_error }}
+         {{ station.percent_error.normalize }}
       </div>
     </div>
   </div>
@@ -152,11 +152,11 @@
             </tr>
           </thead>
           <tbody>
-          {% for input_material in station.input_material.all %} 
+          {% for input_material in station.input_material.all %}
             <tr>
               <td>  <a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a></td>
-              <td> {{ input_material.material.inventory }} {{ input_material.material.unit }} </td>
-              <td> {{ input_material.inventory }} </td>
+              <td> {{ input_material.material.inventory.normalize }} {{ input_material.material.unit }} </td>
+              <td> {{ input_material.inventory.normalize }} </td>
               <td class="text-center">
                 <div class="photo">
                   <img src="{{ input_material.material.image.url }}" alt="Profile Photo">
@@ -425,7 +425,7 @@
                     {{ Order.start_time|timesince }}
                   </td>
                   <td class="text-center"> {{ Order.code }} </td>
-                  <td class="text-center"> {{ Order.circulation }} </td>
+                  <td class="text-center"> {{ Order.circulation.normalize }} </td>
                   <td class="text-center">
                     {% if Order.confirmed %}
                       <i style="color:green;" class="tim-icons icon-check-2"></i>
@@ -495,7 +495,7 @@
                 <tr>
                   <td><a href="{{ Order.get_absolute_url }}"> {{ Tree.relatedProduct }} </a></td>
                   <td> {{ Order.code }} </td>
-                  <td> {{ Order.circulation }} </td>
+                  <td> {{ Order.circulation.normalize }} </td>
                   <td class="text-center">
                     {% if Order.confirmed %}
                       <i style="color:green;" class="tim-icons icon-check-2"></i>

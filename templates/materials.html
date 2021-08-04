@@ -46,7 +46,7 @@
                 <td> {{ Material.code }} </td>
                 <td> {{ Material.description|slice:":70" }}... </td>
                 <td> {{ Material.position }}</td>
-                <td> {{ Material.inventory }}</td>
+                <td> {{ Material.inventory.normalize }}</td>
                 <td class="text-center">
                   <div class="photo">
                     <img src="{{ Material.image.url }}" alt="Profile Photo">

@@ -22,7 +22,7 @@
           <button style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:8px;padding:10px;font-size:16px;border:none;"> کد:&nbsp;{{ order.code }} </button>
         </div>
         <div class="col-md-6" align="left">
-          <button style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:8px;padding:10px;font-size:16px;border:none;"> تیراژ:&nbsp;{{ order.circulation }} </button>
+          <button style="background-color:#0c5ba9bd;color:white;text-align:center;border-radius:8px;padding:10px;font-size:16px;border:none;"> تیراژ:&nbsp;{{ order.circulation.normalize }} </button>
         </div>
       </div>
 
@@ -122,7 +122,7 @@
               </td>
               <td> {{ Tree.station.position }} </td>
               <td> {{ Tree.station.manager }} </td>
-              <td> {{ Tree.station.inventory }} </td>
+              <td> {{ Tree.station.inventory.normalize }} </td>
             </tr>
           {% endfor %}
           </tbody>
@@ -167,8 +167,8 @@
               <tr>
                 <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
                 <td> {{ input_material.material.position }} </td>
-                <td> {{ input_material.material.inventory }} {{ input_material.material.unit }} </td>
-                <td> {{ input_material.inventory }} </td>
+                <td> {{ input_material.material.inventory.normalize }} {{ input_material.material.unit }} </td>
+                <td> {{ input_material.inventory.normalize }} </td>
                 <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
                 <td class="text-center">
                   <div class="photo">
@@ -227,8 +227,8 @@
             {% if input_material.material.position == 'سطح اولیه' %}
               <tr>
                 <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
-                <td> {{ input_material.material.inventory }} {{ input_material.material.unit }}  </td>
-                <td> {{ input_material.inventory }} </td>
+                <td> {{ input_material.material.inventory.normalize }} {{ input_material.material.unit }}  </td>
+                <td> {{ input_material.inventory.normalize }} </td>
                 <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
                 <td class="text-center">
                   <div class="photo">
@@ -277,8 +277,8 @@
             {% if input_material.material.position == 'اقلام مصرفی' %}
               <tr>
                 <td><a href="{{ input_material.material.get_absolute_url }}"> {{ input_material.material }} </a> </td>
-                <td> {{ input_material.material.inventory }} {{ input_material.material.unit }} </td>
-                <td> {{ input_material.inventory }} </td>
+                <td> {{ input_material.material.inventory.normalize }} {{ input_material.material.unit }} </td>
+                <td> {{ input_material.inventory.normalize }} </td>
                 <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
                 <td class="text-center">
                   <div class="photo">
@@ -355,7 +355,7 @@
               <tr>
                 <td> <a href="{{ Station_exit_history.material.get_absolute_url }}"> {{ Station_exit_history.material.name }} </a> </td>
                 <td> <a href="{{ Station_exit_history.station.get_absolute_url }}"> {{ Station_exit_history.station.name }} </a> </td>
-                <td> {{ Station_exit_history.quantity }} </td>
+                <td> {{ Station_exit_history.quantity.normalize }} </td>
                 <td> {{ Station_exit_history.manager }} </td>
                 <td> {{ Station_exit_history.j_time }} </td>
                 <td class="text-center">

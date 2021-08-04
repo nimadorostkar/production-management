@@ -45,7 +45,7 @@
                 <td> {{ Station.code }} </td>
                 <td> {{ Station.manager }} </td>
                 <td> {{ Station.description|slice:":60" }}... </td>
-                <td> {{ Station.inventory }} </td>
+                <td> {{ Station.inventory.normalize }} </td>
                 <td class="text-center"> {{ Station.output_material }} </td>
               </tr>
             {% endfor %}
