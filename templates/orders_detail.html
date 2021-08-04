@@ -86,7 +86,7 @@
 
 <div class="row" align="center" dir="rtl">
 
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="card">
       <div class="card-header">
          <h4> ایستگاه های درگیر :</h4>
@@ -132,7 +132,7 @@
   </div>
 
 
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="card">
       <div class="card-header">
          <h4>   کل قطات سفارش :</h4>
@@ -156,6 +156,9 @@
               <th>
                 نیاز سفارش
               </th>
+              <th>
+               کسر و اضافه
+              </th>
               <th class="text-center">
                 تصویر
               </th>
@@ -170,6 +173,15 @@
                 <td> {{ input_material.material.inventory.normalize }} {{ input_material.material.unit }} </td>
                 <td> {{ input_material.inventory.normalize }} </td>
                 <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
+                <td>
+                  <p id="{{ input_material.material }}"></p>
+                    <script>
+                        var inventoryyy = {{ input_material.material.inventory }} ;
+                        var ordersss = {% widthratio input_material.inventory 1 order.circulation %} ;
+                        var kasroezafe = (inventoryyy - ordersss);
+                        document.getElementById('{{ input_material.material }}').innerHTML = kasroezafe;
+                    </script>
+                </td>
                 <td class="text-center">
                   <div class="photo">
                     <img src="{{ input_material.material.image.url }}" alt="Profile Photo">
