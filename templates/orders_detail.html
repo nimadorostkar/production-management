@@ -156,7 +156,7 @@
               <th>
                 نیاز سفارش
               </th>
-              <th>
+              <th class="text-center">
                کسر و اضافه
               </th>
               <th class="text-center">
@@ -173,7 +173,7 @@
                 <td> {{ input_material.material.inventory.normalize }} {{ input_material.material.unit }} </td>
                 <td> {{ input_material.inventory.normalize }} </td>
                 <td> {% widthratio input_material.inventory 1 order.circulation %} </td>
-                <td>
+                <td dir="ltr" class="text-center">
                   <p id="{{ input_material.material }}"></p>
                     <script>
                         var inventoryyy = {{ input_material.material.inventory }} ;
