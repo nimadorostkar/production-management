@@ -388,10 +388,10 @@
                 نام
               </th>
               <th class="text-center">
-               زمان مورد نیاز
+                زمان شروع
               </th>
               <th class="text-center">
-                زمان سپری شده
+                 زمان پایان
               </th>
               <th class="text-center">
                 کد
@@ -403,7 +403,10 @@
                تایید شده
               </th>
               <th class="text-center">
-               تکمیل شده
+                تولید شده
+              </th>
+              <th class="text-center">
+                 مانده
               </th>
               <th class="text-center">
                 تصویر
@@ -419,10 +422,10 @@
                 <tr>
                   <td><a href="{{ Order.get_absolute_url }}"> {{ Tree.relatedProduct }} </a></td>
                   <td class="text-center">
-                    {% widthratio Order.circulation station.pro_cap_day 1 %} روز
+                    {{ Order.j_time }}
                   </td>
                   <td class="text-center">
-                    {{ Order.start_time|timesince }}
+                    {% widthratio Order.circulation station.pro_cap_day 1 %} روز بعد
                   </td>
                   <td class="text-center"> {{ Order.code }} </td>
                   <td class="text-center"> {{ Order.circulation.normalize }} </td>
@@ -434,11 +437,10 @@
                     {% endif %}
                    </td>
                   <td class="text-center">
-                    {% if Order.completed %}
-                      <i style="color:green;" class="tim-icons icon-check-2"></i>
-                    {% else %}
-                      <i style="color:red;" class="tim-icons icon-simple-remove"></i>
-                    {% endif %}
+                    ۳۳۳۳۳
+                  </td>
+                  <td class="text-center">
+                    ۶۶۵۵۴
                   </td>
                   <td class="text-center">
                     <div class="photo">
