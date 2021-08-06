@@ -219,10 +219,16 @@
           <form action="#" method="post" align="right" dir="rtl">
             {% csrf_token %}
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label for="exampleInputEmail1"> افزودن موجودی  {{ station.output_material }} به تعداد: </label>
                   <input name="inventory_field" type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="form-group">
+                  <label for="exampleInputEmail1"> توضیحات </label>
+                  <input name="inventory_description_field" type="text" class="form-control">
                 </div>
               </div>
             </div>
@@ -239,16 +245,13 @@
             <thead class=" text-primary">
               <tr>
                 <th class="text-center">
-                  تصویر
-                </th>
-                <th class="text-center">
                   قطعه
                 </th>
                 <th class="text-center">
-                  مسئول
+                  تعداد
                 </th>
                 <th class="text-center">
-                  تعداد
+                  توضیحات
                 </th>
                 <th class="text-center">
                   تاریخ
@@ -258,14 +261,9 @@
             <tbody>
             {% for Inventory_history in inventory_history %}
               <tr>
-                <td class="text-center">
-                  <div class="photo">
-                    <img src="{{ Inventory_history.material.image.url }}" alt="Profile Photo">
-                  </div>
-                </td>
                 <td class="text-center"> {{ Inventory_history.material }} </td>
-                <td class="text-center"> {{ Inventory_history.manager }} </td>
                 <td class="text-center"> {{ Inventory_history.quantity.normalize }} </td>
+                <td class="text-center"> {{ Inventory_history.description }} </td>
                 <td class="text-center"> {{ Inventory_history.j_time }} </td>
               </tr>
             {% endfor %}
@@ -289,17 +287,24 @@
             {% csrf_token %}
             <div class="row">
 
-              <div class="col-md-6 pr-md-1">
+              <div class="col-md-2 pr-md-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1"> خروج قطعه {{ station.output_material }} به تعداد: </label>
                   <input name="exit_station_field" type="text" class="form-control">
                 </div>
               </div>
 
-              <div class="col-md-6 px-md-1">
+              <div class="col-md-3 px-md-1">
                 <div class="form-group">
                   <label>برای سفارش با کد:  </label>
                   <input name="order_code" type="text" class="form-control">
+                </div>
+              </div>
+
+              <div class="col-md-7 pr-md-1">
+                <div class="form-group">
+                  <label for="exampleInputEmail1"> توضیحات </label>
+                  <input name="exit_station_description_field" type="text" class="form-control">
                 </div>
               </div>
 

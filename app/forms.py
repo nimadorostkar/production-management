@@ -35,12 +35,14 @@ class TicketForm(forms.ModelForm):
 #------------------------------------------------------------------------------
 class InventoryForm(forms.Form):
 	inventory_field = forms.IntegerField()
+	inventory_description_field = forms.CharField(max_length=300)
 
 
 #------------------------------------------------------------------------------
 class Exit_stationForm(forms.Form):
 	exit_station_field = forms.IntegerField()
 	order_code = forms.CharField(max_length=200)
+	exit_station_description_field = forms.CharField(max_length=300)
 
 
 #------------------------------------------------------------------------------

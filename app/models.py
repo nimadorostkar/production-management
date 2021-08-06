@@ -45,11 +45,27 @@ class Profile(models.Model):
 
 
 
+
+#------------------------------------------------------------------------------
+class Tag(models.Model):
+    name = models.CharField(max_length=300,verbose_name = " نام ")
+
+    class Meta:
+        verbose_name = "تگ"
+        verbose_name_plural = "تگ ها"
+
+    def __str__(self):
+        return self.name
+
+
+
+
 #------------------------------------------------------------------------------
 class Product(models.Model):
     name = models.CharField(max_length=300,verbose_name = " نام ")
     synch_to = models.ForeignKey('Material', on_delete=models.CASCADE,verbose_name = " قطعه مربوطه ")
     file = models.FileField(default='media/Default.png', null=True, blank=True,verbose_name ="فایل")
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE,verbose_name = " تگ ها ")
 
 
     class Meta:
@@ -304,6 +320,7 @@ class Inventory_history(models.Model):
     manager = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name = "مسئول")
     time = models.DateTimeField(auto_now_add=True, verbose_name = "زمان")
     station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name = " ایستگاه ")
+    description = models.CharField(max_length=300,verbose_name = " توضیحات ")
 
 
     class Meta:
@@ -327,6 +344,7 @@ class Station_exit_history(models.Model):
     time = models.DateTimeField(auto_now_add=True, verbose_name = "زمان")
     station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name = " ایستگاه ")
     order_code = models.CharField(max_length=200, null=True, blank=True, verbose_name = "کد سفارش")
+    description = models.CharField(max_length=300,verbose_name = " توضیحات ")
 
 
     class Meta:

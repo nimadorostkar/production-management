@@ -1,7 +1,7 @@
 from django.contrib import admin
 from . import models
 from django.contrib.admin.models import LogEntry
-from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice, Bom_material, Stations_inputs, Bom_product,Inventory_history,Station_exit_history, Order, Order_confirmation
+from .models import Profile, Tree, Mother_Station, Ticket, Material, Station, Notice, Bom_material, Stations_inputs, Bom_product,Inventory_history,Station_exit_history, Order, Order_confirmation, Tag
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from jalali_date import datetime2jalali, date2jalali
@@ -26,6 +26,14 @@ class ProfileAdmin(ImportExportModelAdmin):
 
 admin.site.register(models.Profile, ProfileAdmin)
 
+
+
+
+#------------------------------------------------------------------------------
+class TagAdmin(ImportExportModelAdmin):
+    list_display = ('name','name')
+
+admin.site.register(models.Tag, TagAdmin)
 
 
 

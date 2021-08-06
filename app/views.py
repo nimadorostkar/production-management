@@ -205,6 +205,7 @@ def stations_detail(request, id):
             history.material = station.output_material
             history.quantity = added_value
             history.manager = station.manager
+            history.description = inventory_form.cleaned_data['inventory_description_field']
             history.station = station
             history.save()
             return redirect(obj.get_absolute_url())
@@ -223,6 +224,7 @@ def stations_detail(request, id):
             history.manager = station.manager
             history.station = station
             history.order_code = exit_station_form.cleaned_data['order_code']
+            history.description = exit_station_form.cleaned_data['exit_station_description_field']
             history.save()
             return redirect(obj.get_absolute_url())
 
