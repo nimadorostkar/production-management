@@ -378,7 +378,7 @@
   <div class="col-md-12">
     <div class="card card-user">
       <div class="card-header">
-        <h4 class="card-title"> سفارشات تایید شده  <i style="color:green;" class="tim-icons icon-check-2"></i></h4>
+        <h4 class="card-title"> سفارشات تایید شده  <i style="color:green;" class="tim-icons icon-check-2"></i> </h4>
       </div>
       <div class="card-body">
         <table class="table tablesorter " id="">
@@ -439,6 +439,8 @@
            {% endfor %}
           </tbody>
         </table>
+        <br>
+          مجموع سفارشات:  <small id="totalorderq"></small>
       </div>
     </div>
   </div>
@@ -597,6 +599,10 @@
   <script>
 
 
+
+
+    // each Order total exit history
+
    var exitorders =[
    {% for Order in orders %}
      {% for Tree in input %}
@@ -632,11 +638,8 @@
     document.getElementById("50097").innerHTML = totexitorders[0].total;
     document.getElementById("70000").innerHTML = totexitorders[1].total;
 
-    console.log(totexitorders);
 
-
-
-
+  // ------------------------------------------------------
 
 
 
@@ -650,7 +653,7 @@
        {% if Tree.relatedProduct == Order.product %}
        {% if Order.completed == False %}
        {% if Order.confirmed %}
-                { "a": "{{ Tree.relatedProduct }} {{ Order.code }}", "b": "{{ Order.circulation }}" },
+                { "a": "{{ Tree.relatedProduct }} {{ Order.code }}", "b": {{ Order.circulation }} },
        {% endif %}
        {% endif %}
        {% endif %}
@@ -687,10 +690,20 @@
   }); // end am4core.ready()
 
 
+  var totalorderq = 0;
+  for(var i=0; i < input_data.length; i++){
+      totalorderq += input_data[i].b;
+  }
+
+  document.getElementById("totalorderq").innerHTML = totalorderq;
 
 
 
 
+
+
+
+//-----------------------------------------------------
 
     $(document.getElementById('history')).hide();
     $(document).ready(function(){
