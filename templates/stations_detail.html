@@ -265,7 +265,7 @@
                 </td>
                 <td class="text-center"> {{ Inventory_history.material }} </td>
                 <td class="text-center"> {{ Inventory_history.manager }} </td>
-                <td class="text-center"> {{ Inventory_history.quantity }} </td>
+                <td class="text-center"> {{ Inventory_history.quantity.normalize }} </td>
                 <td class="text-center"> {{ Inventory_history.j_time }} </td>
               </tr>
             {% endfor %}
@@ -346,7 +346,7 @@
                 </td>
                 <td class="text-center"> {{ Inventory_history.material }} </td>
                 <td class="text-center"> {{ Inventory_history.manager }} </td>
-                <td class="text-center"> {{ Inventory_history.quantity }} </td>
+                <td class="text-center"> {{ Inventory_history.quantity.normalize }} </td>
                 <td class="text-center"> {{ Inventory_history.order_code }} </td>
                 <td class="text-center"> {{ Inventory_history.j_time }} </td>
               </tr>
@@ -437,7 +437,11 @@
                     {% endif %}
                    </td>
                   <td class="text-center">
-                    ۳۳۳۳۳
+                    {% for Station_exit_history in station_exit_history %}
+                      {% if Station_exit_history.order_code == Order.code %}
+                        {{ Station_exit_history.quantity.normalize }}
+                      {% endif %}
+                    {% endfor %}
                   </td>
                   <td class="text-center">
                     ۶۶۵۵۴
