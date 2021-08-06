@@ -611,7 +611,7 @@
       {% if Order.confirmed %}
         {% for Station_exit_history in station_exit_history %}
           {% if Station_exit_history.order_code == Order.code %}
-              { "code":"{{Station_exit_history.order_code}}", "tot":"{{Station_exit_history.quantity}}" },
+              { "code":"{{Station_exit_history.order_code}}", "tot":"{{Station_exit_history.quantity.normalize}}" },
           {% endif %}
         {% endfor %}
       {% endif %}
