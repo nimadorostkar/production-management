@@ -34,12 +34,12 @@ class TicketForm(forms.ModelForm):
 
 #------------------------------------------------------------------------------
 class InventoryForm(forms.Form):
-	inventory_field = forms.DecimalField(max_digits=30, decimal_places=4)
+	inventory_field = forms.IntegerField()
 
 
 #------------------------------------------------------------------------------
 class Exit_stationForm(forms.Form):
-	exit_station_field = forms.DecimalField(max_digits=30, decimal_places=4)
+	exit_station_field = forms.IntegerField()
 	order_code = forms.CharField(max_length=200)
 
 

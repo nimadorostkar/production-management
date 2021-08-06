@@ -605,7 +605,7 @@
       {% if Order.confirmed %}
         {% for Station_exit_history in station_exit_history %}
           {% if Station_exit_history.order_code == Order.code %}
-              { "code":"{{Station_exit_history.order_code}}", "tot":"{{Station_exit_history.quantity.normalize}}" },
+              { "code":"{{Station_exit_history.order_code}}", "tot":{{Station_exit_history.quantity}} },
           {% endif %}
         {% endfor %}
       {% endif %}
@@ -616,10 +616,10 @@
     ];
 
     var totexitorders = exitorders.reduce(function (agg, obj) {
-      var objForName = agg.filter(function (nameObj) { return nameObj.code === obj.code})[0]
+      var objForCode = agg.filter(function (codeObj) { return codeObj.code === obj.code})[0]
 
-      if (objForName) {
-        objForName.total += obj.tot;
+      if (objForCode) {
+        objForCode.total += obj.tot;
       } else {
         agg.push({
           code: obj.code,
@@ -633,6 +633,11 @@
     document.getElementById("70000").innerHTML = totexitorders[1].total;
 
     console.log(totexitorders);
+
+
+
+
+
 
 
 
