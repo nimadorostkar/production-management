@@ -262,7 +262,7 @@
             {% for Inventory_history in inventory_history %}
               <tr>
                 <td class="text-center"> {{ Inventory_history.material }} </td>
-                <td class="text-center"> {{ Inventory_history.quantity.normalize }} </td>
+                <td class="text-center"> {{ Inventory_history.quantity }} </td>
                 <td class="text-center"> {{ Inventory_history.description }} </td>
                 <td class="text-center"> {{ Inventory_history.j_time }} </td>
               </tr>
@@ -322,19 +322,16 @@
             <thead class=" text-primary">
               <tr>
                 <th class="text-center">
-                  تصویر
-                </th>
-                <th class="text-center">
                   قطعه
-                </th>
-                <th class="text-center">
-                  مسئول
                 </th>
                 <th class="text-center">
                   تعداد
                 </th>
                 <th class="text-center">
                   کد سفارش مربوطه
+                </th>
+                <th class="text-center">
+                  توضیحات
                 </th>
                 <th class="text-center">
                   تاریخ
@@ -350,9 +347,9 @@
                   </div>
                 </td>
                 <td class="text-center"> {{ Inventory_history.material }} </td>
-                <td class="text-center"> {{ Inventory_history.manager }} </td>
-                <td class="text-center"> {{ Inventory_history.quantity.normalize }} </td>
+                <td class="text-center"> {{ Inventory_history.quantity }} </td>
                 <td class="text-center"> {{ Inventory_history.order_code }} </td>
+                <td class="text-center"> {{ Inventory_history.description }} </td>
                 <td class="text-center"> {{ Inventory_history.j_time }} </td>
               </tr>
             {% endfor %}
