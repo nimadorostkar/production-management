@@ -635,8 +635,11 @@
       return agg;
     }, [])
 
-    document.getElementById("50097").innerHTML = totexitorders[0].total;
-    document.getElementById("70000").innerHTML = totexitorders[1].total;
+
+
+    for(var i=0; i < totexitorders.length; i++){
+      document.getElementById(totexitorders[i].code).innerHTML = totexitorders[i].total;
+    }
 
 
   // ------------------------------------------------------
