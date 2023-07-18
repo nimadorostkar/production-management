@@ -9,7 +9,6 @@ Manufacturing process management or Manage inventory statistics, production and 
 <br>
 
 [![](https://img.shields.io/badge/python-3.10-orange)](https://www.python.org/)
-a
 [![](https://img.shields.io/badge/Django-4.1-green)](https://www.djangoproject.com/)
 
 [![](https://img.shields.io/pypi/v/django-extra-settings.svg?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/django-extra-settings/)
