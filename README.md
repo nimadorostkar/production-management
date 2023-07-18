@@ -8,9 +8,8 @@ Manufacturing process management or Manage inventory statistics, production and 
 
 <br>
 
-[![](https://img.shields.io/pypi/pyversions/django-extra-settings.svg?color=3776AB&logo=python&logoColor=white)](https://www.python.org/)
+[![](https://img.shields.io/badge/python-3.10-blue)](https://www.python.org/)
 a
-Programming Language :: Python :: 3.5
 [![](https://img.shields.io/pypi/djversions/django-extra-settings?color=0C4B33&logo=django&logoColor=white&label=django)](https://www.djangoproject.com/)
 
 [![](https://img.shields.io/pypi/v/django-extra-settings.svg?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/django-extra-settings/)
