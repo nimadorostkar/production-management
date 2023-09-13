@@ -9,9 +9,6 @@ from extensions.utils import jalali_converter
 from mptt.models import MPTTModel, TreeForeignKey
 
 
-
-
-
 #------------------------------------------------------------------------------
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE,unique=True,related_name='profile',verbose_name = "کاربر")
@@ -41,9 +38,6 @@ class Profile(models.Model):
 
   def __str__(self):
     return "پروفایل : " + str(self.user)
-
-
-
 
 
 #------------------------------------------------------------------------------
@@ -91,7 +85,6 @@ class Product(models.Model):
 
 
 
-
 #------------------------------------------------------------------------------
 class Mother_Station(models.Model):
     name = models.CharField(max_length=400,verbose_name = "نام")
@@ -112,7 +105,6 @@ class Mother_Station(models.Model):
     @property
     def short_description(self):
         return truncatechars(self.description, 70)
-
 
 
 #------------------------------------------------------------------------------
@@ -241,8 +233,6 @@ class Station(models.Model):
     @property
     def short_description(self):
         return truncatechars(self.description, 70)
-
-
 
 
 #------------------------------------------------------------------------------
