@@ -15,8 +15,7 @@ class Profile(models.Model):
   phone = models.CharField(max_length=50,null=True, blank=True,verbose_name = " شماره تماس  ")
   address = models.CharField(max_length=3000,null=True, blank=True,verbose_name = " آدرس  ")
   user_photo = models.ImageField(upload_to='user_uploads/user_photo',default='user_uploads/user_photo/default.png',null=True, blank=True,verbose_name = "تصویر کاربر")
-
-
+  
   @receiver(post_save, sender=User)
   def create_user_profile(sender, instance, created, **kwargs):
       if created:
@@ -53,14 +52,12 @@ class Tag(models.Model):
 
 
 
-
 #------------------------------------------------------------------------------
 class Product(models.Model):
     name = models.CharField(max_length=300,verbose_name = " نام ")
     synch_to = models.ForeignKey('Material', on_delete=models.CASCADE,verbose_name = " قطعه مربوطه ")
     file = models.FileField(default='media/Default.png', null=True, blank=True,verbose_name ="فایل")
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE,verbose_name = " تگ ها ")
-
 
     class Meta:
         verbose_name = "محصول"
@@ -240,7 +237,6 @@ class Tree(models.Model):
     station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='station', verbose_name = " ایستگاه ")
     parent_station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='parent_station', verbose_name = " ایستگاه والد ")
     relatedProduct=models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,verbose_name = "محصول مرتبط")
-
 
     class Meta:
         verbose_name = "درخت محصول"
