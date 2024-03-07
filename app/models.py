@@ -9,7 +9,7 @@ from extensions.utils import jalali_converter
 from mptt.models import MPTTModel, TreeForeignKey
 
 
-#------------------------------------------------------------------------------
+
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE,unique=True,related_name='profile',verbose_name = "کاربر")
   phone = models.CharField(max_length=50,null=True, blank=True,verbose_name = " شماره تماس  ")
@@ -49,6 +49,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 
@@ -387,17 +388,6 @@ class Order_confirmation(models.Model):
 
     def __str__(self):
         return self.order.code
-
-
-
-
-
-
-
-
-
-
-
 
 
 
