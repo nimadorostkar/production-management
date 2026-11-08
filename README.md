@@ -42,7 +42,6 @@ python manage.py migrate --run-syncdb
 
 <br>
 
-
 ![example](https://github.com/nimadorostkar/production-management/blob/master/screenshot/Screen%20Shot%201400-05-03%20at%2002.45.02.png)
 ![example](https://github.com/nimadorostkar/production-management/blob/master/screenshot/Screen%20Shot%201400-05-03%20at%2002.44.39.png)
 ![example](https://github.com/nimadorostkar/production-management/blob/master/screenshot/Screen%20Shot%201400-05-03%20at%2002.44.22.png)
@@ -68,7 +67,6 @@ python manage.py migrate --run-syncdb
 <hr>
 
 <div dir="rtl">
-
 نرم افزار برنامه ریزی تولید
 
 مهمترین هدف از پیاده سازی یک نرم افزار ERP در هر سازمانی علاوه بر یکپارچگی فرآیندی بخش های مختلف سازمان، محاسبه بها تمام شده تولید محصول و یا خدمات است. بدیهی است در سازمان ها و شرکت های تولیدی، مدیریت تولید و محاسبه هزینه های مرتبط با تولید از اهمیت به سزایی در محاسبه بها تمام شده برخوردار است. بنابراین در یک راهکار جامع مدیریت منابع سازمانی که قرار است در یک مجموعه تولیدی استقرار یابد، باید راهکاری برای مدیریت این بخش در نظر گرفته شود.
